@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- Required meta tags-->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="token" content="">
+  <!-- Your app title -->
+  <title>My App</title>
+  <link rel="stylesheet" href="assets/css/framework7.material.min.css">
+  <link rel="stylesheet" href="assets/css/framework7.material.colors.min.css">
+  <link rel="stylesheet" href="assets/css/my-app.css">
+</head>
+<body>
+<!-- Status bar overlay for full screen mode (PhoneGap) -->
+<div class="statusbar-overlay"></div>
+<!-- Panels overlay-->
+<div class="panel-overlay"></div>
+<!-- Left panel with reveal effect-->
+<div class="panel panel-left panel-reveal">
+  <div class="content-block">
+    <p>Left panel content goes here</p>
+  </div>
+</div>
+<!-- Views -->
+<div class="views">
+  <!-- Your main view, should have "view-main" class -->
+  <div class="view view-main">
+    <!-- Pages container, because we use fixed-through navbar and toolbar, it has additional appropriate classes-->
+    <div class="pages navbar-through toolbar-through">
+      <!-- Page, "data-page" contains page name -->
+      <div data-page="index" class="page">
+        <!-- Scrollable page content -->
+        <div class="page-content">
+          <div class="login-screen-title">My App</div>
+          <form id="my-form" class="list-block">
+            <ul>
+              <li>
+                <div class="item-content">
+                  <div class="item-inner">
+                    <div class="item-title label">Username</div>
+                    <div class="item-input">
+                      <input type="text" name="username" placeholder="Username">
+                    </div>
+                  </div>
+                </div>
+              </li>
+              <li>
+                <div class="item-content">
+                  <div class="item-inner">
+                    <div class="item-title label">Password</div>
+                    <div class="item-input">
+                      <input type="password" name="password" placeholder="Password">
+                    </div>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </form>
+
+          <div class="content-block">
+            <a href="#" class="button form-to-data">Login</a>
+          </div>
+        </div>
+        </div>
+      </div>
+    </div>
+</div>
+<!--This is a home page-->
+<script type="text/template" id="dashboard">
+  <!-- We don't need full layout in this file because this page will be parsed with Ajax. It is just enough to put here .navbar and .page-->
+
+  <div class = "views">
+    <div class = "view view-main">
+      <div class = "pages">
+        <div data-page = "home" class = "page navbar-fixed">
+
+          <div class = "navbar">
+            <div class = "navbar-inner">
+              <div class = "left"> </div>
+              <div class = "center">List View With Cards</div>
+              <div class = "right"> </div>
+            </div>
+          </div>
+
+          <div class = "page-content">
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+</script>
+<script type="text/javascript" src="assets/js/framework7.min.js"></script>
+<script type="text/javascript" src="assets/js/main.js"></script>
+</body>
+</html>
