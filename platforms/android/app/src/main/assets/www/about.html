@@ -44,35 +44,57 @@
 
 </style>
 <!-- Top Navbar-->
-<div class="navbar">
-    <div class="navbar-inner">
-        <div class="left">
-            <a href="#" class="back link">
-                <i class="icon icon-back"></i>
-                <span>Back</span>
-            </a>
-        </div>
-        <div class="center sliding">About</div>
-        <div class="right">
-            <a href="#" class="link icon-only open-panel"><i class="icon icon-bars"></i></a>
-        </div>
-    </div>
-</div>
+<!--<div class="navbar">-->
+    <!--<div class="navbar-inner">-->
+        <!--<div class="left">-->
+            <!--<a href="#" class="back link">-->
+                <!--<i class="icon icon-back"></i>-->
+                <!--<span>Back</span>-->
+            <!--</a>-->
+        <!--</div>-->
+        <!--<div class="center sliding">About</div>-->
+        <!--<div class="right">-->
+            <!--<a href="#" class="link icon-only open-panel"><i class="icon icon-bars"></i></a>-->
+        <!--</div>-->
+    <!--</div>-->
+<!--</div>-->
+
+
 <div class="pages">
     <div data-page="about" class="page">
         <div class="page-content">
 
-            <div id="content">
-                <div id="signatureparent">
-                    <div>jSignature inherits colors from parent element. Text = Pen color. Background = Background. (This works even when Flash-based Canvas emulation is used.)</div>
-                    <div id="signature"></div></div>
-                <div id="tools"></div>
-                <div><p>Display Area:</p><div id="displayarea"></div></div>
+            <div id="signature-display">
+
             </div>
-            <div id="scrollgrabber"></div>
-        </div>
+
+            <div id="order-details-display">
+
+            </div>
+
+            <!-- Virtual List -->
+            <div class="list-block virtual-list">
+                <!-- keep it empty -->
+            </div>
+
+            <div id="delivery-list">
+
+            </div>
+
+
+            <div style="background-color:gray;color:white;padding:20px;">
+            <div class="wrapper">
+                <canvas id="signature-pad" class="signature-pad" width=200 height=100></canvas>
+            </div>
+            </div>
+
+            <a href="#" class="button active" id="clear">CLEAR</a>
+            <a href="#" class="button active" id="save-jpeg">SUBMIT</a>
+            <!--<button id="erase">Erase</button>-->
+            <!--<button id="clear">Clear</button>-->
 
         </div>
     </div>
 </div>
+
 

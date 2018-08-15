@@ -12,29 +12,35 @@
   <link rel="stylesheet" href="assets/css/framework7.material.min.css">
   <link rel="stylesheet" href="assets/css/framework7.material.colors.min.css">
   <link rel="stylesheet" href="assets/css/my-app.css">
+  <link href="assets/css/jquery.signaturepad.css" rel="stylesheet">
+
+
+
 </head>
 <body>
-<!-- Status bar overlay for full screen mode (PhoneGap) -->
-<div class="statusbar-overlay"></div>
-<!-- Panels overlay-->
-<div class="panel-overlay"></div>
-<!-- Left panel with reveal effect-->
-<div class="panel panel-left panel-reveal">
-  <div class="content-block">
-    <p>Left panel content goes here</p>
-  </div>
-</div>
+
 <!-- Views -->
 <div class="views">
   <!-- Your main view, should have "view-main" class -->
   <div class="view view-main">
+    <!-- Top Navbar-->
+    <div class="navbar">
+      <div class="navbar-inner">
+
+        <!-- We have home navbar without left link-->
+        <div class="center sliding"></div>
+        <div class="right">
+          <!--&lt;!&ndash; Right link contains only icon - additional "icon-only" class&ndash;&gt;<a href="#" class="link icon-only"> <i class="icon icon-bars"></i></a>-->
+        </div>
+      </div>
+    </div>
     <!-- Pages container, because we use fixed-through navbar and toolbar, it has additional appropriate classes-->
     <div class="pages navbar-through toolbar-through">
       <!-- Page, "data-page" contains page name -->
       <div data-page="index" class="page">
         <!-- Scrollable page content -->
         <div class="page-content">
-          <div class="login-screen-title">My App</div>
+          <div class="login-screen-title"></div>
           <form id="my-form" class="list-block">
             <ul>
               <li>
@@ -64,9 +70,35 @@
             <a href="#" class="button form-to-data">Login</a>
           </div>
         </div>
+      </div>
+    </div>
+
+
+    <div id="signature-pad" class="signature-pad">
+      <div class="signature-pad--body">
+        <canvas></canvas>
+      </div>
+      <div class="signature-pad--footer">
+        <div class="description">Sign above</div>
+
+        <div class="signature-pad--actions">
+          <div>
+            <button type="button" class="button clear" data-action="clear">Clear</button>
+            <button type="button" class="button" data-action="change-color">Change color</button>
+            <button type="button" class="button" data-action="undo">Undo</button>
+
+          </div>
+          <div>
+            <button type="button" class="button save" data-action="save-png">Save as PNG</button>
+            <button type="button" class="button save" data-action="save-jpg">Save as JPG</button>
+            <button type="button" class="button save" data-action="save-svg">Save as SVG</button>
+          </div>
         </div>
       </div>
     </div>
+
+
+  </div>
 </div>
 <!--This is a home page-->
 <script type="text/template" id="dashboard">
@@ -77,15 +109,18 @@
       <div class = "pages">
         <div data-page = "home" class = "page navbar-fixed">
 
-          <div class = "navbar">
+          <div class = "navbar" id="id_navbar_home_page">
             <div class = "navbar-inner">
               <div class = "left"> </div>
-              <div class = "center">List View With Cards</div>
-              <div class = "right"> </div>
+              <div class = "center">Order List</div>
+              <div class = "right">
+                <a href="#" class="link icon-only"> <i class="icon icon-bars"></i></a>
+              </div>
             </div>
           </div>
 
           <div class = "page-content">
+
 
           </div>
 
@@ -98,5 +133,13 @@
 </script>
 <script type="text/javascript" src="assets/js/framework7.min.js"></script>
 <script type="text/javascript" src="assets/js/main.js"></script>
+
+<script src="assets/js/signature_pad.umd.js"></script>
+<script src="assets/js/app.js"></script>
+<!--<script src="assets/js/app.js"></script>-->
+<!--<script src="assets/js/numeric-1.2.6.min.js"></script>-->
+<!--<script src="assets/js/bezier.js"></script>-->
+
+<!--<script src="assets/js/json2.min.js"></script>-->
 </body>
 </html>
