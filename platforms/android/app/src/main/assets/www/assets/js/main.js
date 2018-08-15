@@ -58,13 +58,24 @@ $$(document).on('pageInit', function (e) {
             },
             success: function (data) {
                 //console.log(data.data);
-                //var listHTML = '';
-                var listHTML = '<div class = "list-block media-list">';
-                listHTML += '<ul>';
-                $$.each(data.data, function(k, v) {
-                    /// do stuff
-                    //console.log("data for v");
-                    //console.log(v.branch_name);
+                var size = Object.keys(data.data).length;
+                if(size == 0) {
+                    console.log("zero size");
+
+                    $$('#signature-pad').hide();
+                    var listHTML = '<div class="content-block-title">Empty order list</div>';
+                    $$(page.container).find('.page-content').append(listHTML);
+                    $$('.infinite-scroll-preloader').hide();
+
+                }
+                else {
+                    //var listHTML = '';
+                    var listHTML = '<div class = "list-block media-list">';
+                    listHTML += '<ul>';
+                    $$.each(data.data, function(k, v) {
+                        /// do stuff
+                        //console.log("data for v");
+                        //console.log(v.branch_name);
 
                         listHTML += '<li>';
                         listHTML += '<a href="about.html?id='+ v.order_id +'" class="item-link item-content">';
@@ -80,14 +91,17 @@ $$(document).on('pageInit', function (e) {
                         listHTML += '</a>';
                         listHTML += '</li>';
 
-                    // $$(page.container).find('.page-content').append(listHTML);
-                });
+                        // $$(page.container).find('.page-content').append(listHTML);
+                    });
 
-                listHTML += '</ul>';
+                    listHTML += '</ul>';
 
-                $$(page.container).find('.page-content').append(listHTML);
+                    $$(page.container).find('.page-content').append(listHTML);
 
-                $$('.infinite-scroll-preloader').hide();
+                    $$('.infinite-scroll-preloader').hide();
+                    $$('#signature-pad').hide();
+
+                }
 
 
 
