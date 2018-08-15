@@ -60,15 +60,14 @@ $$(document).on('pageInit', function (e) {
                 //console.log(data.data);
                 var size = Object.keys(data.data).length;
                 if(size == 0) {
-                    console.log("zero size");
-
                     $$('#signature-pad').hide();
-                    var listHTML = '<div class="content-block-title">Empty order list</div>';
-                    $$(page.container).find('.page-content').append(listHTML);
                     $$('.infinite-scroll-preloader').hide();
 
                 }
                 else {
+
+                    $$(page.container).find('#loader-here').hide();
+                    $$('#signature-pad').hide();
                     //var listHTML = '';
                     var listHTML = '<div class = "list-block media-list">';
                     listHTML += '<ul>';
@@ -115,6 +114,13 @@ $$(document).on('pageInit', function (e) {
             }
         });
 
+        $$(page.container).find('.button').on('click', function () {
+            //alert("hello");
+            console.log("click loader");
+            mainView.router.loadContent($$('#dashboard').html());
+
+        });
+
         //add infinite scroll
 
 
@@ -123,6 +129,7 @@ $$(document).on('pageInit', function (e) {
 
 
         console.log("this is about");
+
 
         var id = page.query.id;
         var url = "http://192.168.1.224/iwash/api/order-details/"+id;
@@ -445,5 +452,15 @@ $$('.form-to-data').on('click', function(){
              });
         }
     });
+});
+
+$$('.demo-progressbar-infinite-multi-overlay .button').on('click', function () {
+    alert("hello");
+    var container = $$('body');
+    if (container.children('.progressbar, .progressbar-infinite').length) return; //don't run all this if there is a current progressbar loading
+    myApp.showProgressbar(container, 'multi');
+    setTimeout(function () {
+        myApp.hideProgressbar();
+    }, 5000);
 });
 
