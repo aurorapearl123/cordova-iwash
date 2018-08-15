@@ -1,48 +1,5 @@
 <!-- We don't need full layout in this file because this page will be parsed with Ajax. It is just enough to put here .navbar and .page-->
-<style type="text/css">
 
-    div {
-        margin-top:1em;
-        margin-bottom:1em;
-    }
-    input {
-        padding: .5em;
-        margin: .5em;
-    }
-    select {
-        padding: .5em;
-        margin: .5em;
-    }
-
-    #signatureparent {
-        color:darkblue;
-        background-color:darkgrey;
-        /*max-width:600px;*/
-        padding:20px;
-    }
-
-    /*This is the div within which the signature canvas is fitted*/
-    #signature {
-        border: 2px dotted black;
-        background-color:lightgrey;
-    }
-
-    /* Drawing the 'gripper' for touch-enabled devices */
-    html.touch #content {
-        float:left;
-        width:92%;
-    }
-    html.touch #scrollgrabber {
-        float:right;
-        width:4%;
-        margin-right:2%;
-        background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAFCAAAAACh79lDAAAAAXNSR0IArs4c6QAAABJJREFUCB1jmMmQxjCT4T/DfwAPLgOXlrt3IwAAAABJRU5ErkJggg==)
-    }
-    html.borderradius #scrollgrabber {
-        border-radius: 1em;
-    }
-
-</style>
 <!-- Top Navbar-->
 <!--<div class="navbar">-->
     <!--<div class="navbar-inner">-->
@@ -60,10 +17,17 @@
 <!--</div>-->
 
 
+
+
 <div class="pages">
     <div data-page="about" class="page">
-        <div class="page-content">
 
+
+
+
+        <div class="page-content">
+            <br>
+            <br>
             <div id="signature-display">
 
             </div>
@@ -81,15 +45,18 @@
 
             </div>
 
+            <div class="content-block-title">Sign signature</div>
 
-            <div style="background-color:gray;color:white;padding:20px;">
+            <div style="background-color:gray;color:white;padding:10px;">
             <div class="wrapper">
-                <canvas id="signature-pad" class="signature-pad" width=200 height=100></canvas>
+                <canvas id="signature-pad" class="signature-pad" width=250 height=100></canvas>
             </div>
             </div>
 
             <a href="#" class="button active" id="clear">CLEAR</a>
             <a href="#" class="button active" id="save-jpeg">SUBMIT</a>
+            <a href="#" class="button active back link">BACK</a>
+
             <!--<button id="erase">Erase</button>-->
             <!--<button id="clear">Clear</button>-->
 
