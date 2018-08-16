@@ -35,6 +35,7 @@ myApp.onPageInit('about', function (page) {
 $$(document).on('pageInit', function (e) {
     // Get page data from event data
     //console.log("page init");
+
     var page = e.detail.page;
 
     if (page.name === 'home') {
@@ -47,6 +48,19 @@ $$(document).on('pageInit', function (e) {
        console.log("this is home");
 
 
+// Pull to refresh content
+        //$$(page.container).find('.page-content').append(listHTML);
+        var ptrContent = $$(page.container).find('.pull-to-refresh-content');
+
+// Add 'refresh' listener on it
+        ptrContent.on('ptr:refresh', function (e) {
+            // Emulate 2s loading
+            setTimeout(function () {
+                refreshData(page);
+                // When loading done, we need to reset it
+                myApp.pullToRefreshDone();
+            }, 2000);
+        });
 
         var url = "http://192.168.1.224/iwash/api/order";
         $$.ajax({
@@ -126,11 +140,7 @@ $$(document).on('pageInit', function (e) {
 
     }
     if(page.name == 'about') {
-
-
         console.log("this is about");
-
-
         var id = page.query.id;
         var url = "http://192.168.1.224/iwash/api/order-details/"+id;
         var token= $$('meta[name="token"]').attr("content");
@@ -253,6 +263,24 @@ $$(document).on('pageInit', function (e) {
             }
         });
 
+
+       /* $$("#add-signature").on('click', function(){
+            //alert("hello");
+            myApp.popup($$(".popup"), true, true);
+            //myApp.loginScreen();
+        });
+
+        $$('.open-about').on('click', function () {
+            var clickedLink = this;
+            myApp.popover('.popover-about', clickedLink);
+        });
+
+// Open Links popover
+        $$('.open-links').on('click', function () {
+            var clickedLink = this;
+            myApp.popover('.popover-links', clickedLink);
+        });*/
+
         var canvas = document.getElementById('signature-pad');
 
         // Adjust canvas coordinate space taking into account pixel ratio,
@@ -292,6 +320,8 @@ $$(document).on('pageInit', function (e) {
             myApp.confirm('Are you sure?', function () {
                 //myApp.alert('You clicked Ok button');
                 update_order_details(id, data);
+                console.log("this is data");
+                console.log(data);
             });
 
 
@@ -305,7 +335,10 @@ $$(document).on('pageInit', function (e) {
 
         document.getElementById('back').addEventListener('click', function(){
             mainView.router.loadContent($$('#dashboard').html());
+            //myApp.closeModal($$(".popup"),true);
         });
+
+
 
 
     }
@@ -458,13 +491,71 @@ $$('.form-to-data').on('click', function(){
     });
 });
 
-$$('.demo-progressbar-infinite-multi-overlay .button').on('click', function () {
-    alert("hello");
-    var container = $$('body');
-    if (container.children('.progressbar, .progressbar-infinite').length) return; //don't run all this if there is a current progressbar loading
-    myApp.showProgressbar(container, 'multi');
-    setTimeout(function () {
-        myApp.hideProgressbar();
-    }, 5000);
-});
+
+function refreshData(page)
+{
+    var url = "http://192.168.1.224/iwash/api/order";
+    var token= $$('meta[name="token"]').attr("content");
+    $$.ajax({
+        type: "GET",
+        dataType: "json",
+        url: url,
+        headers: {
+            'Authorization': token,
+        },
+        success: function (data) {
+            //console.log(data.data);
+
+            //$$(page.container).find('.page-content').find('.list-block media-list').empty();
+
+
+                $$(page.container).find('.page-content').find('ul').empty();
+
+                //var listHTML = '';
+                var listHTML = '<div class = "list-block media-list">';
+                listHTML += '<ul>';
+                $$.each(data.data, function(k, v) {
+                    /// do stuff
+                    //console.log("data for v");
+                    //console.log(v.branch_name);
+
+                    listHTML += '<li>';
+                    listHTML += '<a href="about.html?id='+ v.order_id +'" class="item-link item-content">';
+                    listHTML += '<div class = "item-inner">';
+                    listHTML += '<div class = "item-title-row">';
+                    listHTML += '<div class = "item-title">'+v.suffix+" "+ v.fname +" "+v.mname+" "+v.lname+'</div>';
+                    listHTML += '<div class="item-after">'+v.date+'</div>';
+                    listHTML += '</div>';
+                    listHTML += '<div class="item-subtitle"> Branch : '+ v.branch_name +'</div>';
+                    listHTML += '<div class="item-text"> Service Type : '+ v.service_type+'</div>';
+                    //listHTML += '<div class = "card-footer"><a href="about.html?id='+ v.order_id +'" class="link">View Details</a></div>';
+                    listHTML += '</div>';
+                    listHTML += '</a>';
+                    listHTML += '</li>';
+
+                   //$$(page.container).find('.page-content').append(listHTML);
+                });
+
+                listHTML += '</ul>';
+
+                $$(page.container).find('.page-content').append(listHTML);
+
+                $$('.infinite-scroll-preloader').hide();
+                $$('#signature-pad').hide();
+
+
+
+
+            // data.data.foreach(function(data){
+            //     console.log(data);
+            // });
+        },
+        error: function (error) {
+            console.log("error");
+            console.log(error);
+        }
+    });
+
+
+}
 

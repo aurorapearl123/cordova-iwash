@@ -1,4 +1,4 @@
-#Wed Aug 15 18:15:50 CST 2018
+#Thu Aug 16 18:30:20 CST 2018
 base.0=C\:\\Users\\IAN\\cordova\\iwash\\platforms\\android\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\0
 renamed.0=classes.dex
 file.0=C\:\\Users\\IAN\\cordova\\iwash\\platforms\\android\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\0\\classes.dex

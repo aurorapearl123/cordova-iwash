@@ -13,9 +13,43 @@
   <link rel="stylesheet" href="assets/css/framework7.material.colors.min.css">
   <link rel="stylesheet" href="assets/css/my-app.css">
   <link href="assets/css/jquery.signaturepad.css" rel="stylesheet">
+  <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
+  <script type="text/javascript" charset="utf-8">
+
+      // Wait for device API libraries to load
+      //
+      function onLoad() {
+          document.addEventListener("deviceready", onDeviceReady, false);
+          //alert("deviceready");
+          //exitAppPopup();
+      }
+
+      // device APIs are available
+      //
+      function onDeviceReady() {
+          // Register the event listener
+          document.addEventListener("backbutton", onBackKeyDown, false);
+         // alert("back press");
+      }
+
+      // Handle the back button
+      //
+      function onBackKeyDown() {
+          alert("back on back key");
+          navigator.app.back();
+      }
+      function exitFromApp()
+      {
+          navigator.app.exitApp();
+          //window.close();
+
+      }
+
+
+  </script>
 </head>
 
-<body>
+<body onload="onLoad()">
 <div class = "views">
   <div class = "view view-main">
     <div class="navbar">
@@ -46,7 +80,8 @@
         <div class = "page">
           <div class = "page-content login-screen-content">
 
-            <div class = "login-screen-title">Iwash</div>
+
+            <div class = "login-screen-title"><img width="300" height="300" data-src="http://192.168.1.224/iwash/assets/img/main/logo-shadow.png" class="lazy"></div>
 
             <form>
               <div class = "list-block">
@@ -55,7 +90,7 @@
                     <div class = "item-inner">
                       <div class = "item-title label">Username</div>
                       <div class = "item-input">
-                        <input type = "text" name = "username" placeholder = "Enter the username">
+                        <input type = "text" name = "username" placeholder = "Enter the username" >
                       </div>
                     </div>
                   </li>
@@ -64,7 +99,7 @@
                     <div class = "item-inner">
                       <div class = "item-title label">Password</div>
                       <div class = "item-input">
-                        <input type = "password" name = "password" placeholder = "Enter the password">
+                        <input type = "password" name = "password" placeholder = "Enter the password" >
                       </div>
                     </div>
                   </li>
@@ -73,7 +108,7 @@
 
               <div class = "list-block">
                 <ul>
-                  <li><a href="#" class="button active" id="login">Log In</a></li>
+                  <li><a href="#" class="button button-fill button-raised" id="login">LOGIN</a></li>
 
                 </ul>
 
@@ -87,11 +122,6 @@
         </div>
       </div>
     </div>
-
-      <!-- end of view view main-->
-  </div>
-
-
     <div id="signature-pad" class="signature-pad">
       <div class="signature-pad--body">
         <canvas></canvas>
@@ -114,6 +144,26 @@
         </div>
       </div>
     </div>
+
+    <!-- Links popover -->
+    <div class="popover popover-links">
+      <div class="popover-angle"></div>
+      <div class="popover-inner">
+        <div class="list-block">
+          <ul>
+            <li><a href="#" class="list-button item-link" onclick="exitFromApp()">Logout</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+
+
+      <!-- end of view view main-->
+  </div>
+
+
+
 </div>
 
 </div>
@@ -126,6 +176,30 @@
     <div class = "view view-main">
       <div class = "pages">
         <div data-page = "home" class = "page navbar-fixed">
+
+         <!-- <div class="page-content pull-to-refresh-content">
+            <div class="pull-to-refresh-layer">
+              <div class="preloader"></div>
+              <div class="pull-to-refresh-arrow"></div>
+            </div>
+            <div class="list-block media-list">
+              <ul>
+                <li class="item-content">
+                  <div class="item-media"><img src="http://hhhhold.com/88/d/jpg?1" width="44"></div>
+                  <div class="item-inner">
+                    <div class="item-title-row">
+                      <div class="item-title">Yellow Submarine</div>
+                    </div>
+                    <div class="item-subtitle">Beatles</div>
+                  </div>
+                </li>
+                ...
+              </ul>
+              <div class="list-block-label">
+                <p>Just pull page down to let the magic happen.</p>
+              </div>
+            </div>
+          </div>-->
 
           <!--<div class = "navbar" id="id_navbar_home_page">-->
             <!--<div class = "navbar-inner">-->
@@ -149,7 +223,17 @@
           </div>
           </div>
 
-          <div class = "page-content infinite-scroll infinite-scroll-top">
+
+            <div class="page-content pull-to-refresh-content">
+              <div class="pull-to-refresh-layer">
+                <div class="preloader"></div>
+                <div class="pull-to-refresh-arrow"></div>
+              </div>
+              <div class="list-block media-list">
+
+
+              </div>
+            </div>
 
             <!-- Preloader -->
             <!--<div class="infinite-scroll-preloader">-->
@@ -181,20 +265,6 @@
             </div>
           </div>
 
-          <!-- Links popover -->
-          <div class="popover popover-links">
-            <div class="popover-angle"></div>
-            <div class="popover-inner">
-              <div class="list-block">
-                <ul>
-                  <li><a href="#" class="list-button item-link">Link 1</a></li>
-                  <li><a href="#" class="list-button item-link">Link 2</a></li>
-                  <li><a href="#" class="list-button item-link">Link 3</a></li>
-                  <li><a href="#" class="list-button item-link">Link 4</a></li>
-                </ul>
-              </div>
-            </div>
-          </div>
 
         </div>
       </div>
