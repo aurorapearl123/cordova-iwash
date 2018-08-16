@@ -303,6 +303,10 @@ $$(document).on('pageInit', function (e) {
             signaturePad.clear();
         });
 
+        document.getElementById('back').addEventListener('click', function(){
+            mainView.router.loadContent($$('#dashboard').html());
+        });
+
 
     }
     if(page.name == 'index'){
