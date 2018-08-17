@@ -50,7 +50,9 @@ $$(document).on('pageInit', function (e) {
 
 // Pull to refresh content
         //$$(page.container).find('.page-content').append(listHTML);
+        //var ptrContent = $$(page.container).find('.pull-to-refresh-content');
         var ptrContent = $$(page.container).find('.pull-to-refresh-content');
+        //$$(page.container).find('.page-content').find('.list-block').append(listHTML);
 
 // Add 'refresh' listener on it
         ptrContent.on('ptr:refresh', function (e) {
@@ -83,12 +85,10 @@ $$(document).on('pageInit', function (e) {
                     $$(page.container).find('#loader-here').hide();
                     $$('#signature-pad').hide();
                     //var listHTML = '';
-                    var listHTML = '<div class = "list-block media-list">';
-                    listHTML += '<ul>';
+
+                    //var listHTML = '<div class = "list-block media-list">';
+                    var listHTML = '<ul>';
                     $$.each(data.data, function(k, v) {
-                        /// do stuff
-                        //console.log("data for v");
-                        //console.log(v.branch_name);
 
                         listHTML += '<li>';
                         listHTML += '<a href="about.html?id='+ v.order_id +'" class="item-link item-content">';
@@ -99,28 +99,21 @@ $$(document).on('pageInit', function (e) {
                         listHTML += '</div>';
                         listHTML += '<div class="item-subtitle"> Branch : '+ v.branch_name +'</div>';
                         listHTML += '<div class="item-text"> Service Type : '+ v.service_type+'</div>';
-                        //listHTML += '<div class = "card-footer"><a href="about.html?id='+ v.order_id +'" class="link">View Details</a></div>';
                         listHTML += '</div>';
                         listHTML += '</a>';
                         listHTML += '</li>';
 
-                        // $$(page.container).find('.page-content').append(listHTML);
                     });
 
                     listHTML += '</ul>';
 
-                    $$(page.container).find('.page-content').append(listHTML);
+                    $$(page.container).find('.page-content').find('.list-block').append(listHTML);
 
                     $$('.infinite-scroll-preloader').hide();
                     $$('#signature-pad').hide();
 
                 }
 
-
-
-                // data.data.foreach(function(data){
-                //     console.log(data);
-                // });
             },
             error: function (error) {
                 console.log("error");
@@ -263,24 +256,7 @@ $$(document).on('pageInit', function (e) {
             }
         });
 
-
-       /* $$("#add-signature").on('click', function(){
-            //alert("hello");
-            myApp.popup($$(".popup"), true, true);
-            //myApp.loginScreen();
-        });
-
-        $$('.open-about').on('click', function () {
-            var clickedLink = this;
-            myApp.popover('.popover-about', clickedLink);
-        });
-
-// Open Links popover
-        $$('.open-links').on('click', function () {
-            var clickedLink = this;
-            myApp.popover('.popover-links', clickedLink);
-        });*/
-
+        
         var canvas = document.getElementById('signature-pad');
 
         // Adjust canvas coordinate space taking into account pixel ratio,
@@ -509,39 +485,36 @@ function refreshData(page)
             //$$(page.container).find('.page-content').find('.list-block media-list').empty();
 
 
-                $$(page.container).find('.page-content').find('ul').empty();
+            $$(page.container).find('.page-content').find('.list-block').find('ul').empty();
 
-                //var listHTML = '';
-                var listHTML = '<div class = "list-block media-list">';
-                listHTML += '<ul>';
-                $$.each(data.data, function(k, v) {
-                    /// do stuff
-                    //console.log("data for v");
-                    //console.log(v.branch_name);
+            //var listHTML = '<div class = "list-block media-list">';
+            var listHTML = '<ul>';
+            $$.each(data.data, function(k, v) {
+                /// do stuff
+                //console.log("data for v");
+                //console.log(v.branch_name);
 
-                    listHTML += '<li>';
-                    listHTML += '<a href="about.html?id='+ v.order_id +'" class="item-link item-content">';
-                    listHTML += '<div class = "item-inner">';
-                    listHTML += '<div class = "item-title-row">';
-                    listHTML += '<div class = "item-title">'+v.suffix+" "+ v.fname +" "+v.mname+" "+v.lname+'</div>';
-                    listHTML += '<div class="item-after">'+v.date+'</div>';
-                    listHTML += '</div>';
-                    listHTML += '<div class="item-subtitle"> Branch : '+ v.branch_name +'</div>';
-                    listHTML += '<div class="item-text"> Service Type : '+ v.service_type+'</div>';
-                    //listHTML += '<div class = "card-footer"><a href="about.html?id='+ v.order_id +'" class="link">View Details</a></div>';
-                    listHTML += '</div>';
-                    listHTML += '</a>';
-                    listHTML += '</li>';
+                listHTML += '<li>';
+                listHTML += '<a href="about.html?id='+ v.order_id +'" class="item-link item-content">';
+                listHTML += '<div class = "item-inner">';
+                listHTML += '<div class = "item-title-row">';
+                listHTML += '<div class = "item-title">'+v.suffix+" "+ v.fname +" "+v.mname+" "+v.lname+'</div>';
+                listHTML += '<div class="item-after">'+v.date+'</div>';
+                listHTML += '</div>';
+                listHTML += '<div class="item-subtitle"> Branch : '+ v.branch_name +'</div>';
+                listHTML += '<div class="item-text"> Service Type : '+ v.service_type+'</div>';
+                //listHTML += '<div class = "card-footer"><a href="about.html?id='+ v.order_id +'" class="link">View Details</a></div>';
+                listHTML += '</div>';
+                listHTML += '</a>';
+                listHTML += '</li>';
 
-                   //$$(page.container).find('.page-content').append(listHTML);
-                });
+                // $$(page.container).find('.page-content').append(listHTML);
+            });
 
-                listHTML += '</ul>';
+            listHTML += '</ul>';
 
-                $$(page.container).find('.page-content').append(listHTML);
-
-                $$('.infinite-scroll-preloader').hide();
-                $$('#signature-pad').hide();
+            // $$(page.container).find('.page-content').append(listHTML);
+            $$(page.container).find('.page-content').find('.list-block').append(listHTML);
 
 
 
@@ -558,4 +531,3 @@ function refreshData(page)
 
 
 }
-

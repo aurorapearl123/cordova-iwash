@@ -13,40 +13,7 @@
   <link rel="stylesheet" href="assets/css/framework7.material.colors.min.css">
   <link rel="stylesheet" href="assets/css/my-app.css">
   <link href="assets/css/jquery.signaturepad.css" rel="stylesheet">
-  <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
-  <script type="text/javascript" charset="utf-8">
 
-      // Wait for device API libraries to load
-      //
-      function onLoad() {
-          document.addEventListener("deviceready", onDeviceReady, false);
-          //alert("deviceready");
-          //exitAppPopup();
-      }
-
-      // device APIs are available
-      //
-      function onDeviceReady() {
-          // Register the event listener
-          document.addEventListener("backbutton", onBackKeyDown, false);
-         // alert("back press");
-      }
-
-      // Handle the back button
-      //
-      function onBackKeyDown() {
-          alert("back on back key");
-          navigator.app.back();
-      }
-      function exitFromApp()
-      {
-          navigator.app.exitApp();
-          //window.close();
-
-      }
-
-
-  </script>
 </head>
 
 <body onload="onLoad()">
@@ -90,7 +57,7 @@
                     <div class = "item-inner">
                       <div class = "item-title label">Username</div>
                       <div class = "item-input">
-                        <input type = "text" name = "username" placeholder = "Enter the username" >
+                        <input type = "text" name = "username" placeholder = "Enter the username">
                       </div>
                     </div>
                   </li>
@@ -99,7 +66,7 @@
                     <div class = "item-inner">
                       <div class = "item-title label">Password</div>
                       <div class = "item-input">
-                        <input type = "password" name = "password" placeholder = "Enter the password" >
+                        <input type = "password" name = "password" placeholder = "Enter the password">
                       </div>
                     </div>
                   </li>
@@ -177,77 +144,68 @@
       <div class = "pages">
         <div data-page = "home" class = "page navbar-fixed">
 
-         <!-- <div class="page-content pull-to-refresh-content">
-            <div class="pull-to-refresh-layer">
-              <div class="preloader"></div>
-              <div class="pull-to-refresh-arrow"></div>
-            </div>
-            <div class="list-block media-list">
-              <ul>
-                <li class="item-content">
-                  <div class="item-media"><img src="http://hhhhold.com/88/d/jpg?1" width="44"></div>
-                  <div class="item-inner">
-                    <div class="item-title-row">
-                      <div class="item-title">Yellow Submarine</div>
-                    </div>
-                    <div class="item-subtitle">Beatles</div>
-                  </div>
-                </li>
-                ...
-              </ul>
-              <div class="list-block-label">
-                <p>Just pull page down to let the magic happen.</p>
+          <div data-page="home" class="page">
+            <div data-page="home" class="page">
+              <!-- Search Bar -->
+              <form data-search-list=".list-block-search" data-search-in=".item-title" class="searchbar searchbar-init">
+                <div class="searchbar-input">
+                  <input type="search" placeholder="Search"><a href="#" class="searchbar-clear"></a>
+                </div><a href="#" class="searchbar-cancel">Cancel</a>
+              </form>
+
+              <!-- Search Bar overlay -->
+              <div class="searchbar-overlay"></div>
+
+              <div class="page-content pull-to-refresh-content">
+                <br>
+                <div class="pull-to-refresh-layer">
+                <div class="preloader"></div>
+                <!--<div class="pull-to-refresh-arrow"></div>-->
+                <!-- This block will be displayed if nothing found -->
+                <div class="content-block searchbar-not-found">
+                  <div class="content-block-inner">Nothing found</div>
+                </div>
+
+                <!-- This block will be displayed if anything found, and this list block is used a searbar target -->
+
+                <!--<div class="page-content pull-to-refresh-content">-->
+                <!--<div class="pull-to-refresh-layer">-->
+                <!--<div class="preloader"></div>-->
+                <!--<div class="pull-to-refresh-arrow"></div>-->
+                <!--</div>-->
+                <div class="list-block list-block-search searchbar-found cards-list media-list">
+
+                  <!--<ul>-->
+                    <!--<li class="item-content">-->
+                      <!--<div class="item-inner">-->
+                        <!--<div class="item-title">Acura </div>-->
+                      <!--</div>-->
+                    <!--</li>-->
+                    <!--<li class="item-content">-->
+                      <!--<div class="item-inner">-->
+                        <!--<div class="item-title">Audi</div>-->
+                      <!--</div>-->
+                    <!--</li>-->
+
+                  <!--</ul>-->
+                </div>
               </div>
             </div>
-          </div>-->
 
-          <!--<div class = "navbar" id="id_navbar_home_page">-->
-            <!--<div class = "navbar-inner">-->
-              <!--<div class = "left"> </div>-->
-              <!--<div class = "center">Order List</div>-->
-              <!--<div class = "right">-->
-                <!--<a href="#" class="link icon-only"> <i class="icon icon-bars"></i></a>-->
+
+
+            <!--<div class="page-content pull-to-refresh-content">-->
+              <!--<div class="pull-to-refresh-layer">-->
+                <!--<div class="preloader"></div>-->
+                <!--<div class="pull-to-refresh-arrow"></div>-->
+              <!--</div>-->
+              <!--<div class="list-block media-list">-->
+
+
               <!--</div>-->
             <!--</div>-->
-          <!--</div>-->
 
 
-            <div class="page-content pull-to-refresh-content">
-              <div class="pull-to-refresh-layer">
-                <div class="preloader"></div>
-                <div class="pull-to-refresh-arrow"></div>
-              </div>
-              <div class="list-block media-list">
-
-
-              </div>
-            </div>
-
-            <!-- Preloader -->
-            <!--<div class="infinite-scroll-preloader">-->
-              <!--<div class="preloader"></div>-->
-            <!--</div>-->
-
-            <!--<div class="content-block-title">Mail App</div>-->
-            <!--<div class="list-block media-list">-->
-              <!--<ul>-->
-                <!--<li>-->
-                  <!--<a href="#" class="item-link item-content">-->
-                    <!--<div class="item-inner">-->
-                      <!--<div class="item-title-row">-->
-                        <!--<div class="item-title">Facebook</div>-->
-                        <!--<div class="item-after">17:14</div>-->
-                      <!--</div>-->
-                      <!--<div class="item-subtitle">New messages from John Doe</div>-->
-                      <!--<div class="item-text">Lorem ipsum dolor sit amet...</div>-->
-                    <!--</div>-->
-                  <!--</a>-->
-                <!--</li>-->
-
-
-              <!--</ul>-->
-            <!--</div>-->
-            <!-- Preloader -->
 
           </div>
 
@@ -262,7 +220,16 @@
 <script type="text/javascript" src="assets/js/framework7.min.js"></script>
 <script type="text/javascript" src="assets/js/main.js"></script>
 <script src="assets/js/signature_pad.umd.js"></script>
+<script type="text/javascript" charset="utf-8" src="cordova.js"></script>
 <script src="assets/js/app.js"></script>
+
+
+<script type="text/javascript" charset="utf-8">
+
+
+
+
+</script>
 
 </body>
 
