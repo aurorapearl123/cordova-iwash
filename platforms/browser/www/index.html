@@ -13,40 +13,7 @@
   <link rel="stylesheet" href="assets/css/framework7.material.colors.min.css">
   <link rel="stylesheet" href="assets/css/my-app.css">
   <link href="assets/css/jquery.signaturepad.css" rel="stylesheet">
-  <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
-  <script type="text/javascript" charset="utf-8">
 
-      // Wait for device API libraries to load
-      //
-      function onLoad() {
-          document.addEventListener("deviceready", onDeviceReady, false);
-          //alert("deviceready");
-          //exitAppPopup();
-      }
-
-      // device APIs are available
-      //
-      function onDeviceReady() {
-          // Register the event listener
-          document.addEventListener("backbutton", onBackKeyDown, false);
-         // alert("back press");
-      }
-
-      // Handle the back button
-      //
-      function onBackKeyDown() {
-          alert("back on back key");
-          navigator.app.back();
-      }
-      function exitFromApp()
-      {
-          navigator.app.exitApp();
-          //window.close();
-
-      }
-
-
-  </script>
 </head>
 
 <body onload="onLoad()">
@@ -151,7 +118,7 @@
       <div class="popover-inner">
         <div class="list-block">
           <ul>
-            <li><a href="#" class="list-button item-link" onclick="exitFromApp()">Logout</a></li>
+            <li><a href="#" class="list-button item-link" id="id-history">History</a></li>
           </ul>
         </div>
       </div>
@@ -177,7 +144,7 @@
       <div class = "pages">
         <div data-page = "home" class = "page navbar-fixed">
 
-          <div data-page="home" class="page">
+
             <div data-page="home" class="page">
               <!-- Search Bar -->
               <form data-search-list=".list-block-search" data-search-in=".item-title" class="searchbar searchbar-init">
@@ -242,18 +209,100 @@
 
           </div>
 
-
         </div>
       </div>
     </div>
   </div>
 
+  </div>
+</script>
 
+<!--This is a home page-->
+<script type="text/template" id="id-history-list">
+  <!-- We don't need full layout in this file because this page will be parsed with Ajax. It is just enough to put here .navbar and .page-->
+
+  <div class = "views">
+    <div class = "view view-main">
+      <div class = "pages">
+        <div data-page = "history-list" class = "page navbar-fixed">
+          <div class="page-content">
+            <div class="content-block-title">Filter date</div>
+            <div class="list-block">
+              <ul>
+                <li>
+                  <div class="item-content">
+                    <div class="item-inner">
+                      <div class="item-input">
+                        <input type="text" placeholder="Date from" readonly id="calendar-from">
+                      </div>
+                    </div>
+                  </div>
+                </li>
+                <li>
+                  <div class="item-content">
+                    <div class="item-inner">
+                      <div class="item-input">
+                        <input type="text" placeholder="Date to" readonly id="calendar-to">
+                      </div>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class = "list-block">
+              <ul>
+                <li><a href="#" class="button button-fill button-raised" id="id-search">SEARCH</a></li>
+
+              </ul>
+            </div>
+            <div class="page-content pull-to-refresh-content">
+              <br>
+              <div class="pull-to-refresh-layer">
+                <div class="preloader"></div>
+                <!--<div class="pull-to-refresh-arrow"></div>-->
+                <!-- This block will be displayed if nothing found -->
+                <div class="content-block searchbar-not-found">
+                  <div class="content-block-inner">Nothing found</div>
+                </div>
+              </div>
+            </div>
+
+
+                <!--<div class="content-block-title">To</div>-->
+            <!--<div class="list-block">-->
+              <!--<ul>-->
+                <!--<li>-->
+                  <!--<div class="item-content">-->
+                    <!--<div class="item-inner">-->
+                      <!--<div class="item-input">-->
+                        <!--<input type="text" placeholder="Date to" readonly id="calendar-to">-->
+                      <!--</div>-->
+                    <!--</div>-->
+                  <!--</div>-->
+                <!--</li>-->
+              <!--</ul>-->
+            <!--</div>-->
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
 </script>
 <script type="text/javascript" src="assets/js/framework7.min.js"></script>
 <script type="text/javascript" src="assets/js/main.js"></script>
 <script src="assets/js/signature_pad.umd.js"></script>
+<script type="text/javascript" charset="utf-8" src="cordova.js"></script>
 <script src="assets/js/app.js"></script>
+
+
+<script type="text/javascript" charset="utf-8">
+
+
+
+
+</script>
 
 </body>
 

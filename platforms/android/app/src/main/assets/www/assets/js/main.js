@@ -319,10 +319,55 @@ $$(document).on('pageInit', function (e) {
 
 
     }
-    if(page.name == 'index'){
+    if(page.name == 'history-list'){
         //alert("hello index");
-        console.log("index");
+        console.log("history-list");
+
+        var calendarFrom = myApp.calendar({
+            input: '#calendar-from',
+            dateFormat: 'M dd yyyy',
+        });
+
+        var calendarTo = myApp.calendar({
+            input: '#calendar-to',
+            dateFormat: 'M dd yyyy',
+        });
+
+        $$("#id-search").on('click', function(){
+            var from_data = calendarFrom.value;
+            console.log(from_data);
+            var from_day = calendarFrom.value[0].getDay();
+            var from_month = calendarFrom.value[0].getMonth();
+            var from_year = calendarFrom.value[0].getFullYear();
+            var from_date = from_year+"-"+from_month+"-"+from_day;
+            console.log(from_date);
+
+            var to_day = calendarTo.value[0].getDate();
+            var to_month = calendarTo.value[0].getMonth();
+            var to_year = calendarTo.value[0].getFullYear();
+            var to_date = to_year+"-"+to_month+"-"+to_day;
+
+            console.log(to_date);
+
+
+            //console.log("this is signature");
+            //console.log(signature);
+            var data = from_date+":"+to_date;
+            console.log(data);
+
+            getOrderDate(data);
+
+
+        });
     }
+
+    $$("#id-history").on("click", function(){
+        //alert("hello");
+
+        myApp.closeModal($$('.popover'), true);
+
+        mainView.router.loadContent($$('#id-history-list').html());
+    });
 });
 
 function update_order_details(id, signature)
@@ -433,17 +478,8 @@ $$('.form-to-data').on('click', function(){
         url: "http://192.168.1.224/iwash/api/login",
         data: data,
         success: function (data) {
-           //console.log(data);
-           //console.log("token");
-           //console.log(data.data.token);
-              //app.addView('.view-main');
-
 
             $$('meta[name="token"]').attr("content", data.data.token);
-            //var meta = $$('meta[name="token"]').attr("content");
-            //console.log(meta);
-
-
             mainView.router.loadContent($$('#dashboard').html());
 
         },
@@ -517,12 +553,6 @@ function refreshData(page)
             // $$(page.container).find('.page-content').append(listHTML);
             $$(page.container).find('.page-content').find('.list-block').append(listHTML);
 
-
-
-
-            // data.data.foreach(function(data){
-            //     console.log(data);
-            // });
         },
         error: function (error) {
             console.log("error");
@@ -578,5 +608,70 @@ function myFunction() {
     } else {
 
     }
+}
+
+
+function getOrderDate(date)
+{
+    console.log("date");
+    console.log(date);
+    var url = "http://192.168.1.224/iwash/api/order-date/"+date;
+    //var url = "http://localhost/iwash/api/order-date/2018-07-01:2018-08-08";
+    var token= $$('meta[name="token"]').attr("content");
+
+    $$.ajax({
+        type: "GET",
+        dataType: "json",
+        url: url,
+        headers: {
+            'Authorization': token,
+        },
+        success: function (data) {
+            //console.log(data.data);
+            console.log("success");
+
+            //$$(page.container).find('.page-content').find('.list-block media-list').empty();
+            console.log(data);
+
+
+            $$(page.container).find('.page-content').find('.list-block').find('ul').empty();
+
+            //var listHTML = '<div class = "list-block media-list">';
+            var listHTML = '<ul>';
+            $$.each(data.data, function(k, v) {
+                /// do stuff
+                //console.log("data for v");
+                //console.log(v.branch_name);
+
+                listHTML += '<li>';
+                listHTML += '<a href="about.html?id='+ v.order_id +'" class="item-link item-content">';
+                listHTML += '<div class = "item-inner">';
+                listHTML += '<div class = "item-title-row">';
+                listHTML += '<div class = "item-title">'+v.suffix+" "+ v.fname +" "+v.mname+" "+v.lname+'</div>';
+                listHTML += '<div class="item-after">'+v.date+'</div>';
+                listHTML += '</div>';
+                listHTML += '<div class="item-subtitle"> Branch : '+ v.branch_name +'</div>';
+                listHTML += '<div class="item-text"> Service Type : '+ v.service_type+'</div>';
+                //listHTML += '<div class = "card-footer"><a href="about.html?id='+ v.order_id +'" class="link">View Details</a></div>';
+                listHTML += '</div>';
+                listHTML += '</a>';
+                listHTML += '</li>';
+
+                // $$(page.container).find('.page-content').append(listHTML);
+            });
+
+            listHTML += '</ul>';
+
+            // $$(page.container).find('.page-content').append(listHTML);
+            $$(page.container).find('.page-content').find('.list-block').append(listHTML);
+
+        },
+        error: function (error) {
+            console.log("error");
+            //console.log(error);
+        }
+    });
 
 }
+
+
