@@ -1,75 +1,140 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-  <!-- Required meta tags-->
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name = "viewport" content = "width = device-width, initial-scale = 1,
+         maximum-scale = 1, minimum-scale = 1, user-scalable = no, minimal-ui" />
+  <meta name = "apple-mobile-web-app-capable" content = "yes" />
+  <meta name = "apple-mobile-web-app-status-bar-style" content = "black" />
   <meta name="token" content="">
-  <!-- Your app title -->
-  <title>My App</title>
+  <title>Iwash</title>
+  <!-- REFERENCE CSS-->
   <link rel="stylesheet" href="assets/css/framework7.material.min.css">
   <link rel="stylesheet" href="assets/css/framework7.material.colors.min.css">
   <link rel="stylesheet" href="assets/css/my-app.css">
+  <link href="assets/css/jquery.signaturepad.css" rel="stylesheet">
 
-  <script src="assets/js/modernizr.js"></script>
 </head>
-<body>
-<!-- Status bar overlay for full screen mode (PhoneGap) -->
-<div class="statusbar-overlay"></div>
-<!-- Panels overlay-->
-<div class="panel-overlay"></div>
-<!-- Left panel with reveal effect-->
-<div class="panel panel-left panel-reveal">
-  <div class="content-block">
-    <p>Left panel content goes here</p>
-  </div>
-</div>
-<!-- Views -->
-<div class="views">
-  <!-- Your main view, should have "view-main" class -->
-  <div class="view view-main">
-    <!-- Pages container, because we use fixed-through navbar and toolbar, it has additional appropriate classes-->
-    <div class="pages navbar-through toolbar-through">
-      <!-- Page, "data-page" contains page name -->
-      <div data-page="index" class="page">
-        <!-- Scrollable page content -->
-        <div class="page-content">
-          <div class="login-screen-title">My App</div>
-          <form id="my-form" class="list-block">
-            <ul>
-              <li>
-                <div class="item-content">
-                  <div class="item-inner">
-                    <div class="item-title label">Username</div>
-                    <div class="item-input">
-                      <input type="text" name="username" placeholder="Username">
-                    </div>
-                  </div>
-                </div>
-              </li>
-              <li>
-                <div class="item-content">
-                  <div class="item-inner">
-                    <div class="item-title label">Password</div>
-                    <div class="item-input">
-                      <input type="password" name="password" placeholder="Password">
-                    </div>
-                  </div>
-                </div>
-              </li>
-            </ul>
-          </form>
 
-          <div class="content-block">
-            <a href="#" class="button form-to-data">Login</a>
-          </div>
+<body onload="onLoad()">
+<div class = "views">
+  <div class = "view view-main">
+    <div class="navbar">
+      <div class="navbar-inner">
+        <div class="left">
         </div>
+        <div class="center sliding">Order lists</div>
+        <div class="right">
+          <a href="#" data-popover=".popover-links" class="link open-popover"> <i class="icon icon-bars"></i></a>
         </div>
       </div>
     </div>
+
+    <div class="pages">
+      <div data-page="index" class="page">
+        <div class="page-content">
+
+
+        </div>
+      </div>
+    </div>
+
+
+
+
+      <div class = "login-screen modal-in">
+      <div class = "view">
+        <div class = "page">
+          <div class = "page-content login-screen-content">
+
+
+            <div class = "login-screen-title"><img width="300" height="300" data-src="http://192.168.1.224/iwash/assets/img/main/logo-shadow.png" class="lazy"></div>
+
+            <form>
+              <div class = "list-block">
+                <ul>
+                  <li class = "item-content">
+                    <div class = "item-inner">
+                      <div class = "item-title label">Username</div>
+                      <div class = "item-input">
+                        <input type = "text" name = "username" placeholder = "Enter the username">
+                      </div>
+                    </div>
+                  </li>
+
+                  <li class = "item-content">
+                    <div class = "item-inner">
+                      <div class = "item-title label">Password</div>
+                      <div class = "item-input">
+                        <input type = "password" name = "password" placeholder = "Enter the password">
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+
+              <div class = "list-block">
+                <ul>
+                  <li><a href="#" class="button button-fill button-raised" id="login">LOGIN</a></li>
+
+                </ul>
+
+                <!-- <div class = "list-block-label">
+                   <p><a href = "#" class = "close-login-screen">Click here to close Login Screen</a></p>
+                </div> -->
+              </div>
+            </form>
+
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="signature-pad" class="signature-pad">
+      <div class="signature-pad--body">
+        <canvas></canvas>
+      </div>
+      <div class="signature-pad--footer">
+        <div class="description">Sign above</div>
+
+        <div class="signature-pad--actions">
+          <div>
+            <button type="button" class="button clear" data-action="clear">Clear</button>
+            <button type="button" class="button" data-action="change-color">Change color</button>
+            <button type="button" class="button" data-action="undo">Undo</button>
+
+          </div>
+          <div>
+            <button type="button" class="button save" data-action="save-png">Save as PNG</button>
+            <button type="button" class="button save" data-action="save-jpg">Save as JPG</button>
+            <button type="button" class="button save" data-action="save-svg">Save as SVG</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Links popover -->
+    <div class="popover popover-links">
+      <div class="popover-angle"></div>
+      <div class="popover-inner">
+        <div class="list-block">
+          <ul>
+            <li><a href="#" class="list-button item-link" onclick="exitFromApp()">Logout</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+
+
+      <!-- end of view view main-->
+  </div>
+
+
+
 </div>
+
+</div>
+
 <!--This is a home page-->
 <script type="text/template" id="dashboard">
   <!-- We don't need full layout in this file because this page will be parsed with Ajax. It is just enough to put here .navbar and .page-->
@@ -79,18 +144,71 @@
       <div class = "pages">
         <div data-page = "home" class = "page navbar-fixed">
 
-          <div class = "navbar">
-            <div class = "navbar-inner">
-              <div class = "left"> </div>
-              <div class = "center">List View With Cards</div>
-              <div class = "right"> </div>
+          <div data-page="home" class="page">
+            <div data-page="home" class="page">
+              <!-- Search Bar -->
+              <form data-search-list=".list-block-search" data-search-in=".item-title" class="searchbar searchbar-init">
+                <div class="searchbar-input">
+                  <input type="search" placeholder="Search"><a href="#" class="searchbar-clear"></a>
+                </div><a href="#" class="searchbar-cancel">Cancel</a>
+              </form>
+
+              <!-- Search Bar overlay -->
+              <div class="searchbar-overlay"></div>
+
+              <div class="page-content pull-to-refresh-content">
+                <br>
+                <div class="pull-to-refresh-layer">
+                <div class="preloader"></div>
+                <!--<div class="pull-to-refresh-arrow"></div>-->
+                <!-- This block will be displayed if nothing found -->
+                <div class="content-block searchbar-not-found">
+                  <div class="content-block-inner">Nothing found</div>
+                </div>
+
+                <!-- This block will be displayed if anything found, and this list block is used a searbar target -->
+
+                <!--<div class="page-content pull-to-refresh-content">-->
+                <!--<div class="pull-to-refresh-layer">-->
+                <!--<div class="preloader"></div>-->
+                <!--<div class="pull-to-refresh-arrow"></div>-->
+                <!--</div>-->
+                <div class="list-block list-block-search searchbar-found cards-list media-list">
+
+                  <!--<ul>-->
+                    <!--<li class="item-content">-->
+                      <!--<div class="item-inner">-->
+                        <!--<div class="item-title">Acura </div>-->
+                      <!--</div>-->
+                    <!--</li>-->
+                    <!--<li class="item-content">-->
+                      <!--<div class="item-inner">-->
+                        <!--<div class="item-title">Audi</div>-->
+                      <!--</div>-->
+                    <!--</li>-->
+
+                  <!--</ul>-->
+                </div>
+              </div>
             </div>
+
+
+
+            <!--<div class="page-content pull-to-refresh-content">-->
+              <!--<div class="pull-to-refresh-layer">-->
+                <!--<div class="preloader"></div>-->
+                <!--<div class="pull-to-refresh-arrow"></div>-->
+              <!--</div>-->
+              <!--<div class="list-block media-list">-->
+
+
+              <!--</div>-->
+            <!--</div>-->
+
+
+
           </div>
 
-          <div class = "page-content">
-
-
-          </div>
 
         </div>
       </div>
@@ -101,5 +219,19 @@
 </script>
 <script type="text/javascript" src="assets/js/framework7.min.js"></script>
 <script type="text/javascript" src="assets/js/main.js"></script>
+<script src="assets/js/signature_pad.umd.js"></script>
+<script type="text/javascript" charset="utf-8" src="cordova.js"></script>
+<script src="assets/js/app.js"></script>
+
+
+<script type="text/javascript" charset="utf-8">
+
+
+
+
+</script>
+
 </body>
+
+
 </html>
