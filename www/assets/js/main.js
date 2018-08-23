@@ -899,6 +899,7 @@ function onLoad() {
     document.addEventListener("deviceready", onDeviceReady, false);
     //alert("deviceready");
     //exitAppPopup();
+    console.log("device ready");
 }
 
 // device APIs are available
