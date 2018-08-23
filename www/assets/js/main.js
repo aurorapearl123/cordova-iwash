@@ -47,6 +47,70 @@ $$(document).on('pageInit', function (e) {
         var token= $$('meta[name="token"]').attr("content");
         //console.log("this is a token",token);
        console.log("this is home");
+       var from_date = "";
+       var to_date = "";
+       var date = "";
+
+        var calendarFrom = myApp.calendar({
+            input: '#calendar-from',
+            dateFormat: 'M dd yyyy',
+            onClose: function(){
+
+                if(typeof(calendarFrom.value) != "undefined")
+                {
+                    var from_day = calendarFrom.value[0].getDate();
+                    var from_month = calendarFrom.value[0].getMonth() + 1;
+                    var from_year = calendarFrom.value[0].getFullYear();
+                    from_date = from_year+"-"+from_month+"-"+from_day;
+                    date = from_date+":"+to_date;
+                    console.log("from date");
+                    console.log(date);
+                    getOrderDate(page, date,4);
+                }
+                else {
+                    console.log("not null");
+                }
+
+
+                //getOrderDate(data);
+
+
+            }
+        });
+
+        var calendarTo = myApp.calendar({
+            input: '#calendar-to',
+            dateFormat: 'M dd yyyy',
+            onClose: function(){
+                if(typeof(calendarTo.value) != "undefined")
+                {
+                    var to_day = calendarTo.value[0].getDate();
+                    var to_month = calendarTo.value[0].getMonth() + 1;
+                    var to_year = calendarTo.value[0].getFullYear();
+                    to_date = to_year+"-"+to_month+"-"+to_day;
+                    date = from_date+":"+to_date;
+                    console.log("to date");
+                    console.log(date);
+                    getOrderDate(page, date, 4);
+                }
+                else {
+                    console.log("empty this");
+                }
+
+            }
+        });
+
+        //console.log(from_date);
+
+
+       //search by date
+
+        //var date_filter = "";
+        //var date_filter = searchByDate();
+
+        //console.log(date_filter);
+
+
 
 
 // Pull to refresh content
@@ -59,7 +123,8 @@ $$(document).on('pageInit', function (e) {
         ptrContent.on('ptr:refresh', function (e) {
             // Emulate 2s loading
             setTimeout(function () {
-                refreshData(page);
+
+                refreshData(date, page, 4);
                 // When loading done, we need to reset it
                 myApp.pullToRefreshDone();
             }, 2000);
@@ -122,14 +187,16 @@ $$(document).on('pageInit', function (e) {
             }
         });
 
-        $$(page.container).find('.button').on('click', function () {
-            //alert("hello");
-            console.log("click loader");
-            mainView.router.loadContent($$('#dashboard').html());
 
-        });
 
         //add infinite scroll
+        $$(page.container).find('#id-reset').on('click', function(){
+            //mainView.router.loadContent($$('#dashboard').html());
+            console.log("reset data");
+            $$('#calendar-from').val("");
+            $$('#calendar-to').val("");
+            resetData(page, token);
+        });
 
 
     }
@@ -297,8 +364,8 @@ $$(document).on('pageInit', function (e) {
             myApp.confirm('Are you sure?', function () {
                 //myApp.alert('You clicked Ok button');
                 update_order_details(id, data);
-                console.log("this is data");
-                console.log(data);
+                //console.log("this is data");
+                //console.log(data);
             });
 
 
@@ -323,43 +390,95 @@ $$(document).on('pageInit', function (e) {
         //alert("hello index");
         console.log("history-list");
 
+        var url = "http://192.168.1.224/iwash/api/order-history";
+        var token= $$('meta[name="token"]').attr("content");
+        var from_date = "";
+        var to_date = "";
+        var date = "";
+
         var calendarFrom = myApp.calendar({
-            input: '#calendar-from',
+            input: '#history-calendar-from',
             dateFormat: 'M dd yyyy',
+            onClose: function(){
+
+                if(typeof(calendarFrom.value) != "undefined")
+                {
+                    var from_day = calendarFrom.value[0].getDate();
+                    var from_month = calendarFrom.value[0].getMonth() + 1;
+                    var from_year = calendarFrom.value[0].getFullYear();
+                    from_date = from_year+"-"+from_month+"-"+from_day;
+                    date = from_date+":"+to_date;
+                    console.log("from date");
+                    console.log(date);
+                    //get history
+                    getOrderDate(page, date, 5);
+                }
+                else {
+                    console.log("not null");
+                }
+
+
+                //getOrderDate(data);
+
+
+            }
         });
 
         var calendarTo = myApp.calendar({
-            input: '#calendar-to',
+            input: '#history-calendar-to',
             dateFormat: 'M dd yyyy',
+            onClose: function(){
+                if(typeof(calendarTo.value) != "undefined")
+                {
+                    var to_day = calendarTo.value[0].getDate();
+                    var to_month = calendarTo.value[0].getMonth() + 1;
+                    var to_year = calendarTo.value[0].getFullYear();
+                    to_date = to_year+"-"+to_month+"-"+to_day;
+                    date = from_date+":"+to_date;
+                    console.log("to date");
+                    console.log(date);
+                    //get history
+                    getOrderDate(page, date, 5);
+                }
+                else {
+                    console.log("empty this");
+                }
+
+            }
+        });
+        // set default data current day
+        var ptrContent = $$(page.container).find('.pull-to-refresh-content');
+        //$$(page.container).find('.page-content').find('.list-block').append(listHTML);
+
+// Add 'refresh' listener on it
+        ptrContent.on('ptr:refresh', function (e) {
+            // Emulate 2s loading
+            setTimeout(function () {
+                //refreshData history
+                refreshDataHistory(date, page, 5);
+                // When loading done, we need to reset it
+                myApp.pullToRefreshDone();
+            }, 2000);
         });
 
-        $$("#id-search").on('click', function(){
-            var from_data = calendarFrom.value;
-            console.log(from_data);
-            var from_day = calendarFrom.value[0].getDay();
-            var from_month = calendarFrom.value[0].getMonth();
-            var from_year = calendarFrom.value[0].getFullYear();
-            var from_date = from_year+"-"+from_month+"-"+from_day;
-            console.log(from_date);
-
-            var to_day = calendarTo.value[0].getDate();
-            var to_month = calendarTo.value[0].getMonth();
-            var to_year = calendarTo.value[0].getFullYear();
-            var to_date = to_year+"-"+to_month+"-"+to_day;
-
-            console.log(to_date);
+        //var url = "http://192.168.1.224/iwash/api/order";
+        //get history list default current day
+        getDefaultHistoryList(page, token, url);
 
 
-            //console.log("this is signature");
-            //console.log(signature);
-            var data = from_date+":"+to_date;
-            console.log(data);
-
-            getOrderDate(data);
-
-
-        });
     }
+
+    //add infinite scroll
+    $$(page.container).find('#history-id-reset').on('click', function(){
+        //mainView.router.loadContent($$('#dashboard').html());
+        console.log("reset data history");
+        $$('#history-calendar-from').val("");
+        $$('#history-calendar-to').val("");
+        date = "";
+        //console.log("reset history");
+        //resetData(page, token);
+        getDefaultHistoryList(page, token, url);
+    });
 
     $$("#id-history").on("click", function(){
         //alert("hello");
@@ -368,6 +487,143 @@ $$(document).on('pageInit', function (e) {
 
         mainView.router.loadContent($$('#id-history-list').html());
     });
+    //about history
+    if(page.name == "about-history"){
+        console.log("about history");
+        //console.log("this is about");
+
+        var id = page.query.id;
+        console.log("this id of order : ", id);
+        var url = "http://192.168.1.224/iwash/api/order-details/"+id;
+        var token= $$('meta[name="token"]').attr("content");
+        $$.ajax({
+            type: "GET",
+            dataType: "json",
+            url: url,
+            headers: {
+                'Authorization': token,
+            },
+            success: function (data) {
+                //console.log(data.data);
+                console.log("about history details");
+                console.log(data);
+                //var listHTML = '';
+                var order_details = [];
+                var delivery_fee = 0, rate = 0, total_amount = 0;
+                var custsign = "";
+                $$.each(data.data, function(k, v) {
+                    /// do stuff
+                    custsign = v.custsign;
+
+                    //console.log(v.branch_name);
+                    var listHTML = '<div class = "list-block cards-list">';
+                    listHTML += '<ul>';
+                    listHTML += '<li class = "card">';
+                    listHTML += '<div class = "card-header">'+ v.suffix+" "+ v.fname +" "+v.mname+" "+v.lname+'</div>';
+                    listHTML += '<div class = "card-content">';
+                    listHTML += '<div class = "card-content-inner">'+"Service type: "+ v.service_type +'</div>';
+                    listHTML += '</div>';
+                    listHTML += '<div class = "card-footer">'+ v.date +'</div>';
+                    listHTML += '</div>';
+                    listHTML += '</li>';
+                    listHTML += '</div>';
+                    listHTML += '</ul>';
+                    listHTML += '</div>';
+
+                    $$(page.container).find('.page-content').find('#signature-display').append(listHTML);
+                    order_details = v.order_details;
+
+                    delivery_fee = v.deliveryFee;
+                    rate = v.rate;
+                    total_amount = v.ttlAmount;
+                });
+
+
+                var myList = myApp.virtualList('.list-block.virtual-list', {
+                    // Array with items data
+                    items: [
+
+                    ],
+                    // Template 7 template to render each item
+                    template: '<li class="item-content">' +
+                    '<div class="item-media"><img src="{{picture}}"></div>' +
+                    '<div class="item-inner">' +
+                    '<div class="item-title">{{title}}</div>' +
+                    '</div>' +
+                    '</li>'
+                });
+
+                $$.each(order_details, function(k, v){
+                    //console.log(v.category);
+                    if(v.qty == 0 ) {
+
+                    }
+                    else {
+                        if(v.category == 'pants') {
+                            myList.appendItem({
+                                title: v.category +" : "+ v.qty,
+                                picture: base_url+'/assets/img/mobile/'+v.category+'.png',
+                            });
+                        }
+                        else if(v.category == 'underwears') {
+                            myList.appendItem({
+                                title: v.category +" : "+ v.qty,
+                                picture: base_url+'/assets/img/mobile/'+v.category+'.png',
+                            });
+                        }
+
+                        else if(v.category == 'dress') {
+                            myList.appendItem({
+                                title: v.category +" : "+ v.qty,
+                                picture: base_url+'/assets/img/mobile/'+v.category+'.png',
+                            });
+                        }
+
+                        else if(v.category == 'boxes') {
+                            myList.appendItem({
+                                title: v.category +" : "+ v.qty,
+                                picture: base_url+'/assets/img/mobile/'+v.category+'.png',
+                            });
+                        }
+                        else if(v.category == 'upperwears') {
+                            myList.appendItem({
+                                title: v.category +" : "+ v.qty,
+                                picture: base_url+'/assets/img/mobile/'+v.category+'.png',
+                            });
+                        }
+                        else {
+                            myList.appendItem({
+                                title: v.category +" : "+ v.qty,
+                                picture: base_url+'/assets/img/mobile/shopping.png',
+                            });
+                        }
+
+                    }}
+                );
+                // set delivery fee
+                var delivery_fee_html = '<div class="list-block">'+
+                    '<ul>' +
+                    '<li class="item-content"> <div class="item-inner"> <div class="item-title"> Delivery Fee: '+delivery_fee+'</div></div>' +
+                    '<li class="item-content"> <div class="item-inner"> <div class="item-title"> Rate : '+rate+'</div></div>' +
+                    '<li class="item-content"> <div class="item-inner"> <div class="item-title"> Total : '+total_amount+'</div></div>' +
+                    '</li>'+
+                    '</ul>'+
+                    '<br>'+
+                    '<div class="content-block-title">Signature</div>'+
+                    '<img src="'+custsign+'" width="300" height="300"/>';
+
+                $$(page.container).find('.page-content').find('#delivery-list').append(delivery_fee_html);
+
+
+            },
+            error: function (error) {
+                console.log("error");
+                console.log(error);
+            }
+        });
+
+
+    }
 });
 
 function update_order_details(id, signature)
@@ -505,9 +761,84 @@ $$('.form-to-data').on('click', function(){
 });
 
 
-function refreshData(page)
+function refreshData(date, page, status)
 {
-    var url = "http://192.168.1.224/iwash/api/order";
+    console.log("this is date");
+    console.log(date);
+    if(date == "") {
+        var url = "http://192.168.1.224/iwash/api/order";
+    }
+    else {
+        var url = "http://192.168.1.224/iwash/api/order-date/"+date+":"+status;
+    }
+
+
+    var token= $$('meta[name="token"]').attr("content");
+    $$.ajax({
+        type: "GET",
+        dataType: "json",
+        url: url,
+        headers: {
+            'Authorization': token,
+        },
+        success: function (data) {
+            //console.log(data.data);
+
+            //$$(page.container).find('.page-content').find('.list-block media-list').empty();
+
+
+            $$(page.container).find('.page-content').find('.list-block').find('ul').empty();
+
+            //var listHTML = '<div class = "list-block media-list">';
+            var listHTML = '<ul>';
+            $$.each(data.data, function(k, v) {
+                /// do stuff
+                //console.log("data for v");
+                //console.log(v.branch_name);
+
+                listHTML += '<li>';
+                listHTML += '<a href="about.html?id='+ v.order_id +'" class="item-link item-content">';
+                listHTML += '<div class = "item-inner">';
+                listHTML += '<div class = "item-title-row">';
+                listHTML += '<div class = "item-title">'+v.suffix+" "+ v.fname +" "+v.mname+" "+v.lname+'</div>';
+                listHTML += '<div class="item-after">'+v.date+'</div>';
+                listHTML += '</div>';
+                listHTML += '<div class="item-subtitle"> Branch : '+ v.branch_name +'</div>';
+                listHTML += '<div class="item-text"> Service Type : '+ v.service_type+'</div>';
+                //listHTML += '<div class = "card-footer"><a href="about.html?id='+ v.order_id +'" class="link">View Details</a></div>';
+                listHTML += '</div>';
+                listHTML += '</a>';
+                listHTML += '</li>';
+
+                // $$(page.container).find('.page-content').append(listHTML);
+            });
+
+            listHTML += '</ul>';
+
+            // $$(page.container).find('.page-content').append(listHTML);
+            $$(page.container).find('.page-content').find('.list-block').append(listHTML);
+
+        },
+        error: function (error) {
+            console.log("error");
+            console.log(error);
+        }
+    });
+
+}
+
+function refreshDataHistory(date, page, status)
+{
+    console.log("this is date");
+    console.log(date);
+    if(date == "") {
+        var url = "http://192.168.1.224/iwash/api/order-history";
+    }
+    else {
+        var url = "http://192.168.1.224/iwash/api/order-date/"+date+":"+status;
+    }
+
+
     var token= $$('meta[name="token"]').attr("content");
     $$.ajax({
         type: "GET",
@@ -611,11 +942,11 @@ function myFunction() {
 }
 
 
-function getOrderDate(date)
+function getOrderDate(page, date, status)
 {
     console.log("date");
     console.log(date);
-    var url = "http://192.168.1.224/iwash/api/order-date/"+date;
+    var url = "http://192.168.1.224/iwash/api/order-date/"+date+":"+status;
     //var url = "http://localhost/iwash/api/order-date/2018-07-01:2018-08-08";
     var token= $$('meta[name="token"]').attr("content");
 
@@ -627,43 +958,43 @@ function getOrderDate(date)
             'Authorization': token,
         },
         success: function (data) {
-            //console.log(data.data);
-            console.log("success");
+            //console.log("this is data");
+            //console.log(data);
+            $$(page.container).find('.page-content').find('#id-not-found').html("");
+            $$(page.container).find('.page-content').find('ul').empty();
+            if(data.data.length != 0) {
 
-            //$$(page.container).find('.page-content').find('.list-block media-list').empty();
-            console.log(data);
 
+                //var listHTML = '<div class = "list-block media-list">';
+                var listHTML = '<ul>';
+                $$.each(data.data, function(k, v) {
 
-            $$(page.container).find('.page-content').find('.list-block').find('ul').empty();
+                    listHTML += '<li>';
+                    listHTML += '<a href="about.html?id='+ v.order_id +'" class="item-link item-content">';
+                    listHTML += '<div class = "item-inner">';
+                    listHTML += '<div class = "item-title-row">';
+                    listHTML += '<div class = "item-title">'+v.suffix+" "+ v.fname +" "+v.mname+" "+v.lname+'</div>';
+                    listHTML += '<div class="item-after">'+v.date+'</div>';
+                    listHTML += '</div>';
+                    listHTML += '<div class="item-subtitle"> Branch : '+ v.branch_name +'</div>';
+                    listHTML += '<div class="item-text"> Service Type : '+ v.service_type+'</div>';
+                    listHTML += '</div>';
+                    listHTML += '</a>';
+                    listHTML += '</li>';
 
-            //var listHTML = '<div class = "list-block media-list">';
-            var listHTML = '<ul>';
-            $$.each(data.data, function(k, v) {
-                /// do stuff
-                //console.log("data for v");
-                //console.log(v.branch_name);
+                });
 
-                listHTML += '<li>';
-                listHTML += '<a href="about.html?id='+ v.order_id +'" class="item-link item-content">';
-                listHTML += '<div class = "item-inner">';
-                listHTML += '<div class = "item-title-row">';
-                listHTML += '<div class = "item-title">'+v.suffix+" "+ v.fname +" "+v.mname+" "+v.lname+'</div>';
-                listHTML += '<div class="item-after">'+v.date+'</div>';
-                listHTML += '</div>';
-                listHTML += '<div class="item-subtitle"> Branch : '+ v.branch_name +'</div>';
-                listHTML += '<div class="item-text"> Service Type : '+ v.service_type+'</div>';
-                //listHTML += '<div class = "card-footer"><a href="about.html?id='+ v.order_id +'" class="link">View Details</a></div>';
-                listHTML += '</div>';
-                listHTML += '</a>';
-                listHTML += '</li>';
+                listHTML += '</ul>';
 
-                // $$(page.container).find('.page-content').append(listHTML);
-            });
+                $$(page.container).find('.page-content').find('.list-block').append(listHTML);
+            }
+            else {
 
-            listHTML += '</ul>';
-
-            // $$(page.container).find('.page-content').append(listHTML);
-            $$(page.container).find('.page-content').find('.list-block').append(listHTML);
+                $$(page.container).find('.page-content').find('#id-not-found').html("");
+                var listHTML = '<p id="id-not-found">Nothing to found.</p>';
+                console.log("nothing to found");
+                $$(page.container).find('.page-content').append(listHTML);
+            }
 
         },
         error: function (error) {
@@ -673,5 +1004,133 @@ function getOrderDate(date)
     });
 
 }
+
+function resetData(page, token)
+{
+    var url = "http://192.168.1.224/iwash/api/order";
+    $$.ajax({
+        type: "GET",
+        dataType: "json",
+        url: url,
+        headers: {
+            'Authorization': token,
+        },
+        success: function (data) {
+            //console.log(data.data);
+            var size = Object.keys(data.data).length;
+            if(size == 0) {
+                $$('#signature-pad').hide();
+                $$('.infinite-scroll-preloader').hide();
+
+            }
+            else {
+
+                $$(page.container).find('.page-content').find('#id-not-found').html("");
+                $$(page.container).find('.page-content').find('.list-block').find('ul').empty();
+
+                $$(page.container).find('#loader-here').hide();
+                $$('#signature-pad').hide();
+                //var listHTML = '';
+
+                //var listHTML = '<div class = "list-block media-list">';
+                var listHTML = '<ul>';
+                $$.each(data.data, function(k, v) {
+
+                    listHTML += '<li>';
+                    listHTML += '<a href="about.html?id='+ v.order_id +'" class="item-link item-content">';
+                    listHTML += '<div class = "item-inner">';
+                    listHTML += '<div class = "item-title-row">';
+                    listHTML += '<div class = "item-title">'+v.suffix+" "+ v.fname +" "+v.mname+" "+v.lname+'</div>';
+                    listHTML += '<div class="item-after">'+v.date+'</div>';
+                    listHTML += '</div>';
+                    listHTML += '<div class="item-subtitle"> Branch : '+ v.branch_name +'</div>';
+                    listHTML += '<div class="item-text"> Service Type : '+ v.service_type+'</div>';
+                    listHTML += '</div>';
+                    listHTML += '</a>';
+                    listHTML += '</li>';
+
+                });
+
+                listHTML += '</ul>';
+
+                $$(page.container).find('.page-content').find('.list-block').append(listHTML);
+
+                $$('.infinite-scroll-preloader').hide();
+                $$('#signature-pad').hide();
+
+            }
+
+        },
+        error: function (error) {
+            console.log("error");
+            console.log(error);
+        }
+    });
+}
+
+function getDefaultHistoryList(page, token, url)
+{
+
+    $$.ajax({
+        type: "GET",
+        dataType: "json",
+        url: url,
+        headers: {
+            'Authorization': token,
+        },
+        success: function (data) {
+            //console.log(data.data);
+            var size = Object.keys(data.data).length;
+            if(size == 0) {
+                $$('#signature-pad').hide();
+                $$('.infinite-scroll-preloader').hide();
+
+            }
+            else {
+
+                $$(page.container).find('.page-content').find('.list-block').find('ul').empty();
+
+                $$(page.container).find('#loader-here').hide();
+                $$('#signature-pad').hide();
+                //var listHTML = '';
+
+                //var listHTML = '<div class = "list-block media-list">';
+                var listHTML = '<ul>';
+                $$.each(data.data, function(k, v) {
+
+                    listHTML += '<li>';
+                    listHTML += '<a href="about-history.html?id='+ v.order_id +'" class="item-link item-content">';
+                    listHTML += '<div class = "item-inner">';
+                    listHTML += '<div class = "item-title-row">';
+                    listHTML += '<div class = "item-title">'+v.suffix+" "+ v.fname +" "+v.mname+" "+v.lname+'</div>';
+                    listHTML += '<div class="item-after">'+v.date+'</div>';
+                    listHTML += '</div>';
+                    listHTML += '<div class="item-subtitle"> Branch : '+ v.branch_name +'</div>';
+                    listHTML += '<div class="item-text"> Service Type : '+ v.service_type+'</div>';
+                    listHTML += '</div>';
+                    listHTML += '</a>';
+                    listHTML += '</li>';
+
+                });
+
+                listHTML += '</ul>';
+
+                $$(page.container).find('.page-content').find('.list-block').append(listHTML);
+
+                $$('.infinite-scroll-preloader').hide();
+                $$('#signature-pad').hide();
+
+            }
+
+        },
+        error: function (error) {
+            console.log("error");
+            console.log(error);
+        }
+    });
+}
+
+
+
 
 
