@@ -29,5 +29,8 @@
     <splash density="mdpi" src="res/screen/android/logo_shadow_mdpi.png" />
     <splash density="xhdpi" src="res/screen/android/logo_shadow_xhdpi.png" />
     <preference name="loglevel" value="DEBUG" />
-    <preference name="SplashScreenDelay" value="10000" />
+    <preference name="SplashScreenDelay" value="5000" />
+    <preference name="SplashMaintainAspectRatio" value="true|false" />
+    <preference name="SplashShowOnlyFirstTime" value="true|false" />
+    <preference name="SplashScreenSpinnerColor" value="white" />
 </widget>

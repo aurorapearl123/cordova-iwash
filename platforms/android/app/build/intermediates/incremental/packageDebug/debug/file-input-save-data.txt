@@ -1,5 +1,5 @@
 #Internal package file, do not edit.
-#Thu Aug 23 16:36:45 CST 2018
+#Thu Aug 23 19:32:43 CST 2018
 5.base=C\:\\Users\\IAN\\cordova\\iwash\\platforms\\android\\app\\build\\intermediates\\assets\\debug
 42.base=C\:\\Users\\IAN\\cordova\\iwash\\platforms\\android\\app\\build\\intermediates\\res\\debug\\resources-debug.ap_
 32.set=ASSET

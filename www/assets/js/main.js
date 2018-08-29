@@ -15,6 +15,7 @@ var myApp = new Framework7({
 var $$ = Dom7;
 
 var base_url = 'http://192.168.1.224/iwash';
+//var  base_url = "http://192.168.1.44/iwash/";
 
 
 
@@ -130,7 +131,8 @@ $$(document).on('pageInit', function (e) {
             }, 2000);
         });
 
-        var url = "http://192.168.1.224/iwash/api/order";
+
+        var url = base_url+"/api/order";
         $$.ajax({
             type: "GET",
             dataType: "json",
@@ -195,16 +197,20 @@ $$(document).on('pageInit', function (e) {
             console.log("reset data");
             $$('#calendar-from').val("");
             $$('#calendar-to').val("");
+            date = "";
             resetData(page, token);
+
         });
 
 
     }
     if(page.name == 'about') {
         console.log("this is about");
+
         var id = page.query.id;
-        var url = "http://192.168.1.224/iwash/api/order-details/"+id;
+        var url = base_url+"/api/order-details/"+id;
         var token= $$('meta[name="token"]').attr("content");
+        var listHTML = '';
         $$.ajax({
             type: "GET",
             dataType: "json",
@@ -221,7 +227,7 @@ $$(document).on('pageInit', function (e) {
                     /// do stuff
 
                     //console.log(v.branch_name);
-                    var listHTML = '<div class = "list-block cards-list">';
+                    listHTML = '<div class = "list-block cards-list">';
                     listHTML += '<ul>';
                     listHTML += '<li class = "card">';
                     listHTML += '<div class = "card-header">'+ v.suffix+" "+ v.fname +" "+v.mname+" "+v.lname+'</div>';
@@ -235,7 +241,7 @@ $$(document).on('pageInit', function (e) {
                     listHTML += '</ul>';
                     listHTML += '</div>';
 
-                    $$(page.container).find('.page-content').find('#signature-display').append(listHTML);
+                    // $$(page.container).find('.page-content').find('#signature-display').append(listHTML);
                     order_details = v.order_details;
 
                     delivery_fee = v.deliveryFee;
@@ -316,6 +322,8 @@ $$(document).on('pageInit', function (e) {
 
                 $$(page.container).find('.page-content').find('#delivery-list').append(delivery_fee_html);
 
+                $$(page.container).find('.page-content').find('#signature-display').append(listHTML);
+
 
             },
             error: function (error) {
@@ -389,8 +397,8 @@ $$(document).on('pageInit', function (e) {
     if(page.name == 'history-list'){
         //alert("hello index");
         console.log("history-list");
-
-        var url = "http://192.168.1.224/iwash/api/order-history";
+        //var base_url = 'http://192.168.1.224/iwash';
+        var url = base_url+"/api/order-history";
         var token= $$('meta[name="token"]').attr("content");
         var from_date = "";
         var to_date = "";
@@ -494,7 +502,7 @@ $$(document).on('pageInit', function (e) {
 
         var id = page.query.id;
         console.log("this id of order : ", id);
-        var url = "http://192.168.1.224/iwash/api/order-details/"+id;
+        var url = base_url+"/api/order-details/"+id;
         var token= $$('meta[name="token"]').attr("content");
         $$.ajax({
             type: "GET",
@@ -628,7 +636,8 @@ $$(document).on('pageInit', function (e) {
 
 function update_order_details(id, signature)
 {
-    var url = "http://192.168.1.224/iwash/api/order-details";
+
+    var url = base_url+"/api/order-details";
     var token= $$('meta[name="token"]').attr("content");
     //console.log("this is signature");
     //console.log(signature);
@@ -674,10 +683,11 @@ $$('#login').on('click', function(){
 
     //myApp.closeModal('.login-screen',true);
     //mainView.router.loadContent($$('#dashboard').html());
+    //var base_url = 'http://192.168.1.224/iwash';
     $$.ajax({
         type: "POST",
         dataType: "json",
-        url: "http://192.168.1.224/iwash/api/login",
+        url: base_url+"/api/login",
         data: data,
         success: function (data) {
             //console.log(data);
@@ -685,8 +695,8 @@ $$('#login').on('click', function(){
             //console.log(data.data.token);
             //app.addView('.view-main');
 
-
             $$('meta[name="token"]').attr("content", data.data.token);
+            $$('meta[name="user_group"]').attr("content", data.data.groupName);
             //var meta = $$('meta[name="token"]').attr("content");
             //console.log(meta);
 
@@ -716,60 +726,16 @@ $$('#login').on('click', function(){
 
 });
 
-$$('.form-to-data').on('click', function(){
-    var formData = myApp.formToData('#my-form');
-    var username = formData.username;
-    var password = formData.password;
-    var data = {"username": username, "password": password };
-    //console.log("meta data");
-    //var meta = $$('meta[name="token"]').attr("content");
-    //console.log(meta);
-    //alert(data);
-
-
-
-     $$.ajax({
-        type: "POST",
-        dataType: "json",
-        url: "http://192.168.1.224/iwash/api/login",
-        data: data,
-        success: function (data) {
-
-            $$('meta[name="token"]').attr("content", data.data.token);
-            mainView.router.loadContent($$('#dashboard').html());
-
-        },
-        error: function (error) {
-             //console.log(error);
-             var response_message = "";
-             var message = JSON.parse(error.responseText);
-            //console.log(message);
-           // if(typeof message.error.username !== undefined) {
-          if (typeof(message.error) != "undefined"){
-                 var username_error = (message.error.username) ? message.error.username : "";
-                   var password_error = (message.error.password) ? message.error.password : "";
-                   response_message = username_error +" "+ password_error;
-            }
-            else {
-                 response_message = message.message;
-            }
-             myApp.alert(response_message, "Iwash", function () {
-                //app.closeModal('.login-screen');
-             });
-        }
-    });
-});
-
 
 function refreshData(date, page, status)
 {
     console.log("this is date");
     console.log(date);
     if(date == "") {
-        var url = "http://192.168.1.224/iwash/api/order";
+        var url = base_url+"/api/order";
     }
     else {
-        var url = "http://192.168.1.224/iwash/api/order-date/"+date+":"+status;
+        var url = base_url+"/api/order-date/"+date+":"+status;
     }
 
 
@@ -832,10 +798,10 @@ function refreshDataHistory(date, page, status)
     console.log("this is date");
     console.log(date);
     if(date == "") {
-        var url = "http://192.168.1.224/iwash/api/order-history";
+        var url = base_url+"/api/order-history";
     }
     else {
-        var url = "http://192.168.1.224/iwash/api/order-date/"+date+":"+status;
+        var url = base_url+"/api/order-date/"+date+":"+status;
     }
 
 
@@ -863,7 +829,7 @@ function refreshDataHistory(date, page, status)
                 //console.log(v.branch_name);
 
                 listHTML += '<li>';
-                listHTML += '<a href="about.html?id='+ v.order_id +'" class="item-link item-content">';
+                listHTML += '<a href="about-history.html?id='+ v.order_id +'" class="item-link item-content">';
                 listHTML += '<div class = "item-inner">';
                 listHTML += '<div class = "item-title-row">';
                 listHTML += '<div class = "item-title">'+v.suffix+" "+ v.fname +" "+v.mname+" "+v.lname+'</div>';
@@ -899,7 +865,7 @@ function onLoad() {
     document.addEventListener("deviceready", onDeviceReady, false);
     //alert("deviceready");
     //exitAppPopup();
-    console.log("device ready");
+
 }
 
 // device APIs are available
@@ -907,7 +873,7 @@ function onLoad() {
 function onDeviceReady() {
     // Register the event listener
     document.addEventListener("backbutton", onBackKeyDown, false);
-    // alert("back press");
+
 }
 
 // Handle the back button
@@ -947,7 +913,7 @@ function getOrderDate(page, date, status)
 {
     console.log("date");
     console.log(date);
-    var url = "http://192.168.1.224/iwash/api/order-date/"+date+":"+status;
+    var url = base_url+"/api/order-date/"+date+":"+status;
     //var url = "http://localhost/iwash/api/order-date/2018-07-01:2018-08-08";
     var token= $$('meta[name="token"]').attr("content");
 
@@ -971,7 +937,12 @@ function getOrderDate(page, date, status)
                 $$.each(data.data, function(k, v) {
 
                     listHTML += '<li>';
-                    listHTML += '<a href="about.html?id='+ v.order_id +'" class="item-link item-content">';
+                    if(status == 4) {
+                        listHTML += '<a href="about.html?id=' + v.order_id + '" class="item-link item-content">';
+                    }
+                    else if(status == 5) {
+                        listHTML += '<a href="about-history.html?id='+ v.order_id +'" class="item-link item-content">';
+                    }
                     listHTML += '<div class = "item-inner">';
                     listHTML += '<div class = "item-title-row">';
                     listHTML += '<div class = "item-title">'+v.suffix+" "+ v.fname +" "+v.mname+" "+v.lname+'</div>';
@@ -1008,7 +979,7 @@ function getOrderDate(page, date, status)
 
 function resetData(page, token)
 {
-    var url = "http://192.168.1.224/iwash/api/order";
+    var url = base_url+"/api/order";
     $$.ajax({
         type: "GET",
         dataType: "json",
@@ -1130,6 +1101,17 @@ function getDefaultHistoryList(page, token, url)
         }
     });
 }
+
+
+$$(document).on('pageBeforeInit', function (e) {
+    console.log("this is before init");
+    var page = e.detail.page;
+
+    if (page.name === 'about') {
+        console.log("this is before init of about");
+
+    }
+});
 
 
 

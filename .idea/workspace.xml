@@ -2,88 +2,31 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="949a967c-9d2a-43ae-914d-dc39b6c88e02" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/res/screen/android/logo_shadow_hdpi.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/res/screen/android/logo_shadow_mdpi.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/res/screen/android/logo_shadow_xhdpi.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/config.xml" beforeDir="false" afterPath="$PROJECT_DIR$/config.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/platforms/android/.gradle/4.1/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/android/.gradle/4.1/fileHashes/fileHashes.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/platforms/android/.gradle/4.1/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/android/.gradle/4.1/fileHashes/fileHashes.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/platforms/android/.gradle/4.1/javaCompile/classAnalysis.bin" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/android/.gradle/4.1/javaCompile/classAnalysis.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/platforms/android/.gradle/4.1/javaCompile/javaCompile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/android/.gradle/4.1/javaCompile/javaCompile.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/platforms/android/.gradle/4.1/javaCompile/taskHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/android/.gradle/4.1/javaCompile/taskHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/platforms/android/.gradle/4.1/taskHistory/fileSnapshots.bin" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/android/.gradle/4.1/taskHistory/fileSnapshots.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/platforms/android/.gradle/4.1/taskHistory/taskHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/android/.gradle/4.1/taskHistory/taskHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/platforms/android/.gradle/4.1/taskHistory/taskHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/android/.gradle/4.1/taskHistory/taskHistory.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/platforms/android/android.json" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/android/android.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/platforms/android/app/build/intermediates/assets/debug/www/cordova_plugins.js" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/android/app/build/intermediates/assets/debug/www/cordova_plugins.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/platforms/android/app/build/intermediates/blame/res/debug/single/debug.json" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/android/app/build/intermediates/blame/res/debug/single/debug.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/platforms/android/app/build/intermediates/incremental/mergeDebugAssets/merger.xml" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/android/app/build/intermediates/incremental/mergeDebugAssets/merger.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/platforms/android/app/build/intermediates/assets/debug/www/assets/js/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/android/app/build/intermediates/assets/debug/www/assets/js/main.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/platforms/android/app/build/intermediates/assets/debug/www/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/android/app/build/intermediates/assets/debug/www/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/platforms/android/app/build/intermediates/incremental/mergeDebugResources/compile-file-map.properties" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/android/app/build/intermediates/incremental/mergeDebugResources/compile-file-map.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/platforms/android/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values/values.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/platforms/android/app/build/intermediates/incremental/mergeDebugResources/merger.xml" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/android/app/build/intermediates/incremental/mergeDebugResources/merger.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/platforms/android/app/build/intermediates/incremental/packageDebug/debug/dex-renamer-state.txt" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/android/app/build/intermediates/incremental/packageDebug/debug/dex-renamer-state.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/platforms/android/app/build/intermediates/incremental/packageDebug/debug/file-input-save-data.txt" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/android/app/build/intermediates/incremental/packageDebug/debug/file-input-save-data.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/platforms/android/app/build/intermediates/incremental/packageDebug/debug/zip-cache/HfU6pg1i9zgWznttI99LXmJuUq4=" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/android/app/build/intermediates/incremental/packageDebug/debug/zip-cache/HfU6pg1i9zgWznttI99LXmJuUq4=" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/platforms/android/app/build/intermediates/res/merged/debug/drawable-land-hdpi_screen.png.flat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/platforms/android/app/build/intermediates/res/merged/debug/drawable-land-ldpi_screen.png.flat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/platforms/android/app/build/intermediates/res/merged/debug/drawable-land-mdpi_screen.png.flat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/platforms/android/app/build/intermediates/res/merged/debug/drawable-land-xhdpi_screen.png.flat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/platforms/android/app/build/intermediates/res/merged/debug/drawable-land-xxhdpi_screen.png.flat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/platforms/android/app/build/intermediates/res/merged/debug/drawable-land-xxxhdpi_screen.png.flat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/platforms/android/app/build/intermediates/res/merged/debug/drawable-port-hdpi_screen.png.flat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/platforms/android/app/build/intermediates/res/merged/debug/drawable-port-ldpi_screen.png.flat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/platforms/android/app/build/intermediates/res/merged/debug/drawable-port-mdpi_screen.png.flat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/platforms/android/app/build/intermediates/res/merged/debug/drawable-port-xhdpi_screen.png.flat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/platforms/android/app/build/intermediates/res/merged/debug/drawable-port-xxhdpi_screen.png.flat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/platforms/android/app/build/intermediates/res/merged/debug/drawable-port-xxxhdpi_screen.png.flat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/platforms/android/app/build/intermediates/res/merged/debug/mipmap-hdpi_icon.png.flat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/platforms/android/app/build/intermediates/res/merged/debug/mipmap-ldpi_icon.png.flat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/platforms/android/app/build/intermediates/res/merged/debug/mipmap-mdpi_icon.png.flat" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/android/app/build/intermediates/res/merged/debug/mipmap-mdpi_icon.png.flat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/platforms/android/app/build/intermediates/res/merged/debug/mipmap-xhdpi_icon.png.flat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/platforms/android/app/build/intermediates/res/merged/debug/mipmap-xxhdpi_icon.png.flat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/platforms/android/app/build/intermediates/res/merged/debug/mipmap-xxxhdpi_icon.png.flat" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/platforms/android/app/build/intermediates/res/merged/debug/xml_config.xml.flat" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/android/app/build/intermediates/res/merged/debug/xml_config.xml.flat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/platforms/android/app/build/intermediates/transforms/dexBuilder/debug/__content__.json" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/android/app/build/intermediates/transforms/dexBuilder/debug/__content__.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/platforms/android/app/build/intermediates/transforms/dexMerger/debug/0/classes.dex" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/android/app/build/intermediates/transforms/dexMerger/debug/0/classes.dex" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/platforms/android/app/build/intermediates/transforms/dexMerger/debug/__content__.json" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/android/app/build/intermediates/transforms/dexMerger/debug/__content__.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/platforms/android/app/build/intermediates/transforms/mergeJavaRes/debug/__content__.json" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/android/app/build/intermediates/transforms/mergeJavaRes/debug/__content__.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/platforms/android/app/build/outputs/apk/debug/app-debug.apk" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/android/app/build/outputs/apk/debug/app-debug.apk" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/platforms/android/app/src/main/assets/www/assets/js/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/android/app/src/main/assets/www/assets/js/main.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/platforms/android/app/src/main/assets/www/cordova_plugins.js" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/android/app/src/main/assets/www/cordova_plugins.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/platforms/android/app/src/main/res/drawable-land-hdpi/screen.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/platforms/android/app/src/main/res/drawable-land-ldpi/screen.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/platforms/android/app/src/main/res/drawable-land-mdpi/screen.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/platforms/android/app/src/main/res/drawable-land-xhdpi/screen.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/platforms/android/app/src/main/res/drawable-land-xxhdpi/screen.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/platforms/android/app/src/main/res/drawable-land-xxxhdpi/screen.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/platforms/android/app/src/main/res/drawable-port-hdpi/screen.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/platforms/android/app/src/main/res/drawable-port-ldpi/screen.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/platforms/android/app/src/main/res/drawable-port-mdpi/screen.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/platforms/android/app/src/main/res/drawable-port-xhdpi/screen.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/platforms/android/app/src/main/res/drawable-port-xxhdpi/screen.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/platforms/android/app/src/main/res/drawable-port-xxxhdpi/screen.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/platforms/android/app/src/main/res/mipmap-hdpi/icon.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/platforms/android/app/src/main/res/mipmap-ldpi/icon.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/platforms/android/app/src/main/res/mipmap-mdpi/icon.png" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/android/app/src/main/res/mipmap-mdpi/icon.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/platforms/android/app/src/main/res/mipmap-xhdpi/icon.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/platforms/android/app/src/main/res/mipmap-xxhdpi/icon.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/platforms/android/app/src/main/res/mipmap-xxxhdpi/icon.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/platforms/android/app/src/main/assets/www/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/android/app/src/main/assets/www/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/platforms/android/app/src/main/res/xml/config.xml" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/android/app/src/main/res/xml/config.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/platforms/android/platform_www/cordova_plugins.js" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/android/platform_www/cordova_plugins.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/platforms/browser/browser.json" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/browser/browser.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/platforms/browser/config.xml" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/browser/config.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/platforms/browser/platform_www/cordova_plugins.js" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/browser/platform_www/cordova_plugins.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/platforms/browser/www/assets/js/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/browser/www/assets/js/main.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/platforms/browser/www/config.xml" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/browser/www/config.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/platforms/browser/www/cordova_plugins.js" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/browser/www/cordova_plugins.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plugins/android.json" beforeDir="false" afterPath="$PROJECT_DIR$/plugins/android.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plugins/browser.json" beforeDir="false" afterPath="$PROJECT_DIR$/plugins/browser.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plugins/fetch.json" beforeDir="false" afterPath="$PROJECT_DIR$/plugins/fetch.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/platforms/browser/www/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/browser/www/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/www/assets/js/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/www/assets/js/main.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/www/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/www/index.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -106,8 +49,8 @@
       <file leaf-file-name="about.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/www/about.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="143">
-              <caret line="9" column="23" selection-start-line="6" selection-start-column="12" selection-end-line="9" selection-end-column="23" />
+            <state relative-caret-position="1292">
+              <caret line="76" column="72" selection-start-line="76" selection-start-column="11" selection-end-line="76" selection-end-column="72" />
               <folding>
                 <element signature="n#style#0;n#div#6;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
               </folding>
@@ -118,8 +61,8 @@
       <file leaf-file-name="about-history.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/www/about-history.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="969">
-              <caret line="84" column="16" selection-start-line="78" selection-start-column="11" selection-end-line="84" selection-end-column="16" />
+            <state relative-caret-position="731">
+              <caret line="43" column="18" selection-start-line="43" selection-start-column="18" selection-end-line="43" selection-end-column="18" />
             </state>
           </provider>
         </entry>
@@ -127,17 +70,17 @@
       <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/www/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="211">
-              <caret line="44" column="25" selection-start-line="44" selection-start-column="20" selection-end-line="44" selection-end-column="25" />
+            <state relative-caret-position="1173">
+              <caret line="69" column="119" selection-start-line="69" selection-start-column="119" selection-end-line="69" selection-end-column="119" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="config.xml" pinned="false" current-in-tab="false">
+      <file leaf-file-name="config.xml" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/config.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="354">
-              <caret line="24" column="53" selection-start-line="24" selection-start-column="53" selection-end-line="24" selection-end-column="53" />
+            <state relative-caret-position="466">
+              <caret line="32" column="71" selection-start-line="32" selection-start-column="71" selection-end-line="32" selection-end-column="71" />
             </state>
           </provider>
         </entry>
@@ -151,15 +94,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="main.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="main.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/www/assets/js/main.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="152">
-              <caret line="901" column="29" selection-start-line="901" selection-start-column="29" selection-end-line="901" selection-end-column="29" />
-              <folding>
-                <element signature="e#16870#18624#0" />
-                <element signature="e#18670#20157#0" />
-              </folding>
+            <state relative-caret-position="15011">
+              <caret line="883" column="49" selection-start-line="883" selection-start-column="40" selection-end-line="883" selection-end-column="49" />
             </state>
           </provider>
         </entry>
@@ -185,7 +124,6 @@
       <find>signature-pad</find>
       <find>home</find>
       <find>logout</find>
-      <find>dashboard</find>
       <find>this is home</find>
       <find>searchByDate</find>
       <find>id-res</find>
@@ -195,10 +133,15 @@
       <find>history-list</find>
       <find>getDefaultHistoryList</find>
       <find>about histo</find>
-      <find>history</find>
       <find>refreshDataHistory</find>
       <find>about</find>
+      <find>history</find>
+      <find>refreshDataH</find>
+      <find>signa</find>
+      <find>deli</find>
+      <find>reset</find>
       <find>login</find>
+      <find>dashboard</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -214,9 +157,9 @@
         <option value="$PROJECT_DIR$/www/about.html" />
         <option value="$PROJECT_DIR$/www/pages/about-history.html" />
         <option value="$PROJECT_DIR$/www/about-history.html" />
+        <option value="$PROJECT_DIR$/www/assets/js/main.js" />
         <option value="$PROJECT_DIR$/www/index.html" />
         <option value="$PROJECT_DIR$/config.xml" />
-        <option value="$PROJECT_DIR$/www/assets/js/main.js" />
       </list>
     </option>
   </component>
@@ -380,6 +323,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -432,13 +376,12 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="C:/xampp/htdocs/iwash" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
   </component>
@@ -490,12 +433,18 @@
       <workItem from="1534493058754" duration="4645000" />
       <workItem from="1534900401995" duration="601000" />
       <workItem from="1534919824733" duration="15493000" />
-      <workItem from="1534995719666" duration="15429000" />
+      <workItem from="1534995719666" duration="15431000" />
+      <workItem from="1535020757891" duration="3145000" />
+      <workItem from="1535078901200" duration="55000" />
+      <workItem from="1535081262121" duration="1371000" />
+      <workItem from="1535439989546" duration="1501000" />
+      <workItem from="1535450426727" duration="1398000" />
+      <workItem from="1535506784794" duration="594000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="139237000" />
+    <option name="totallyTimeSpent" value="147303000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="848" extended-state="6" />
@@ -505,8 +454,8 @@
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" weight="0.3292517" />
       <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="7" />
-      <window_info anchor="bottom" id="Run" order="2" />
       <window_info id="npm" order="2" side_tool="true" />
+      <window_info anchor="bottom" id="Run" order="2" />
       <window_info anchor="bottom" id="Terminal" order="7" />
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.22005208" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
@@ -550,6 +499,11 @@
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <option name="time" value="1" />
+    </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/www/index.html">
@@ -844,51 +798,47 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/res/icon/android/icon-36-ldpi.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/screen/android/screen-hdpi-landscape.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/about-history.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="731">
+          <caret line="43" column="18" selection-start-line="43" selection-start-column="18" selection-end-line="43" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/www/about.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="143">
-          <caret line="9" column="23" selection-start-line="6" selection-start-column="12" selection-end-line="9" selection-end-column="23" />
+        <state relative-caret-position="1292">
+          <caret line="76" column="72" selection-start-line="76" selection-start-column="11" selection-end-line="76" selection-end-column="72" />
           <folding>
             <element signature="n#style#0;n#div#6;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/res/icon/android/icon-36-ldpi.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/www/about-history.html">
+    <entry file="file://$PROJECT_DIR$/www/assets/js/main.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="969">
-          <caret line="84" column="16" selection-start-line="78" selection-start-column="11" selection-end-line="84" selection-end-column="16" />
+        <state relative-caret-position="15011">
+          <caret line="883" column="49" selection-start-line="883" selection-start-column="40" selection-end-line="883" selection-end-column="49" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/www/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="211">
-          <caret line="44" column="25" selection-start-line="44" selection-start-column="20" selection-end-line="44" selection-end-column="25" />
+        <state relative-caret-position="1173">
+          <caret line="69" column="119" selection-start-line="69" selection-start-column="119" selection-end-line="69" selection-end-column="119" />
         </state>
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/res/screen/android/screen-hdpi-landscape.png">
-      <provider selected="true" editor-type-id="images" />
     </entry>
     <entry file="file://$PROJECT_DIR$/config.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="354">
-          <caret line="24" column="53" selection-start-line="24" selection-start-column="53" selection-end-line="24" selection-end-column="53" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/www/assets/js/main.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="152">
-          <caret line="901" column="29" selection-start-line="901" selection-start-column="29" selection-end-line="901" selection-end-column="29" />
-          <folding>
-            <element signature="e#16870#18624#0" />
-            <element signature="e#18670#20157#0" />
-          </folding>
+        <state relative-caret-position="466">
+          <caret line="32" column="71" selection-start-line="32" selection-start-column="71" selection-end-line="32" selection-end-column="71" />
         </state>
       </provider>
     </entry>
