@@ -7,46 +7,14 @@
   <meta name = "apple-mobile-web-app-capable" content = "yes" />
   <meta name = "apple-mobile-web-app-status-bar-style" content = "black" />
   <meta name="token" content="">
+  <meta name="user_group" content="">
   <title>Iwash</title>
   <!-- REFERENCE CSS-->
   <link rel="stylesheet" href="assets/css/framework7.material.min.css">
   <link rel="stylesheet" href="assets/css/framework7.material.colors.min.css">
   <link rel="stylesheet" href="assets/css/my-app.css">
   <link href="assets/css/jquery.signaturepad.css" rel="stylesheet">
-  <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
-  <script type="text/javascript" charset="utf-8">
 
-      // Wait for device API libraries to load
-      //
-      function onLoad() {
-          document.addEventListener("deviceready", onDeviceReady, false);
-          //alert("deviceready");
-          //exitAppPopup();
-      }
-
-      // device APIs are available
-      //
-      function onDeviceReady() {
-          // Register the event listener
-          document.addEventListener("backbutton", onBackKeyDown, false);
-         // alert("back press");
-      }
-
-      // Handle the back button
-      //
-      function onBackKeyDown() {
-          alert("back on back key");
-          navigator.app.back();
-      }
-      function exitFromApp()
-      {
-          navigator.app.exitApp();
-          //window.close();
-
-      }
-
-
-  </script>
 </head>
 
 <body onload="onLoad()">
@@ -90,7 +58,7 @@
                     <div class = "item-inner">
                       <div class = "item-title label">Username</div>
                       <div class = "item-input">
-                        <input type = "text" name = "username" placeholder = "Enter the username" value="admin">
+                        <input type = "text" name = "username" placeholder = "Enter the username" value="cashier">
                       </div>
                     </div>
                   </li>
@@ -99,7 +67,7 @@
                     <div class = "item-inner">
                       <div class = "item-title label">Password</div>
                       <div class = "item-input">
-                        <input type = "password" name = "password" placeholder = "Enter the password" value="admin123">
+                        <input type = "password" name = "password" placeholder = "Enter the password" value="cashier123">
                       </div>
                     </div>
                   </li>
@@ -151,7 +119,7 @@
       <div class="popover-inner">
         <div class="list-block">
           <ul>
-            <li><a href="#" class="list-button item-link" onclick="exitFromApp()">Logout</a></li>
+            <li><a href="#" class="list-button item-link" id="id-history">History</a></li>
           </ul>
         </div>
       </div>
@@ -177,14 +145,21 @@
       <div class = "pages">
         <div data-page = "home" class = "page navbar-fixed">
 
-          <div data-page="home" class="page">
-            <div data-page="home" class="page">
+
+
+
               <!-- Search Bar -->
               <form data-search-list=".list-block-search" data-search-in=".item-title" class="searchbar searchbar-init">
                 <div class="searchbar-input">
                   <input type="search" placeholder="Search"><a href="#" class="searchbar-clear"></a>
                 </div><a href="#" class="searchbar-cancel">Cancel</a>
+
               </form>
+
+
+
+
+
 
               <!-- Search Bar overlay -->
               <div class="searchbar-overlay"></div>
@@ -208,6 +183,17 @@
                 <!--</div>-->
                 <div class="list-block list-block-search searchbar-found cards-list media-list">
 
+                  <p class="buttons-row">
+                    <input type="text" placeholder="Date from" readonly id="calendar-from">
+                    <input type="text" placeholder="Date to" readonly id="calendar-to">
+                    <a href="#" class="button button-fill button-raised" id="id-reset">RESET</a>
+                  </p>
+
+
+
+                  <!--<p><a href="#" data-popup=".popup-about" class="open-popup">Filter </a></p>-->
+
+
                   <!--<ul>-->
                     <!--<li class="item-content">-->
                       <!--<div class="item-inner">-->
@@ -227,6 +213,9 @@
 
 
 
+
+
+
             <!--<div class="page-content pull-to-refresh-content">-->
               <!--<div class="pull-to-refresh-layer">-->
                 <!--<div class="preloader"></div>-->
@@ -242,18 +231,137 @@
 
           </div>
 
-
         </div>
       </div>
     </div>
   </div>
 
+  </div>
+</script>
 
+<!--This is a home page-->
+<script type="text/template" id="id-history-list">
+  <div class = "views">
+    <div class = "view view-main">
+      <div class = "pages">
+        <div data-page = "history-list" class = "page navbar-fixed">
+
+
+
+
+          <!-- Search Bar -->
+          <form data-search-list=".list-block-search" data-search-in=".item-title" class="searchbar searchbar-init">
+            <div class="searchbar-input">
+              <input type="search" placeholder="Search"><a href="#" class="searchbar-clear"></a>
+            </div><a href="#" class="searchbar-cancel">Cancel</a>
+
+          </form>
+
+
+
+
+
+
+          <!-- Search Bar overlay -->
+          <div class="searchbar-overlay"></div>
+
+          <div class="page-content pull-to-refresh-content">
+            <br>
+            <div class="pull-to-refresh-layer">
+              <div class="preloader"></div>
+              <!--<div class="pull-to-refresh-arrow"></div>-->
+              <!-- This block will be displayed if nothing found -->
+              <div class="content-block searchbar-not-found">
+                <div class="content-block-inner">Nothing found</div>
+              </div>
+
+              <!-- This block will be displayed if anything found, and this list block is used a searbar target -->
+
+              <!--<div class="page-content pull-to-refresh-content">-->
+              <!--<div class="pull-to-refresh-layer">-->
+              <!--<div class="preloader"></div>-->
+              <!--<div class="pull-to-refresh-arrow"></div>-->
+              <!--</div>-->
+              <div class="list-block list-block-search searchbar-found cards-list media-list">
+
+                <div class="content-block-title">History List</div>
+
+                <p class="buttons-row">
+                  <input type="text" placeholder="Date from" readonly id="history-calendar-from">
+                  <input type="text" placeholder="Date to" readonly id="history-calendar-to">
+                  <a href="#" class="button button-fill button-raised" id="history-id-reset">RESET</a>
+                </p>
+
+
+
+
+
+                <!--<p><a href="#" data-popup=".popup-about" class="open-popup">Filter </a></p>-->
+
+
+                <!--<ul>-->
+                <!--<li class="item-content">-->
+                <!--<div class="item-inner">-->
+                <!--<div class="item-title">Acura </div>-->
+                <!--</div>-->
+                <!--</li>-->
+                <!--<li class="item-content">-->
+                <!--<div class="item-inner">-->
+                <!--<div class="item-title">Audi</div>-->
+                <!--</div>-->
+                <!--</li>-->
+
+                <!--</ul>-->
+              </div>
+              <p class="buttons-row">
+
+                <a href="#" class="button button-fill button-raised back link">
+                  <span>Back</span>
+                </a>
+
+              </p>
+            </div>
+          </div>
+
+
+
+
+
+
+          <!--<div class="page-content pull-to-refresh-content">-->
+          <!--<div class="pull-to-refresh-layer">-->
+          <!--<div class="preloader"></div>-->
+          <!--<div class="pull-to-refresh-arrow"></div>-->
+          <!--</div>-->
+          <!--<div class="list-block media-list">-->
+
+
+          <!--</div>-->
+          <!--</div>-->
+
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+  </div>
+
+  </div>
 </script>
 <script type="text/javascript" src="assets/js/framework7.min.js"></script>
 <script type="text/javascript" src="assets/js/main.js"></script>
 <script src="assets/js/signature_pad.umd.js"></script>
+<script type="text/javascript" charset="utf-8" src="cordova.js"></script>
 <script src="assets/js/app.js"></script>
+
+
+<script type="text/javascript" charset="utf-8">
+
+
+
+
+</script>
 
 </body>
 
