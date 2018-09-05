@@ -3,6 +3,7 @@
 var myApp = new Framework7({
     modalTitle: "Iwash",
     material: true,
+    dynamicNavbar: true,
     onAjaxStart: function(xhr){
         myApp.showIndicator();
     },
@@ -15,6 +16,7 @@ var myApp = new Framework7({
 var $$ = Dom7;
 
 var base_url = 'http://192.168.1.224/iwash';
+
 //var  base_url = "http://192.168.1.44/iwash/";
 
 
@@ -41,11 +43,14 @@ $$(document).on('pageInit', function (e) {
     var page = e.detail.page;
 
     if (page.name === 'home') {
+
         // Following code will be executed for page with data-page attribute equal to "about"
         //myApp.alert('Here comes About page');
         //console.log("home page");
 
         var token= $$('meta[name="token"]').attr("content");
+
+        var groupName= $$('meta[name="user_group"]').attr("content");
         //console.log("this is a token",token);
        console.log("this is home");
        var from_date = "";
@@ -202,7 +207,124 @@ $$(document).on('pageInit', function (e) {
 
         });
 
+        if(groupName === 'Delivery') {
+            $$('#span-persons').hide();
+            $$('#span-order').hide();
+        }
 
+        $$('#id-add-customer').on('click', function(){
+            console.log("add customer");
+            mainView.router.loadContent($$('#id-customer-page').html());
+        });
+        $$('#id-home').on('click', function(){
+            mainView.router.loadContent($$('#dashboard').html());
+
+        });
+        $$('#id-logout').on('click', function(e){
+
+            if(e.handled !== true) // This will prevent event triggering more then once
+            {
+                console.log("logout");
+                myApp.confirm('Are you sure?', function () {
+                    navigator.app.exitApp();
+                });
+                e.handled = true;
+
+            }
+
+        });
+
+
+    }
+
+
+    if(page.name == 'customer-page') {
+        console.log("this is customer page");
+        var ptrContent = $$('.pull-to-refresh-content');
+        getCustomer(ptrContent);
+        // Pull to refresh content
+        //var ptrContent = $$('.pull-to-refresh-content');
+
+        // Add 'refresh' listener on it
+        ptrContent.on('ptr:refresh', function (e) {
+            // Emulate 2s loading
+            setTimeout(function () {
+                customerPullToRefresh(ptrContent);
+                // When loading done, we need to reset it
+                myApp.pullToRefreshDone();
+            }, 2000);
+        });
+
+        // got to add customer page
+        $$('#id-floating-add-customer').on('click',function(){
+            //console.log("add customer");
+            mainView.router.loadContent($$('#id-add-customer-page').html())
+
+        })
+
+
+    }
+    if(page.name == 'customer-page-add') {
+        // Append option
+        //myApp.smartSelectAddOption('.smart-select select', '<option value="jade">jade</option>');
+        // Add new option as first selected option
+        // Append option
+        //get province
+        var provinceID = "";
+        var default_province = getProvince();
+
+        console.log("get first value province");
+        console.log(default_province);
+        //myApp.smartSelectAddOption('#id-smart-select-province select', '<option value="jade">hey</option>');
+
+        //first cover smart-select picker, second cover full view
+        $$('#form_entry_province').on('change', function() {
+            //console.log('Form entry item was changed was changed!');
+
+            //detect if picker is closed after a selection is made for additional actions:
+            $$('.picker-modal').on('close', function() {
+                //console.log('Picker closed after selecting an item!');
+                //additional actions here
+                //var cars = [];
+                 $$('select[name="provinceID"] option:checked').each(function () {
+                     //get province and set select cities and barangay to zero
+                     console.log("get province clear cities");
+                    // $$('select[name="city"] option:checked').remove();
+                     //$$('select[name="barangay"] option:checked').remove();
+                     provinceID = this.value;
+
+                     getCities(provinceID);
+                     //myApp.smartSelectAddOption('#id-smart-select-city select', '<option value="jade">fuck</option>');
+                 });
+            });
+        });
+
+        //cities picker
+        $$('#form_entry_city').on('change', function(){
+            $$('.picker-modal').on('close', function(){
+                $$('select[name="cityID"] option:checked').each(function(){
+                    // console.log("province id",provinceID);
+                    // console.log("city id", this.value);
+                    // console.log("you change city close me");
+                    getBarangay(provinceID, this.value);
+                });
+
+            });
+        });
+
+        $$('#id-create-customer').on('click', function(){
+            console.log("you click");
+            var formData = myApp.formToData('#my-form');
+            //alert(JSON.stringify(formData));
+            //var data = JSON.stringify(formData);
+            //console.log(data);
+            addCustomer(formData);
+
+
+        });
+
+
+        //myApp.smartSelectAddOption('#id-smart-select-city select', '<option value="jade">jade</option>');
     }
     if(page.name == 'about') {
         console.log("this is about");
@@ -632,6 +754,7 @@ $$(document).on('pageInit', function (e) {
 
 
     }
+
 });
 
 function update_order_details(id, signature)
@@ -695,8 +818,8 @@ $$('#login').on('click', function(){
             //console.log(data.data.token);
             //app.addView('.view-main');
 
-
             $$('meta[name="token"]').attr("content", data.data.token);
+            $$('meta[name="user_group"]').attr("content", data.data.groupName);
             //var meta = $$('meta[name="token"]').attr("content");
             //console.log(meta);
 
@@ -724,50 +847,6 @@ $$('#login').on('click', function(){
 
 
 
-});
-
-$$('.form-to-data').on('click', function(){
-    var formData = myApp.formToData('#my-form');
-    var username = formData.username;
-    var password = formData.password;
-    var data = {"username": username, "password": password };
-    //console.log("meta data");
-    //var meta = $$('meta[name="token"]').attr("content");
-    //console.log(meta);
-    //alert(data);
-
-
-
-     $$.ajax({
-        type: "POST",
-        dataType: "json",
-        url: base_url+"/iwash/api/login",
-        data: data,
-        success: function (data) {
-
-            $$('meta[name="token"]').attr("content", data.data.token);
-            mainView.router.loadContent($$('#dashboard').html());
-
-        },
-        error: function (error) {
-             //console.log(error);
-             var response_message = "";
-             var message = JSON.parse(error.responseText);
-            //console.log(message);
-           // if(typeof message.error.username !== undefined) {
-          if (typeof(message.error) != "undefined"){
-                 var username_error = (message.error.username) ? message.error.username : "";
-                   var password_error = (message.error.password) ? message.error.password : "";
-                   response_message = username_error +" "+ password_error;
-            }
-            else {
-                 response_message = message.message;
-            }
-             myApp.alert(response_message, "Iwash", function () {
-                //app.closeModal('.login-screen');
-             });
-        }
-    });
 });
 
 
@@ -1146,16 +1225,202 @@ function getDefaultHistoryList(page, token, url)
     });
 }
 
+function customerPullToRefresh(ptrContent)
+{
 
-$$(document).on('pageBeforeInit', function (e) {
-    console.log("this is before init");
-    var page = e.detail.page;
+    // Dummy Content
+    var songs = ['Yellow Submarine', 'Don\'t Stop Me Now', 'Billie Jean', 'Californication'];
+    var authors = ['Beatles', 'Queen', 'Michael Jackson', 'Red Hot Chili Peppers'];
+    // Random image
+    var picURL = 'http://localhost/iwash/assets/img/users/noimage.gif';
+    // Random song
+    var song = songs[Math.floor(Math.random() * songs.length)];
+    // Random author
+    var author = authors[Math.floor(Math.random() * authors.length)];
+    // List item html
+    var itemHTML = '<li class="item-content">' +
+        '<div class="item-media"><img src="' + picURL + '" width="44"/></div>' +
+        '<div class="item-inner">' +
+        '<div class="item-title-row">' +
+        '<div class="item-title">' + song + '</div>' +
+        '</div>' +
+        '<div class="item-subtitle">' + author + '</div>' +
+        '</div>' +
+        '</li>';
+    // Prepend new list element
+    ptrContent.find('ul').prepend(itemHTML);
+}
 
-    if (page.name === 'about') {
-        console.log("this is before init of about");
+function getCustomer(ptrContent)
+{
+    var token= $$('meta[name="token"]').attr("content");
 
-    }
-});
+    var url = base_url+"/api/customer";
+    $$.ajax({
+        type: "GET",
+        dataType: "json",
+        //url: 'http://192.168.1.224/iwash/api/customer',
+        url: url,
+        headers: {
+            'Authorization': token,
+        },
+        success: function (data) {
+            //console.log("this is data");
+            //console.log(data.data);
+            //data = $$.parseJSON(data);
+            $$.each(data.data, function(k, v) {
+                // console.log("append me");
+                // console.log(k);
+                // console.log(v);
+                // Dummy Content
+                //var songs = v.fname ;
+                //var authors = ['Beatles', 'Queen', 'Michael Jackson', 'Red Hot Chili Peppers'];
+                // Random image
+                var picURL = 'http://192.168.1.224/iwash/assets/img/users/noimage.gif';
+                // Random song
+                var song = v.fname+" "+v.mname+" "+v.lname;
+                // Random author
+                var author = v.title;
+                var itemHTML = '<li class="item-content">' +
+                    '<div class="item-media"><img src="' + picURL + '" width="44"/></div>' +
+                    '<div class="item-inner">' +
+                    '<div class="item-title-row">' +
+                    '<div class="item-title">' + song + '</div>' +
+                    '</div>' +
+                    '<div class="item-subtitle">' + author + '</div>' +
+                    '</div>' +
+                    '</li>';
+                // Prepend new list element
+                ptrContent.find('ul').prepend(itemHTML);
+            });
+
+           // $$(page.container).find('.page-content').find('.list-block').find('ul').append(itemHTML);
+
+        }
+    });
+}
+
+function getProvince()
+{
+
+
+    var default_province_id = 0;
+    var token= $$('meta[name="token"]').attr("content");
+
+    var url = base_url+"/api/province";
+    $$.ajax({
+        type: "GET",
+        dataType: "json",
+        //url: 'http://192.168.1.224/iwash/api/customer',
+        url: url,
+        headers: {
+            'Authorization': token,
+        },
+        success: function (data) {
+            //console.log("province this is data");
+           // console.log(data.data);
+            //data = $$.parseJSON(data);
+            //console.log(data.data[0].provinceID);
+            default_province_id = data.data[0].provinceID;
+            console.log(default_province_id);
+            //console.log(default_province_id);
+            $$.each(data.data, function(k, v) {
+                 //console.log("each");
+                 //console.log(k);
+                 //console.log(v.province);
+                myApp.smartSelectAddOption('#id-smart-select-province select', '<option value="'+v.provinceID+'">'+v.province+'</option>');
+                // Dummy Content
+            });
+
+            return default_province_id;
+        }
+    });
+
+
+
+    //return default_province_id;
+}
+
+function getCities(provinceID)
+{
+
+    var token= $$('meta[name="token"]').attr("content");
+
+    var url = base_url+"/api/cities/"+provinceID;
+    $$.ajax({
+        type: "GET",
+        dataType: "json",
+        url: url,
+        headers: {
+            'Authorization': token,
+        },
+        success: function (data) {
+
+            $$.each(data.data, function(k, v) {
+                myApp.smartSelectAddOption('#id-smart-select-city select', '<option value="'+v.cityID+'">'+v.city+'</option>');
+            });
+        }
+    });
+}
+
+function getBarangay(provinceID, cityID)
+{
+    console.log("provinceID",provinceID);
+    console.log("city id",cityID);
+    //http://localhost/iwash/api/barangays/54:602
+
+    var token= $$('meta[name="token"]').attr("content");
+
+    var url = base_url+"/api/barangays/"+provinceID+":"+cityID;
+    $$.ajax({
+        type: "GET",
+        dataType: "json",
+        url: url,
+        headers: {
+            'Authorization': token,
+        },
+        success: function (data) {
+            $$.each(data.data, function(k, v) {
+                //myApp.smartSelectAddOption('#id-smart-select-city select', '<option value="'+v.cityID+'">'+v.city+'</option>');
+                myApp.smartSelectAddOption('#id-smart-select-barangay select', '<option value="'+v.barangayID+'">'+v.barangay+'</option>');
+            });
+        }
+    });
+
+    //myApp.smartSelectAddOption('#id-smart-select-barangay select', '<option value="23">fdsafda</option>');
+}
+
+//function addCustomer(suffix, title, first_name, middle_name, last_name, province_id, city_id, barangay_id, address, contact, bday, resgular)
+function addCustomer(data)
+{
+    //var data = { title: title, fname: first_name, mname: middle_name, lname: last_name, suffix, suffix, provinceID: province_id, cityID: city_id, barangayID: barangay_id, address: address, contact: contact, bday: bday, isRegular: resgular };
+    var token= $$('meta[name="token"]').attr("content");
+
+    var url = base_url+"/api/customer";
+
+    myApp.showPreloader('Saving to server.')
+    setTimeout(function () {
+        myApp.hidePreloader();
+    }, 2000);
+
+    $$.ajax({
+        type: "POST",
+        dataType: "json",
+        url: url,
+        headers: {
+            'Authorization': token,
+        },
+        data: data,
+        success: function (data) {
+            console.log(data);
+        },
+        error: function(xhr){
+            console.log("error creating customer");
+            console.log(xhr.responseText);
+            myApp.alert(xhr.responseText, 'Custom Title!');
+        }
+    });
+}
 
 
 
