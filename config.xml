@@ -22,7 +22,7 @@
         <allow-intent href="itms:*" />
         <allow-intent href="itms-apps:*" />
     </platform>
-    <preference name="SplashScreenDelay" value="5000" />
+    <preference name="SplashScreenDelay" value="1000" />
     <preference name="SplashMaintainAspectRatio" value="true|false" />
     <preference name="SplashShowOnlyFirstTime" value="true|false" />
     <preference name="SplashScreenSpinnerColor" value="white" />
