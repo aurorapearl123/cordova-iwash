@@ -12,6 +12,8 @@ var myApp = new Framework7({
     }
 });
 
+var options = {};
+
 // We need to use custom DOM library, let's save it to $$ variable:
 var $$ = Dom7;
 
@@ -316,11 +318,10 @@ $$(document).on('pageInit', function (e) {
             console.log("you click");
             var formData = myApp.formToData('#my-form');
             //alert(JSON.stringify(formData));
-            //var data = JSON.stringify(formData);
+           //var data = JSON.stringify(formData);
             //console.log(data);
+
             addCustomer(formData);
-
-
         });
 
 
@@ -752,6 +753,59 @@ $$(document).on('pageInit', function (e) {
             }
         });
 
+
+    }
+
+    if(page.name == "customer-detail") {
+        var id = page.query.id;
+        customer_details(id, page);
+    }
+    if(page.name == 'customer-edit-page') {
+        console.log("customer edit page");
+        var id = page.query.id;
+        var token= $$('meta[name="token"]').attr("content");
+        var url = base_url+"/api/customer-details/"+id;
+        var customer_data = [];
+        $$.ajax({
+            type: "GET",
+            dataType: "json",
+            //url: 'http://192.168.1.224/iwash/api/customer',
+            url: url,
+            headers: {
+                'Authorization': token,
+            },
+            success: function (data) {
+                //console.log(data.data);
+                var formData = {};
+                $$.each(data.data, function(k,v){
+                    var isRegular = (v.isRegular == "N") ? "no" : "yes";
+                    formData = {
+                        'fname' : v.fname,
+                        'mname' : v.mname,
+                        'lname' : v.lname,
+                        'gender': v.gender,
+                        'suffix' : v.suffix,
+                        'title' : v.title,
+                        'contact' : v.contact,
+                        'address' : v.address,
+                        'bday' : v.bday,
+                        'isRegular' : ['yes'],
+                        'switch': ['yes'],
+                    }
+                });
+                console.log("this is data this");
+                console.log(formData);
+                myApp.formFromData('#customer-edit-form', formData);
+            }
+        });
+
+        // var formData = {
+        //     'name': 'John',
+        //     'email': 'john@doe.com',
+        //     'gender': 'female',
+        //     'switch': ['yes'],
+        //     'slider': 10
+        // }
 
     }
 
@@ -1281,7 +1335,8 @@ function getCustomer(ptrContent)
                 var song = v.fname+" "+v.mname+" "+v.lname;
                 // Random author
                 var author = v.title;
-                var itemHTML = '<li class="item-content">' +
+                var itemHTML = '<a href="customer-detail.html?id='+v.custID+'" class="item-link">'+
+                    '<li class="item-content">' +
                     '<div class="item-media"><img src="' + picURL + '" width="44"/></div>' +
                     '<div class="item-inner">' +
                     '<div class="item-title-row">' +
@@ -1289,11 +1344,14 @@ function getCustomer(ptrContent)
                     '</div>' +
                     '<div class="item-subtitle">' + author + '</div>' +
                     '</div>' +
-                    '</li>';
+                    '</li>'+
+                    '</a>';
                 // Prepend new list element
                 ptrContent.find('ul').prepend(itemHTML);
             });
 
+
+            //listHTML += '<a href="about-history.html?id='+ v.order_id +'" class="item-link item-content">';
            // $$(page.container).find('.page-content').find('.list-block').find('ul').append(itemHTML);
 
         }
@@ -1400,25 +1458,113 @@ function addCustomer(data)
 
     myApp.showPreloader('Saving to server.')
     setTimeout(function () {
-        myApp.hidePreloader();
-    }, 2000);
+        $$.ajax({
+            type: "POST",
+            dataType: "json",
+            url: url,
+            headers: {
+                'Authorization': token,
+            },
+            data: data,
+            success: function (data) {
+                myApp.hidePreloader();
+                mainView.router.loadContent($$('#id-customer-page').html());
+            },
+            error: function(xhr){
+                console.log("error creating customer");
+                myApp.hidePreloader();
+                console.log(xhr.responseText);
+                var error = JSON.parse(xhr.responseText);
+                myApp.alert(error.message, 'Error creating customer!');
+            }
+        });
 
+
+    }, 2000);
+}
+
+function customer_details(id, page)
+{
+    var token= $$('meta[name="token"]').attr("content");
+
+    var url = base_url+"/api/customer-details/"+id;
     $$.ajax({
-        type: "POST",
+        type: "GET",
         dataType: "json",
+        //url: 'http://192.168.1.224/iwash/api/customer',
         url: url,
         headers: {
             'Authorization': token,
         },
-        data: data,
         success: function (data) {
-            console.log(data);
-        },
-        error: function(xhr){
-            console.log("error creating customer");
-            console.log(xhr.responseText);
-            myApp.alert(xhr.responseText, 'Custom Title!');
+
+            $$.each(data.data, function(k, v) {
+
+                var picURL = 'http://192.168.1.224/iwash/assets/img/users/noimage.gif';
+                // Random song
+                var customer_name = v.suffix+" "+v.fname+" "+v.mname+" "+v.lname,
+                province_name = v.province_name ? v.province_name : "",
+                barangay_name = v.barangay_name ? v.barangay_name : "",
+                city_name = v.city_name ? v.city_name : "",
+                telephone = v.telephone ? v.telephone : "",
+                contact = v.contact ? v.contact : "",
+                address = v.address ? v.address : "",
+                regular = (v.isRegular == 'Y') ? "YES" : "NO",
+                title = v.title ? v.title : "";
+                // Random author
+                var author = v.title;
+                var itemHTML = '<div class="content-block-title">Customer Details</div>'+
+                                '<div class="card demo-card-header-pic">'+
+                                '<div style="background-image:url(http://192.168.1.224/iwash/assets/img/mobile/person.jpg)" valign="bottom" class="card-header color-white no-border">'+customer_name+'</div>'+
+                                '<div class="card-content">'+
+                                '<div class="card-content-inner">'+
+                                '<p class="color-gray">Birth date: '+v.bday+'</p>'+
+                                '<p>Title : '+title+'</p>'+
+                                '<p>Province : '+province_name+'</p>'+
+                                '<p>Barangay : '+barangay_name+'</p>'+
+                                '<p>City : '+city_name+'</p>'+
+                                '<p>Address : '+address+'</p>'+
+                                '<p>Telephone : '+telephone+'</p>'+
+                                '<p>Contact : '+contact+'</p>'+
+                                '<p>Regular : '+regular+'</p>'+
+                                '</div>'+
+                                '</div>'+
+                                '<div class="card-footer">'+
+                                '<a href="customer-edit.html?id='+v.custID+'" class="link"><i class="icon f7-icons">settings</i></a>'+
+                                '<a href="javascript:delete_customer('+v.custID+');" class="link" id="id-delete"><i class="icon f7-icons">trash</i></a>'+
+                                '</div>'+
+                                '</div>';
+                $$(page.container).find('.page-content').find('.list-block').append(itemHTML);
+
+            });
+
         }
+    });
+}
+
+function delete_customer(id){
+    myApp.confirm('Are you sure?', function () {
+        console.log("delete customer", id);
+        var token= $$('meta[name="token"]').attr("content");
+
+        var url = base_url+"/api/customer-delete/"+id;
+        $$.ajax({
+            type: "DELETE",
+            //url: 'http://192.168.1.224/iwash/api/customer',
+            url: url,
+            headers: {
+                'Authorization': token,
+            },
+            success: function (data) {
+                console.log(data);
+
+                mainView.router.loadContent($$('#id-customer-page').html());
+            },
+            error: function(xhr) {
+                console.log("error delete");
+                console.log(xhr);
+            }
+        });
     });
 }
 
