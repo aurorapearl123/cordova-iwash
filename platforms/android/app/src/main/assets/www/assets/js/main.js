@@ -19,9 +19,9 @@ var $$ = Dom7;
 
 //var base_url = 'http://192.168.84.2/iwash';
 
-var  base_url = "http://192.168.1.44/iwash/";
+//var  base_url = "http://192.168.1.44/iwash/";
 
-//var  base_url = "http://192.168.1.224/iwash/";
+var  base_url = "http://192.168.1.224/iwash/";
 
 
 
