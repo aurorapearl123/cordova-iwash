@@ -17,9 +17,11 @@ var options = {};
 // We need to use custom DOM library, let's save it to $$ variable:
 var $$ = Dom7;
 
-var base_url = 'http://192.168.1.224/iwash';
+//var base_url = 'http://192.168.84.2/iwash';
 
-//var  base_url = "http://192.168.1.44/iwash/";
+var  base_url = "http://192.168.1.44/iwash/";
+
+//var  base_url = "http://192.168.1.224/iwash/";
 
 
 
@@ -324,6 +326,67 @@ $$(document).on('pageInit', function (e) {
             addCustomer(formData);
         });
 
+        $$('#profile-image').on('click', function(){
+            console.log("image picture");
+            myApp.modal({
+                title:  'Profile image',
+                text: 'Select camera or album',
+                buttons: [
+                    {
+                        text: 'CAMERA',
+                        onClick: function() {
+                            getImageFromCamera();
+                        }
+                    },
+                    {
+                        text: 'ALBUM',
+                        onClick: function() {
+                           getImageFromAlbum();
+                        }
+                    },
+                ]
+            });
+        });
+
+        //get image from camera
+        function getImageFromCamera() {
+            navigator.camera.getPicture(onSuccess, onFail, { quality: 25,
+                destinationType: Camera.DestinationType.DATA_URL,
+                targetWidth: 512,
+                targetHeight: 512,
+                //destinationType: Camera.PictureSourceType.PHOTOLIBRARY
+            });
+
+            function onSuccess(imageData) {
+                var image = document.getElementById('my-profile');
+                image.src = "data:image/jpeg;base64," + imageData;
+                $$("#profile-value").val("data:image/jpeg;base64," + imageData);
+            }
+
+            function onFail(message) {
+                alert('Failed because: ' + message);
+            }
+        }
+        //get image from album
+        function getImageFromAlbum() {
+            navigator.camera.getPicture(onSuccess, onFailure, {
+                destinationType: navigator.camera.DestinationType.DATA_URL,
+                sourceType: navigator.camera.PictureSourceType.PHOTOLIBRARY,
+                targetWidth: 512,
+                targetHeight: 512,
+            });
+        }
+
+        function onSuccess(imageURI) {
+            var image = document.getElementById('my-profile');
+            image.src = "data:image/jpeg;base64,"+imageURI;
+            $$("#profile-value").val("data:image/jpeg;base64,"+imageURI);
+
+        }
+
+        function onFailure(message) {
+            alert("Get image failed: " + message);
+        }
 
         //myApp.smartSelectAddOption('#id-smart-select-city select', '<option value="jade">jade</option>');
     }
@@ -766,6 +829,7 @@ $$(document).on('pageInit', function (e) {
         var token= $$('meta[name="token"]').attr("content");
         var url = base_url+"/api/customer-details/"+id;
         var customer_data = [];
+        var profile = "";
         $$.ajax({
             type: "GET",
             dataType: "json",
@@ -779,6 +843,7 @@ $$(document).on('pageInit', function (e) {
                 var formData = {};
                 $$.each(data.data, function(k,v){
                     var isRegular = (v.isRegular == "N") ? "no" : "yes";
+                    profile = v.profile;
                     formData = {
                         'fname' : v.fname,
                         'mname' : v.mname,
@@ -793,6 +858,13 @@ $$(document).on('pageInit', function (e) {
                         'switch': ['yes'],
                     }
                 });
+
+                var image = document.getElementById('my-profile');
+                image.src = profile;
+                console.log("this is profile");
+                console.log(profile);
+                //$$("#profile-value").val("data:image/jpeg;base64,"+imageURI);
+
                 console.log("this is data this");
                 console.log(formData);
                 myApp.formFromData('#customer-edit-form', formData);
@@ -1049,6 +1121,8 @@ function onLoad() {
 //
 function onDeviceReady() {
     // Register the event listener
+    console.log("device ready");
+    console.log(navigator.camera);
     document.addEventListener("backbutton", onBackKeyDown, false);
 
 }
@@ -1330,7 +1404,10 @@ function getCustomer(ptrContent)
                 //var songs = v.fname ;
                 //var authors = ['Beatles', 'Queen', 'Michael Jackson', 'Red Hot Chili Peppers'];
                 // Random image
-                var picURL = 'http://192.168.1.224/iwash/assets/img/users/noimage.gif';
+                var defaultImage = 'http://192.168.1.224/iwash/assets/img/users/noimage.gif';
+                //var picURL = v.profile;
+                var picURL = v.profile ? v.profile : defaultImage;
+                //var picURL = v.profile;
                 // Random song
                 var song = v.fname+" "+v.mname+" "+v.lname;
                 // Random author
@@ -1510,10 +1587,12 @@ function customer_details(id, page)
                 contact = v.contact ? v.contact : "",
                 address = v.address ? v.address : "",
                 regular = (v.isRegular == 'Y') ? "YES" : "NO",
+                picURL = v.profile ? v.profile : picURL,
                 title = v.title ? v.title : "";
+
                 // Random author
                 var author = v.title;
-                var itemHTML = '<div class="content-block-title">Customer Details</div>'+
+                var itemHTML = '<div class="content-block-title"><img src="'+picURL+'" style="width:100px;height:100px;"></div>'+
                                 '<div class="card demo-card-header-pic">'+
                                 '<div style="background-image:url(http://192.168.1.224/iwash/assets/img/mobile/person.jpg)" valign="bottom" class="card-header color-white no-border">'+customer_name+'</div>'+
                                 '<div class="card-content">'+
