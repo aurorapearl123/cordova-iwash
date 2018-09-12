@@ -275,7 +275,7 @@ $$(document).on('pageInit', function (e) {
         // Append option
         //get province
         var provinceID = "";
-        var default_province = getProvince();
+        var default_province = getProvince(provinceID);
 
         console.log("get first value province");
         console.log(default_province);
@@ -310,7 +310,7 @@ $$(document).on('pageInit', function (e) {
                     // console.log("province id",provinceID);
                     // console.log("city id", this.value);
                     // console.log("you change city close me");
-                    getBarangay(provinceID, this.value);
+                    getBarangay(provinceID, this.value, "");
                 });
 
             });
@@ -389,6 +389,192 @@ $$(document).on('pageInit', function (e) {
         }
 
         //myApp.smartSelectAddOption('#id-smart-select-city select', '<option value="jade">jade</option>');
+    }
+
+    if(page.name == "customer-detail") {
+        var id = page.query.id;
+        customer_details(id, page);
+    }
+    if(page.name == 'customer-edit-page') {
+        console.log("customer edit page");
+
+        //myApp.showPreloader('Fetching data.');
+        var id = page.query.id;
+        var token= $$('meta[name="token"]').attr("content");
+        var url = base_url+"/api/customer-details/"+id;
+        var customer_data = [];
+        var profile = "";
+        var provinceID = "";
+        var cityID = "";
+        var barangayID = "";
+        $$.ajax({
+            type: "GET",
+            dataType: "json",
+            //url: 'http://192.168.1.224/iwash/api/customer',
+            url: url,
+            headers: {
+                'Authorization': token,
+            },
+            success: function (data) {
+                //console.log(data.data);
+                var formData = {};
+                $$.each(data.data, function(k,v){
+                    var isRegular = (v.isRegular == "N") ? "no" : "yes";
+                    profile = v.profile;
+                    formData = {
+                        'fname' : v.fname,
+                        'mname' : v.mname,
+                        'lname' : v.lname,
+                        'gender': v.gender,
+                        'suffix' : v.suffix,
+                        'title' : v.title,
+                        'contact' : v.contact,
+                        'address' : v.address,
+                        'bday' : v.bday,
+                        'isRegular' : ['yes'],
+                        'switch': ['yes'],
+                    }
+
+                    provinceID = v.provinceID;
+                    cityID = v.cityID;
+                    barangayID = v.barangayID;
+                });
+
+                var image = document.getElementById('my-profile');
+                image.src = profile;
+                $$("#profile-value").val(profile);
+                myApp.formFromData('#customer-edit-form', formData);
+
+                //console.log("province this", provinceID);
+                //first cover smart-select picker, second cover full view
+                //$(document).on('click', '#ready',
+                var default_province = getProvince(provinceID);
+                //get cities
+                getCities(provinceID, cityID);
+                getBarangay(provinceID, cityID, barangayID);
+
+                //console.log("get first value province");
+                //console.log(default_province);
+                //myApp.smartSelectAddOption('#id-smart-select-province select', '<option value="jade">hey</option>');
+
+                //first cover smart-select picker, second cover full view
+                $$('#form_entry_province').on('change', function() {
+                    //console.log('Form entry item was changed was changed!');
+
+                    //detect if picker is closed after a selection is made for additional actions:
+                    $$('.picker-modal').on('close', function() {
+                        //console.log('Picker closed after selecting an item!');
+                        //additional actions here
+                        //var cars = [];
+                        $$('select[name="provinceID"] option:checked').each(function () {
+                            //get province and set select cities and barangay to zero
+                            console.log("get province clear cities");
+                            // $$('select[name="city"] option:checked').remove();
+                            //$$('select[name="barangay"] option:checked').remove();
+                            provinceID = this.value;
+
+                            getCities(provinceID, cityID);
+                            //myApp.smartSelectAddOption('#id-smart-select-city select', '<option value="jade">fuck</option>');
+                        });
+                    });
+                });
+
+                //cities picker
+                $$('#form_entry_city').on('change', function(){
+                    $$('.picker-modal').on('close', function(){
+                        $$('select[name="cityID"] option:checked').each(function(){
+                            // console.log("province id",provinceID);
+                            // console.log("city id", this.value);
+                            // console.log("you change city close me");
+                            getBarangay(provinceID, this.value, "");
+
+                        });
+
+                    });
+                });
+                //myApp.hidePreloader();
+
+                //myApp.smartSelectAddOption('#id-smart-select-province select', '<option value="apple" selected>Apple</option>', 0);
+                //myApp.smartSelectAddOption('#id-smart-select-province select', '<option value="'+v.provinceID+'">'+v.province+'</option>');
+
+            }
+        });
+
+        $$('#profile-image').on('click', function(){
+            myApp.modal({
+                title:  'Profile image',
+                text: 'Select camera or album',
+                buttons: [
+                    {
+                        text: 'CAMERA',
+                        onClick: function() {
+                            getImageFromCamera();
+                        }
+                    },
+                    {
+                        text: 'ALBUM',
+                        onClick: function() {
+                            getImageFromAlbum();
+                        }
+                    },
+                ]
+            });
+        });
+
+        //get image from camera
+        function getImageFromCamera() {
+            navigator.camera.getPicture(onSuccess, onFail, { quality: 25,
+                destinationType: Camera.DestinationType.DATA_URL,
+                targetWidth: 512,
+                targetHeight: 512,
+                //destinationType: Camera.PictureSourceType.PHOTOLIBRARY
+            });
+
+            function onSuccess(imageData) {
+                var image = document.getElementById('my-profile');
+                image.src = "data:image/jpeg;base64," + imageData;
+                $$("#profile-value").val("data:image/jpeg;base64," + imageData);
+            }
+
+            function onFail(message) {
+                alert('Failed because: ' + message);
+            }
+        }
+        //get image from album
+        function getImageFromAlbum() {
+            navigator.camera.getPicture(onSuccess, onFailure, {
+                destinationType: navigator.camera.DestinationType.DATA_URL,
+                sourceType: navigator.camera.PictureSourceType.PHOTOLIBRARY,
+                targetWidth: 512,
+                targetHeight: 512,
+            });
+        }
+
+        function onSuccess(imageURI) {
+            var image = document.getElementById('my-profile');
+            image.src = "data:image/jpeg;base64,"+imageURI;
+            $$("#profile-value").val("data:image/jpeg;base64,"+imageURI);
+
+        }
+
+        function onFailure(message) {
+            alert("Get image failed: " + message);
+        }
+
+        $$('#id-edit-customer').on('click', function(){
+            //alert("hello");
+
+            var formData = myApp.formToData('#customer-edit-form');
+            //alert(JSON.stringify(formData));
+            //var data = JSON.stringify(formData);
+            //console.log(data);
+            updateCustomer(formData, id);
+        });
+
+
+
+
+
     }
     if(page.name == 'about') {
         console.log("this is about");
@@ -819,67 +1005,6 @@ $$(document).on('pageInit', function (e) {
 
     }
 
-    if(page.name == "customer-detail") {
-        var id = page.query.id;
-        customer_details(id, page);
-    }
-    if(page.name == 'customer-edit-page') {
-        console.log("customer edit page");
-        var id = page.query.id;
-        var token= $$('meta[name="token"]').attr("content");
-        var url = base_url+"/api/customer-details/"+id;
-        var customer_data = [];
-        var profile = "";
-        $$.ajax({
-            type: "GET",
-            dataType: "json",
-            //url: 'http://192.168.1.224/iwash/api/customer',
-            url: url,
-            headers: {
-                'Authorization': token,
-            },
-            success: function (data) {
-                //console.log(data.data);
-                var formData = {};
-                $$.each(data.data, function(k,v){
-                    var isRegular = (v.isRegular == "N") ? "no" : "yes";
-                    profile = v.profile;
-                    formData = {
-                        'fname' : v.fname,
-                        'mname' : v.mname,
-                        'lname' : v.lname,
-                        'gender': v.gender,
-                        'suffix' : v.suffix,
-                        'title' : v.title,
-                        'contact' : v.contact,
-                        'address' : v.address,
-                        'bday' : v.bday,
-                        'isRegular' : ['yes'],
-                        'switch': ['yes'],
-                    }
-                });
-
-                var image = document.getElementById('my-profile');
-                image.src = profile;
-                console.log("this is profile");
-                console.log(profile);
-                //$$("#profile-value").val("data:image/jpeg;base64,"+imageURI);
-
-                console.log("this is data this");
-                console.log(formData);
-                myApp.formFromData('#customer-edit-form', formData);
-            }
-        });
-
-        // var formData = {
-        //     'name': 'John',
-        //     'email': 'john@doe.com',
-        //     'gender': 'female',
-        //     'switch': ['yes'],
-        //     'slider': 10
-        // }
-
-    }
 
 });
 
@@ -1435,9 +1560,12 @@ function getCustomer(ptrContent)
     });
 }
 
-function getProvince()
+function getProvince(provinceID)
 {
 
+
+    console.log("THIS IS PROVINCE ID");
+    console.log(provinceID);
 
     var default_province_id = 0;
     var token= $$('meta[name="token"]').attr("content");
@@ -1463,7 +1591,13 @@ function getProvince()
                  //console.log("each");
                  //console.log(k);
                  //console.log(v.province);
-                myApp.smartSelectAddOption('#id-smart-select-province select', '<option value="'+v.provinceID+'">'+v.province+'</option>');
+                if(provinceID == v.provinceID) {
+                    myApp.smartSelectAddOption('#id-smart-select-province select', '<option value="' + v.provinceID + '" selected>' + v.province + '</option>');
+                }
+                else {
+                    myApp.smartSelectAddOption('#id-smart-select-province select', '<option value="' + v.provinceID + '">' + v.province + '</option>');
+                }
+                //myApp.smartSelectAddOption('#id-smart-select-province select', '<option value="apple" selected>Apple</option>');
                 // Dummy Content
             });
 
@@ -1476,7 +1610,7 @@ function getProvince()
     //return default_province_id;
 }
 
-function getCities(provinceID)
+function getCities(provinceID, cityID)
 {
 
     var token= $$('meta[name="token"]').attr("content");
@@ -1492,13 +1626,18 @@ function getCities(provinceID)
         success: function (data) {
 
             $$.each(data.data, function(k, v) {
-                myApp.smartSelectAddOption('#id-smart-select-city select', '<option value="'+v.cityID+'">'+v.city+'</option>');
+                if(cityID == v.cityID) {
+                    myApp.smartSelectAddOption('#id-smart-select-city select', '<option value="' + v.cityID + '" selected>' + v.city + '</option>');
+                }
+                else {
+                    myApp.smartSelectAddOption('#id-smart-select-city select', '<option value="' + v.cityID + '">' + v.city + '</option>');
+                }
             });
         }
     });
 }
 
-function getBarangay(provinceID, cityID)
+function getBarangay(provinceID, cityID, barangayID)
 {
     console.log("provinceID",provinceID);
     console.log("city id",cityID);
@@ -1517,7 +1656,12 @@ function getBarangay(provinceID, cityID)
         success: function (data) {
             $$.each(data.data, function(k, v) {
                 //myApp.smartSelectAddOption('#id-smart-select-city select', '<option value="'+v.cityID+'">'+v.city+'</option>');
-                myApp.smartSelectAddOption('#id-smart-select-barangay select', '<option value="'+v.barangayID+'">'+v.barangay+'</option>');
+                if(barangayID == v.barangayID) {
+                    myApp.smartSelectAddOption('#id-smart-select-barangay select', '<option value="' + v.barangayID + '" selected>' + v.barangay + '</option>');
+                }
+                else {
+                    myApp.smartSelectAddOption('#id-smart-select-barangay select', '<option value="' + v.barangayID + '">' + v.barangay + '</option>');
+                }
             });
         }
     });
@@ -1533,7 +1677,7 @@ function addCustomer(data)
 
     var url = base_url+"/api/customer";
 
-    myApp.showPreloader('Saving to server.')
+    myApp.showPreloader('Saving to server.');
     setTimeout(function () {
         $$.ajax({
             type: "POST",
@@ -1634,6 +1778,33 @@ function delete_customer(id){
             headers: {
                 'Authorization': token,
             },
+            success: function (data) {
+                console.log(data);
+
+                mainView.router.loadContent($$('#id-customer-page').html());
+            },
+            error: function(xhr) {
+                console.log("error delete");
+                console.log(xhr);
+            }
+        });
+    });
+}
+
+function updateCustomer(data, id) {
+
+    myApp.confirm('Do you want to update this customer?', function () {
+
+        var token= $$('meta[name="token"]').attr("content");
+
+        var url = base_url+"/api/customer-update/"+id;
+        $$.ajax({
+            type: "PUT",
+            url: url,
+            headers: {
+                'Authorization': token,
+            },
+            data: data,
             success: function (data) {
                 console.log(data);
 
