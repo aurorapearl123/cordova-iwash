@@ -224,6 +224,11 @@ $$(document).on('pageInit', function (e) {
             mainView.router.loadContent($$('#dashboard').html());
 
         });
+
+        $$('#id-add-order').on('click', function(){
+            console.log("add order");
+            mainView.router.loadContent($$('#id-add-order-page').html());
+        });
         $$('#id-logout').on('click', function(e){
 
             if(e.handled !== true) // This will prevent event triggering more then once
@@ -275,7 +280,7 @@ $$(document).on('pageInit', function (e) {
         // Append option
         //get province
         var provinceID = "";
-        var default_province = getProvince();
+        var default_province = getProvince(provinceID);
 
         console.log("get first value province");
         console.log(default_province);
@@ -310,7 +315,7 @@ $$(document).on('pageInit', function (e) {
                     // console.log("province id",provinceID);
                     // console.log("city id", this.value);
                     // console.log("you change city close me");
-                    getBarangay(provinceID, this.value);
+                    getBarangay(provinceID, this.value, "");
                 });
 
             });
@@ -389,6 +394,194 @@ $$(document).on('pageInit', function (e) {
         }
 
         //myApp.smartSelectAddOption('#id-smart-select-city select', '<option value="jade">jade</option>');
+    }
+
+    if(page.name == "customer-detail") {
+        var id = page.query.id;
+        customer_details(id, page);
+    }
+    if(page.name == 'customer-edit-page') {
+        console.log("customer edit page");
+
+        //myApp.showPreloader('Fetching data.');
+        var id = page.query.id;
+        var token= $$('meta[name="token"]').attr("content");
+        var url = base_url+"/api/customer-details/"+id;
+        var customer_data = [];
+        var profile = "";
+        var provinceID = "";
+        var cityID = "";
+        var barangayID = "";
+        $$.ajax({
+            type: "GET",
+            dataType: "json",
+            //url: 'http://192.168.1.224/iwash/api/customer',
+            url: url,
+            headers: {
+                'Authorization': token,
+            },
+            success: function (data) {
+                //console.log(data.data);
+                var formData = {};
+                $$.each(data.data, function(k,v){
+                    var isRegular = (v.isRegular == "N") ? "no" : "yes";
+                    profile = v.profile;
+                    formData = {
+                        'fname' : v.fname,
+                        'mname' : v.mname,
+                        'lname' : v.lname,
+                        'gender': v.gender,
+                        'suffix' : v.suffix,
+                        'title' : v.title,
+                        'contact' : v.contact,
+                        'address' : v.address,
+                        'bday' : v.bday,
+                        'isRegular' : ['yes'],
+                        'switch': ['yes'],
+                    }
+
+                    provinceID = v.provinceID;
+                    cityID = v.cityID;
+                    barangayID = v.barangayID;
+                });
+                var defaultImage = base_url+'/assets/img/users/noimage.gif';
+                //var picURL = v.profile;
+                var picURL = profile ? profile : defaultImage;
+                var image = document.getElementById('my-profile');
+                image.src = picURL;
+                $$("#profile-value").val(picURL);
+                myApp.formFromData('#customer-edit-form', formData);
+
+                //console.log("province this", provinceID);
+                //first cover smart-select picker, second cover full view
+                //$(document).on('click', '#ready',
+                var default_province = getProvince(provinceID);
+                //get cities
+                getCities(provinceID, cityID);
+                getBarangay(provinceID, cityID, barangayID);
+
+                //console.log("get first value province");
+                //console.log(default_province);
+                //myApp.smartSelectAddOption('#id-smart-select-province select', '<option value="jade">hey</option>');
+
+                //first cover smart-select picker, second cover full view
+                $$('#form_entry_province').on('change', function() {
+                    //console.log('Form entry item was changed was changed!');
+
+                    //detect if picker is closed after a selection is made for additional actions:
+                    $$('.picker-modal').on('close', function() {
+                        //console.log('Picker closed after selecting an item!');
+                        //additional actions here
+                        //var cars = [];
+                        $$('select[name="provinceID"] option:checked').each(function () {
+                            //get province and set select cities and barangay to zero
+                            console.log("get province clear cities");
+                            // $$('select[name="city"] option:checked').remove();
+                            //$$('select[name="barangay"] option:checked').remove();
+                            provinceID = this.value;
+
+                            getCities(provinceID, cityID);
+                            //myApp.smartSelectAddOption('#id-smart-select-city select', '<option value="jade">fuck</option>');
+                        });
+                    });
+                });
+
+                //cities picker
+                $$('#form_entry_city').on('change', function(){
+                    $$('.picker-modal').on('close', function(){
+                        $$('select[name="cityID"] option:checked').each(function(){
+                            // console.log("province id",provinceID);
+                            // console.log("city id", this.value);
+                            // console.log("you change city close me");
+                            getBarangay(provinceID, this.value, "");
+
+                        });
+
+                    });
+                });
+                //myApp.hidePreloader();
+
+                //myApp.smartSelectAddOption('#id-smart-select-province select', '<option value="apple" selected>Apple</option>', 0);
+                //myApp.smartSelectAddOption('#id-smart-select-province select', '<option value="'+v.provinceID+'">'+v.province+'</option>');
+
+            }
+        });
+
+        $$('#profile-image').on('click', function(){
+            myApp.modal({
+                title:  'Profile image',
+                text: 'Select camera or album',
+                buttons: [
+                    {
+                        text: 'CAMERA',
+                        onClick: function() {
+                            getImageFromCamera();
+                        }
+                    },
+                    {
+                        text: 'ALBUM',
+                        onClick: function() {
+                            getImageFromAlbum();
+                        }
+                    },
+                ]
+            });
+        });
+
+        //get image from camera
+        function getImageFromCamera() {
+            navigator.camera.getPicture(onSuccess, onFail, { quality: 25,
+                destinationType: Camera.DestinationType.DATA_URL,
+                targetWidth: 512,
+                targetHeight: 512,
+                //destinationType: Camera.PictureSourceType.PHOTOLIBRARY
+            });
+
+            function onSuccess(imageData) {
+                var image = document.getElementById('my-profile');
+                image.src = "data:image/jpeg;base64," + imageData;
+                $$("#profile-value").val("data:image/jpeg;base64," + imageData);
+            }
+
+            function onFail(message) {
+                alert('Failed because: ' + message);
+            }
+        }
+        //get image from album
+        function getImageFromAlbum() {
+            navigator.camera.getPicture(onSuccess, onFailure, {
+                destinationType: navigator.camera.DestinationType.DATA_URL,
+                sourceType: navigator.camera.PictureSourceType.PHOTOLIBRARY,
+                targetWidth: 512,
+                targetHeight: 512,
+            });
+        }
+
+        function onSuccess(imageURI) {
+            var image = document.getElementById('my-profile');
+            image.src = "data:image/jpeg;base64,"+imageURI;
+            $$("#profile-value").val("data:image/jpeg;base64,"+imageURI);
+
+        }
+
+        function onFailure(message) {
+            alert("Get image failed: " + message);
+        }
+
+        $$('#id-edit-customer').on('click', function(){
+            //alert("hello");
+
+            var formData = myApp.formToData('#customer-edit-form');
+            //alert(JSON.stringify(formData));
+            //var data = JSON.stringify(formData);
+            //console.log(data);
+            updateCustomer(formData, id);
+        });
+
+
+
+
+
     }
     if(page.name == 'about') {
         console.log("this is about");
@@ -819,69 +1012,187 @@ $$(document).on('pageInit', function (e) {
 
     }
 
-    if(page.name == "customer-detail") {
-        var id = page.query.id;
-        customer_details(id, page);
-    }
-    if(page.name == 'customer-edit-page') {
-        console.log("customer edit page");
-        var id = page.query.id;
-        var token= $$('meta[name="token"]').attr("content");
-        var url = base_url+"/api/customer-details/"+id;
-        var customer_data = [];
-        var profile = "";
-        $$.ajax({
-            type: "GET",
-            dataType: "json",
-            //url: 'http://192.168.1.224/iwash/api/customer',
-            url: url,
-            headers: {
-                'Authorization': token,
-            },
-            success: function (data) {
-                //console.log(data.data);
-                var formData = {};
-                $$.each(data.data, function(k,v){
-                    var isRegular = (v.isRegular == "N") ? "no" : "yes";
-                    profile = v.profile;
-                    formData = {
-                        'fname' : v.fname,
-                        'mname' : v.mname,
-                        'lname' : v.lname,
-                        'gender': v.gender,
-                        'suffix' : v.suffix,
-                        'title' : v.title,
-                        'contact' : v.contact,
-                        'address' : v.address,
-                        'bday' : v.bday,
-                        'isRegular' : ['yes'],
-                        'switch': ['yes'],
+    if(page.name == 'order-add-page') {
+
+        //localStorage.clear();
+
+        var dynamic_services = "";
+
+
+
+        console.log("get customer");
+        var branchName = $$('meta[name="branchName"]').attr("content");
+        getServices("");
+        $$('#id-branch').val(branchName);
+        var today = new Date();
+        var dd = today.getDate();
+        var mm = today.getMonth()+1; //January is 0!
+        var yyyy = today.getFullYear();
+        if(dd<10) {
+            dd = '0'+dd
+        }
+        if(mm<10) {
+            mm = '0'+mm
+        }
+        today = yyyy+"-"+mm+"-"+dd;
+        $$('#id-date').val(today);
+        getCustomerSmartSelect();
+        //get the local storage
+        var service_id = "";
+        $$('#id-click-services').on('click', function(){
+            dynamic_services = JSON.parse(localStorage.getItem("service_ids"));
+            //console.log("on change");
+            //console.log(dynamic_services);
+        });
+        //get service type
+        $$('#form_entry_services').on('change', function() {
+
+            //detect if picker is closed after a selection is made for additional actions:
+            $$('.picker-modal').on('close', function() {
+                //console.log('Picker closed after selecting an item!');
+                //additional actions here
+                //var cars = [];
+                $$('select[name="serviceID"] option:checked').each(function () {
+
+                    if(dynamic_services) {
+                        for (var i = 0; i<dynamic_services.length; i++) {
+                            if(dynamic_services[i] == this.value) {
+                                myApp.alert("Already exist");
+                                return false;
+                            }
+                        }
+                        dynamic_services.push(this.value);
+                        localStorage.setItem("service_ids", JSON.stringify(dynamic_services));
                     }
+                    else {
+                        var ids = [];
+                        ids.push(this.value);
+                        localStorage.setItem("service_ids", JSON.stringify(ids));
+                    }
+                    var str = this.text;
+                    str = str.replace(/ +/g, "");
+                    var the_id = this.value+str;
+                    var add_more_id = "id-add-more-"+this.value+str;
+                    $$(page.container).find('.list-block')
+                        .append($$('<div>').attr('class', "data-table data-table-init card")
+                            .append($$('<div>').attr('class', "card-header")
+                                .append($$('<div>').attr('class', "data-table-links")
+                                    .append($$('<a>').attr('class', "link").text("Service type : "+this.text).attr('name',this.value))
+                                    .append($$('<a>').attr('class', "link").attr('id', add_more_id).text("ADD"))
+                                )
+                            )
+                            .append($$('<div>').attr('class', "card-content")
+                                .append($$('<table>').attr('id', 'order-table'+the_id)
+                                    .append($$('<tr>').attr('id', 'tr-head'+the_id))
+                                    .append($$('<tbody>'))
+                                )
+                            )
+                        );
+
+                    //getCategories(this.value);
+                    service_id = this.value;
+                    var SERVICE_TYPE = this.text;
+                    var service_ids = $$('meta[name="service_ids"]').attr("content");
+
+                    var service_ids = JSON.parse(service_ids);
+                    for(var i =0; i<service_ids.length; i++)
+                    {
+                        var id = "#id-add-more-"+service_ids[i];
+                        $$(id).on("click", function(){
+                            addMore(service_ids[i], the_id,$$('select[name="serviceID"] option:checked').val(), SERVICE_TYPE, page, this.id, add_more_id);
+                            return false;
+                        });
+                    }
+
                 });
-
-                var image = document.getElementById('my-profile');
-                image.src = profile;
-                console.log("this is profile");
-                console.log(profile);
-                //$$("#profile-value").val("data:image/jpeg;base64,"+imageURI);
-
-                console.log("this is data this");
-                console.log(formData);
-                myApp.formFromData('#customer-edit-form', formData);
-            }
+            });
         });
 
-        // var formData = {
-        //     'name': 'John',
-        //     'email': 'john@doe.com',
-        //     'gender': 'female',
-        //     'switch': ['yes'],
-        //     'slider': 10
-        // }
+        $$(document).on('click', '#id-remove', function(){
+            $$(this).closest('tr').remove();
+        });
+
+
+        $$('#id-button-form-add-order').on('click', function(){
+            console.log("submit");
+
+            var formData = myApp.formToData('#id-form-add-page');
+            //alert(JSON.stringify(formData));
+            //var data = JSON.stringify(formData);
+            //console.log(data);
+           var data = [];
+            //check for table services id
+            var service_ids = $$('meta[name="service_ids"]').attr("content");
+
+            var service_ids = JSON.parse(service_ids);
+            for(var i =0; i<service_ids.length; i++) {
+                var the_id = "#order-table"+service_ids[i];
+                $$(''+the_id+' > tbody > tr.item').each(function(index, element){
+                    var amount = $$(this).find("input.total-amount").val();
+                    var pieces = $$(this).find("input.add-more-pieces").val();
+                    var perkilo = $$(this).find("input.add-more-weight-kilo").val();
+                    var services = $$(this).find("select.form_entry_categories").val();
+
+                    var name = service_ids[i];
+                    data.push({
+                        table: name,
+                        service_id: services,
+                        amount : amount,
+                        pieces : pieces,
+                        perkilo: perkilo,
+                    });
+                    //console.log('total amount table ', amount);
+                });
+
+            }
+            //console.log("result");
+            //console.log(data);
+
+            var grand_total = $$('#grand-total').val();
+            var customer_id = $$('#form_entry_customer').val();
+            if(data.length == 0) {
+                myApp.alert("Please add services");
+            }
+            else {
+                createOrder(data, grand_total, customer_id);
+            }
+
+
+
+            // $$('#order-table3regular > tbody > tr.item').each(function(index, element){
+            //
+            //     var qty = $$(this).find("input.total-amount").val();
+            //     //total_amount += parseFloat(qty);
+            //     regular.push({
+            //         total: qty,
+            //
+            //     })
+            //     //console.log('total amount table ', qty);
+            //
+            // });
+            //
+            // $$('#order-table1rush > tbody > tr.item').each(function(k, v){
+            //     var qty = $$(this).find("input.total-amount").val();
+            //     rush.push({
+            //         total: qty
+            //     });
+            //     //console.log('total amount table table rush ', qty);
+            // });
+            // console.log(regular);
+            // console.log(rush);
+            // createOrder(regular, rush);
+
+            //http://localhost/iwash/api/create-order
+        });
+        //get services on click
 
     }
 
+
 });
+
+
+
 
 function update_order_details(id, signature)
 {
@@ -946,8 +1257,10 @@ $$('#login').on('click', function(){
 
             $$('meta[name="token"]').attr("content", data.data.token);
             $$('meta[name="user_group"]').attr("content", data.data.groupName);
+            $$('meta[name="branchName"]').attr("content", data.data.branchName);
             //var meta = $$('meta[name="token"]').attr("content");
             //console.log(meta);
+            localStorage.clear();
 
             myApp.closeModal('.login-screen',true);
             mainView.router.loadContent($$('#dashboard').html());
@@ -1356,31 +1669,14 @@ function getDefaultHistoryList(page, token, url)
 function customerPullToRefresh(ptrContent)
 {
 
-    // Dummy Content
-    var songs = ['Yellow Submarine', 'Don\'t Stop Me Now', 'Billie Jean', 'Californication'];
-    var authors = ['Beatles', 'Queen', 'Michael Jackson', 'Red Hot Chili Peppers'];
-    // Random image
-    var picURL = 'http://localhost/iwash/assets/img/users/noimage.gif';
-    // Random song
-    var song = songs[Math.floor(Math.random() * songs.length)];
-    // Random author
-    var author = authors[Math.floor(Math.random() * authors.length)];
-    // List item html
-    var itemHTML = '<li class="item-content">' +
-        '<div class="item-media"><img src="' + picURL + '" width="44"/></div>' +
-        '<div class="item-inner">' +
-        '<div class="item-title-row">' +
-        '<div class="item-title">' + song + '</div>' +
-        '</div>' +
-        '<div class="item-subtitle">' + author + '</div>' +
-        '</div>' +
-        '</li>';
-    // Prepend new list element
-    ptrContent.find('ul').prepend(itemHTML);
+    ptrContent.find('ul').empty();
+    getCustomer(ptrContent);
+
 }
 
 function getCustomer(ptrContent)
 {
+
     var token= $$('meta[name="token"]').attr("content");
 
     var url = base_url+"/api/customer";
@@ -1404,7 +1700,7 @@ function getCustomer(ptrContent)
                 //var songs = v.fname ;
                 //var authors = ['Beatles', 'Queen', 'Michael Jackson', 'Red Hot Chili Peppers'];
                 // Random image
-                var defaultImage = 'http://192.168.1.224/iwash/assets/img/users/noimage.gif';
+                var defaultImage = base_url+'/assets/img/users/noimage.gif';
                 //var picURL = v.profile;
                 var picURL = v.profile ? v.profile : defaultImage;
                 //var picURL = v.profile;
@@ -1435,9 +1731,12 @@ function getCustomer(ptrContent)
     });
 }
 
-function getProvince()
+function getProvince(provinceID)
 {
 
+
+    console.log("THIS IS PROVINCE ID");
+    console.log(provinceID);
 
     var default_province_id = 0;
     var token= $$('meta[name="token"]').attr("content");
@@ -1463,7 +1762,13 @@ function getProvince()
                  //console.log("each");
                  //console.log(k);
                  //console.log(v.province);
-                myApp.smartSelectAddOption('#id-smart-select-province select', '<option value="'+v.provinceID+'">'+v.province+'</option>');
+                if(provinceID == v.provinceID) {
+                    myApp.smartSelectAddOption('#id-smart-select-province select', '<option value="' + v.provinceID + '" selected>' + v.province + '</option>');
+                }
+                else {
+                    myApp.smartSelectAddOption('#id-smart-select-province select', '<option value="' + v.provinceID + '">' + v.province + '</option>');
+                }
+                //myApp.smartSelectAddOption('#id-smart-select-province select', '<option value="apple" selected>Apple</option>');
                 // Dummy Content
             });
 
@@ -1476,7 +1781,7 @@ function getProvince()
     //return default_province_id;
 }
 
-function getCities(provinceID)
+function getCities(provinceID, cityID)
 {
 
     var token= $$('meta[name="token"]').attr("content");
@@ -1492,13 +1797,18 @@ function getCities(provinceID)
         success: function (data) {
 
             $$.each(data.data, function(k, v) {
-                myApp.smartSelectAddOption('#id-smart-select-city select', '<option value="'+v.cityID+'">'+v.city+'</option>');
+                if(cityID == v.cityID) {
+                    myApp.smartSelectAddOption('#id-smart-select-city select', '<option value="' + v.cityID + '" selected>' + v.city + '</option>');
+                }
+                else {
+                    myApp.smartSelectAddOption('#id-smart-select-city select', '<option value="' + v.cityID + '">' + v.city + '</option>');
+                }
             });
         }
     });
 }
 
-function getBarangay(provinceID, cityID)
+function getBarangay(provinceID, cityID, barangayID)
 {
     console.log("provinceID",provinceID);
     console.log("city id",cityID);
@@ -1517,7 +1827,12 @@ function getBarangay(provinceID, cityID)
         success: function (data) {
             $$.each(data.data, function(k, v) {
                 //myApp.smartSelectAddOption('#id-smart-select-city select', '<option value="'+v.cityID+'">'+v.city+'</option>');
-                myApp.smartSelectAddOption('#id-smart-select-barangay select', '<option value="'+v.barangayID+'">'+v.barangay+'</option>');
+                if(barangayID == v.barangayID) {
+                    myApp.smartSelectAddOption('#id-smart-select-barangay select', '<option value="' + v.barangayID + '" selected>' + v.barangay + '</option>');
+                }
+                else {
+                    myApp.smartSelectAddOption('#id-smart-select-barangay select', '<option value="' + v.barangayID + '">' + v.barangay + '</option>');
+                }
             });
         }
     });
@@ -1533,7 +1848,7 @@ function addCustomer(data)
 
     var url = base_url+"/api/customer";
 
-    myApp.showPreloader('Saving to server.')
+    myApp.showPreloader('Saving to server.');
     setTimeout(function () {
         $$.ajax({
             type: "POST",
@@ -1635,7 +1950,7 @@ function delete_customer(id){
                 'Authorization': token,
             },
             success: function (data) {
-                console.log(data);
+                //console.log(data);
 
                 mainView.router.loadContent($$('#id-customer-page').html());
             },
@@ -1645,6 +1960,343 @@ function delete_customer(id){
             }
         });
     });
+}
+
+function updateCustomer(data, id) {
+
+    myApp.confirm('Do you want to update this customer?', function () {
+
+        var token= $$('meta[name="token"]').attr("content");
+
+        var url = base_url+"/api/customer-update/"+id;
+        $$.ajax({
+            type: "PUT",
+            url: url,
+            headers: {
+                'Authorization': token,
+            },
+            data: data,
+            success: function (data) {
+                //console.log(data);
+
+                mainView.router.loadContent($$('#id-customer-page').html());
+            },
+            error: function(xhr) {
+                console.log("error delete");
+                console.log(xhr);
+            }
+        });
+    });
+}
+
+function getCustomerSmartSelect()
+{
+
+    var token= $$('meta[name="token"]').attr("content");
+
+    var url = base_url+"/api/customer";
+    $$.ajax({
+        type: "GET",
+        dataType: "json",
+        //url: 'http://192.168.1.224/iwash/api/customer',
+        url: url,
+        headers: {
+            'Authorization': token,
+        },
+        success: function (data) {
+            //console.log("this is data");
+            //console.log(data.data);
+            //data = $$.parseJSON(data);
+            $$.each(data.data, function(k, v) {
+                myApp.smartSelectAddOption('#id-smart-select-customer select', '<option value="' + v.custID + '">' + v.fname +" "+v.mname+" "+v.lname+ '</option>');
+            });
+
+
+            //listHTML += '<a href="about-history.html?id='+ v.order_id +'" class="item-link item-content">';
+            // $$(page.container).find('.page-content').find('.list-block').find('ul').append(itemHTML);
+
+        }
+    });
+}
+
+function getServices(servinceID)
+{
+    var token= $$('meta[name="token"]').attr("content");
+
+    var url = base_url+"/api/services";
+    $$.ajax({
+        type: "GET",
+        dataType: "json",
+        //url: 'http://192.168.1.224/iwash/api/customer',
+        url: url,
+        headers: {
+            'Authorization': token,
+        },
+        success: function (data) {
+            //console.log("this is data");
+            //console.log(data.data);
+            //data = $$.parseJSON(data);
+            var services_ids = [];
+            $$.each(data.data, function(k, v) {
+                var str = v.serviceType;
+                str = str.replace(/ +/g, "");
+                services_ids.push(v.serviceID+str);
+                myApp.smartSelectAddOption('#id-smart-select-services select', '<option value="' + v.serviceID + '">' + v.serviceType +'</option>');
+            });
+
+            var data_service_ids = JSON.stringify(services_ids);
+            //console.log(data);
+            $$('meta[name="service_ids"]').attr("content", data_service_ids);
+
+
+            //listHTML += '<a href="about-history.html?id='+ v.order_id +'" class="item-link item-content">';
+            // $$(page.container).find('.page-content').find('.list-block').find('ul').append(itemHTML);
+
+        }
+    });
+}
+
+
+function getCategories(serviceID, smart_select_id)
+{
+    var token= $$('meta[name="token"]').attr("content");
+
+    var the_id = "#"+smart_select_id;
+
+    //$$('#id-smart-select-categories')[0].options.length = 0;
+
+    //$$('#id-smart-select-categories').empty();
+    //myApp.smartSelectAddOption('#id-smart-select-categories select', 0)
+
+    var url = base_url+"/api/categories/"+serviceID;
+    $$.ajax({
+        type: "GET",
+        dataType: "json",
+        //url: 'http://192.168.1.224/iwash/api/customer',
+        url: url,
+        headers: {
+            'Authorization': token,
+        },
+        success: function (data) {
+            //var categories = [];
+            //categories.push(data.data);
+            $$.each(data.data, function(k, v) {
+                myApp.smartSelectAddOption(the_id+' select', '<option value="' + v.clothesCatID + '">' + v.category +'</option>');
+            });
+            var data_categories = JSON.stringify(data.data);
+            $$('meta[name="categories"]').attr("content", data_categories);
+
+        }
+    });
+}
+
+
+function addMore(service_id, the_id, select_service_id, service_type, page, my_id, add_more_id)
+{
+    console.log("service type: ", service_type);
+    if(service_type === 'dry cleaning') {
+        console.log("this is dry clean");
+
+        // if(my_id == add_more_id) {
+        //     var smart_select_id = "id-smart-select-categories-"+the_id;
+        //     $$('#order-table'+the_id).find('#tr-head'+the_id).empty();
+        //     $$('#order-table'+the_id).find('#tr-head'+the_id)
+        //         .append($$('<th>').attr('class', 'numeric-cell').text('CATEGORY'))
+        //         .append($$('<th>').attr('class', 'numeric-cell').text('PRICE PER PIECE'))
+        //         .append($$('<th>').attr('class', 'numeric-cell').text('# PIECES'))
+        //         .append($$('<th>').attr('class', 'numeric-cell').text('AMOUNT'));
+        //     $$('#order-table'+the_id).find('tbody')
+        //         .append($$('<tr>').attr('class', 'item')
+        //             .append($$('<td>').attr('class', "numeric-cell")
+        //                 .append($$('<a>').attr('href', "#").attr('id', smart_select_id).attr('class', "item-link smart-select").attr('data-open-in', "picker").attr('data-back-on-select', "true").attr('data-searchbar', "true").attr('data-searchbar-placeholder', "Search Categories")
+        //                     .append($$('<select>').attr('name', 'categories').attr('class', "form_entry_categories"))
+        //                     .append($$('<div>').attr('class', "item-content")
+        //                         .append($$('<div>').attr('class', "item-inner")
+        //                             .append($$('<div>').attr('class', "item-input"))))))
+        //             .append($$('<td>').attr('class', "numeric-cell")
+        //                 .append($$('<input>').attr('type',"number").attr('readonly', true).css('background-color','#EFEFEF')))
+        //             .append($$('<td>').attr('class', "numeric-cell")
+        //                 .append($$('<input>').attr('type',"number").attr('class', 'add-more-pieces').css('background-color','#EFEFEF')))
+        //             .append($$('<td>').attr('class', "numeric-cell")
+        //                 .append($$('<input>').attr('type',"number").attr('class', 'add-more-weight-kilo').css('background-color','#EFEFEF')))
+        //             .append($$('<td>').attr('class', "numeric-cell")
+        //                 .append($$('<input>').attr('type',"number").attr('class', 'total-amount').css('background-color','#EFEFEF')))
+        //             .append($$('<td>').attr('class', "action-cell")
+        //                 .append($$('<a>').attr('class', "link icon-only")
+        //                     .append($$('<i>').attr('class', "icon f7-icons").attr('id', 'id-remove').text('trash'))))
+        //         );
+        // }
+
+
+    }
+    else {
+        //compare id for append and click
+        if(my_id == add_more_id) {
+            var smart_select_id = "id-smart-select-categories-"+the_id;
+            $$('#order-table'+the_id).find('#tr-head'+the_id).empty();
+            $$('#order-table'+the_id).find('#tr-head'+the_id)
+                .append($$('<th>').attr('class', 'numeric-cell').text('CATEGORY'))
+                .append($$('<th>').attr('class', 'numeric-cell').text('PRICE PER KILO'))
+                .append($$('<th>').attr('class', 'numeric-cell').text('# PIECES'))
+                .append($$('<th>').attr('class', 'numeric-cell').text('WEIGHT IN KG'))
+                .append($$('<th>').attr('class', 'numeric-cell').text('AMOUNT'));
+            $$('#order-table'+the_id).find('tbody')
+                .append($$('<tr>').attr('class', 'item')
+                    .append($$('<td>').attr('class', "numeric-cell")
+                        .append($$('<a>').attr('href', "#").attr('id', smart_select_id).attr('class', "item-link smart-select").attr('data-open-in', "picker").attr('data-back-on-select', "true").attr('data-searchbar', "true").attr('data-searchbar-placeholder', "Search Categories")
+                            .append($$('<select>').attr('name', 'categories').attr('class', "form_entry_categories"))
+                            .append($$('<div>').attr('class', "item-content")
+                                .append($$('<div>').attr('class', "item-inner")
+                                    .append($$('<div>').attr('class', "item-input"))))))
+                    .append($$('<td>').attr('class', "numeric-cell")
+                        .append($$('<input>').attr('type',"number").attr('name', 'pricekilo[]').attr('readonly', true).css('background-color','#EFEFEF')))
+                    .append($$('<td>').attr('class', "numeric-cell")
+                        .append($$('<input>').attr('type',"number").attr('name', 'pieces[]').attr('class', 'add-more-pieces').css('background-color','#EFEFEF')))
+                    .append($$('<td>').attr('class', "numeric-cell")
+                        .append($$('<input>').attr('type',"number").attr('class', 'add-more-weight-kilo').css('background-color','#EFEFEF')))
+                    .append($$('<td>').attr('class', "numeric-cell")
+                        .append($$('<input>').attr('type',"number").attr('class', 'total-amount').css('background-color','#EFEFEF')))
+                    .append($$('<td>').attr('class', "action-cell")
+                        .append($$('<a>').attr('class', "link icon-only")
+                            .append($$('<i>').attr('class', "icon f7-icons").attr('id', 'id-remove').text('trash'))))
+                );
+        }
+
+
+    }
+
+
+    //console.log("this is service id");
+    //console.log(select_service_id);
+    getCategories(select_service_id, smart_select_id);
+
+
+
+    //select categories action
+
+    $$('.form_entry_categories').on('change', function() {
+        //console.log('Form entry item was changed was changed!');
+        //detect if picker is closed after a selection is made for additional actions:
+        //console.log("this change");
+        var _this = this;
+        $$('.picker-modal').on('close', function() {
+            //console.log('Picker closed after selecting an item!');
+            //additional actions here
+            //var cars = [];
+            $$('select[name="categories"] option:checked').each(function () {
+                //get province and set select cities and barangay to zero
+                //console.log("categories selected to find");
+                //console.log(this.value);
+                var selected_id = this.value;
+                //get categories object
+                var categories = $$('meta[name="categories"]').attr("content");
+
+                var categories = JSON.parse(categories);
+                $$.each(categories, function(i,v){
+                    //console.log("clothes id : ",v.clothesCatID);
+                    if(v.clothesCatID == selected_id) {
+                        $$(_this).closest('td').next('td').find('input').val(v.price);
+                        //$$(this).closest('td').next().find('input').val(price_amount);
+                        return false;
+                    }
+                });
+
+                //getCities(provinceID, cityID);
+                //myApp.smartSelectAddOption('#id-smart-select-city select', '<option value="jade">fuck</option>');
+            });
+        });
+
+
+
+    });
+
+    var GRAND_TOTAL = 0;
+    var pieces_amount = 0;
+    var price_amount = 0
+    var pieces_total = 0;
+    var price_total = 0;
+
+    $$('.add-more-pieces').on('keyup',function(){
+        var pieces = this.value;
+        //console.log("pieces : ", pieces);
+        //multiple price
+        //var lasttd =  $$(this).closest('td').next('td').next('td').find('input').val(500);
+        var price =  $$(this).closest('td').next('td').find('input').val();
+        pieces_total = pieces * price;
+        pieces_total =  $$(this).closest('td').next('td').next().find('input').val(pieces_total);
+        GRAND_TOTAL = $$('.total-amount').val();
+
+        var total_amount = 0;
+        $$('tr.item').each(function(){
+            var qty = $$(this).find("input.total-amount").val();
+            total_amount += parseFloat(qty);
+            //console.log('the talbe', qty);
+        });
+
+        $$('#grand-total').val(total_amount);
+
+    });
+
+    $$('.add-more-weight-kilo').on('keyup', function(){
+        var price = this.value;
+        //console.log("price : ", price);
+        var pieces = $$(this).closest('td').prev().find('input').val();
+        var per_kilo = $$(this).closest('td').prev().prev().find('input').val();
+        //console.log("per kilo :", per_kilo);
+
+        var total =  price * per_kilo;
+        //console.log("pieces inside price :", pieces);
+        var price_amount = (total == 0) ? price : total;
+        price_total =  $$(this).closest('td').next().find('input').val(price_amount);
+        //GRAND_TOTAL = $$('.total-amount').val();
+        //$$('#grand-total').text(GRAND_TOTAL);
+
+        var total_amount = 0;
+        $$('tr.item').each(function(){
+            var qty = $$(this).find("input.total-amount").val();
+            total_amount += parseFloat(qty);
+            //console.log('the talbe', qty);
+        });
+
+        $$('#grand-total').val(total_amount);
+    });
+}
+
+function createOrder(data, grand_total, customer_id)
+{
+    var token= $$('meta[name="token"]').attr("content");
+
+    var url = base_url+"/api/create-order";
+
+    myApp.showPreloader('Saving to server.');
+    setTimeout(function () {
+        $$.ajax({
+            type: "POST",
+            dataType: "json",
+            url: url,
+            headers: {
+                'Authorization': token,
+            },
+            data: { data: data, customer_id: customer_id, grand_total: grand_total},
+            success: function (data) {
+                myApp.hidePreloader();
+                console.log("result");
+                console.log(data);
+                //var result = JSON.parse(data.data);
+                //mainView.router.loadContent($$('#id-customer-page').html());
+                //myApp.alert(result);
+            },
+            error: function(xhr){
+                console.log("error creating customer");
+                myApp.hidePreloader();
+                console.log(xhr.responseText);
+                var error = JSON.parse(xhr.responseText);
+                myApp.alert(error.message, 'Error creating customer!');
+            }
+        });
+
+
+    }, 2000);
 }
 
 
