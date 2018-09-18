@@ -8,6 +8,10 @@
   <meta name = "apple-mobile-web-app-status-bar-style" content = "black" />
   <meta name="token" content="">
   <meta name="user_group" content="">
+  <meta name="branchName" content="">
+  <meta name="service_ids" content="">
+  <meta name="categories" content="">
+  <meta name="dynamic_services" content="">
   <title>Iwash</title>
   <!-- REFERENCE CSS-->
   <link rel="stylesheet" href="assets/css/framework7.material.min.css">
@@ -34,7 +38,7 @@
             <a href="#" class="link" id="id-add-customer"> <i class="f7-icons color-default">persons</i></a>
           </span>
           <span id="span-order">
-            <a href="#" class="link open-right-panel"> <i class="f7-icons color-default">add_round_fill</i></a>
+            <a href="#" class="link" id="id-add-order"> <i class="f7-icons color-default">add_round_fill</i></a>
           </span>
           <a href="#" class="link" id="id-history"> <i class="icon icon-bars"></i></a>
 
@@ -208,42 +212,10 @@
                   </p>
 
 
-
-                  <!--<p><a href="#" data-popup=".popup-about" class="open-popup">Filter </a></p>-->
-
-
-                  <!--<ul>-->
-                    <!--<li class="item-content">-->
-                      <!--<div class="item-inner">-->
-                        <!--<div class="item-title">Acura </div>-->
-                      <!--</div>-->
-                    <!--</li>-->
-                    <!--<li class="item-content">-->
-                      <!--<div class="item-inner">-->
-                        <!--<div class="item-title">Audi</div>-->
-                      <!--</div>-->
-                    <!--</li>-->
-
-                  <!--</ul>-->
                 </div>
               </div>
             </div>
 
-
-
-
-
-
-            <!--<div class="page-content pull-to-refresh-content">-->
-              <!--<div class="pull-to-refresh-layer">-->
-                <!--<div class="preloader"></div>-->
-                <!--<div class="pull-to-refresh-arrow"></div>-->
-              <!--</div>-->
-              <!--<div class="list-block media-list">-->
-
-
-              <!--</div>-->
-            <!--</div>-->
 
 
 
@@ -286,13 +258,6 @@
                 <div class="content-block-inner">Nothing found</div>
               </div>
 
-              <!-- This block will be displayed if anything found, and this list block is used a searbar target -->
-
-              <!--<div class="page-content pull-to-refresh-content">-->
-              <!--<div class="pull-to-refresh-layer">-->
-              <!--<div class="preloader"></div>-->
-              <!--<div class="pull-to-refresh-arrow"></div>-->
-              <!--</div>-->
               <div class="list-block list-block-search searchbar-found cards-list media-list">
 
                 <div class="content-block-title">History List</div>
@@ -304,25 +269,6 @@
                 </p>
 
 
-
-
-
-                <!--<p><a href="#" data-popup=".popup-about" class="open-popup">Filter </a></p>-->
-
-
-                <!--<ul>-->
-                <!--<li class="item-content">-->
-                <!--<div class="item-inner">-->
-                <!--<div class="item-title">Acura </div>-->
-                <!--</div>-->
-                <!--</li>-->
-                <!--<li class="item-content">-->
-                <!--<div class="item-inner">-->
-                <!--<div class="item-title">Audi</div>-->
-                <!--</div>-->
-                <!--</li>-->
-
-                <!--</ul>-->
               </div>
               <p class="buttons-row">
 
@@ -333,22 +279,6 @@
               </p>
             </div>
           </div>
-
-
-
-
-
-
-          <!--<div class="page-content pull-to-refresh-content">-->
-          <!--<div class="pull-to-refresh-layer">-->
-          <!--<div class="preloader"></div>-->
-          <!--<div class="pull-to-refresh-arrow"></div>-->
-          <!--</div>-->
-          <!--<div class="list-block media-list">-->
-
-
-          <!--</div>-->
-          <!--</div>-->
 
 
         </div>
@@ -647,6 +577,96 @@
           <!-- end of page content -->
         </div>
 
+      </div>
+    </div>
+  </div>
+</script>
+
+
+<!--This is a home page-->
+<script type="text/template" id="id-add-order-page">
+  <div class = "views">
+    <div class = "view view-main">
+      <div class = "pages">
+        <form data-page = "order-add-page" class = "page navbar-fixed" id="id-form-add-page">
+          <div class="page-content">
+
+            <div class="content-block-title">Labels and inputs</div>
+            <div class="list-block">
+              <ul>
+                <!-- Text inputs -->
+                <li>
+                  <div class="item-content">
+                    <div class="item-inner">
+                      <div class="item-title label">Branch</div>
+                      <div class="item-input">
+                        <input type="text" id="id-branch" readonly>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+                <li>
+                  <div class="item-content">
+                    <div class="item-inner">
+                      <div class="item-title label">Date</div>
+                      <div class="item-input">
+                        <input type="date" id="id-date" readonly>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+
+                <li>
+                  <!-- Additional "smart-select" class -->
+                  <a href="#" class="item-link smart-select" id="id-smart-select-customer" data-open-in="picker" data-back-on-select="true" data-searchbar="true" data-searchbar-placeholder="Search Customer">
+                    <!--<a href="#" class="item-link " id="id-smart-select-city" >-->
+                    <!-- select -->
+                    <select name="custID" id="form_entry_customer">
+                      <!--<option value="cebu">cebu</option>-->
+
+                    </select>
+                    <div class="item-content">
+                      <div class="item-media"><i class="icon f7-icons">person</i></div>
+                      <div class="item-inner">
+                        <div class="item-title label">Customer</div>
+                        <div class="item-input">
+
+                        </div>
+                      </div>
+                    </div>
+                  </a>
+                </li>
+              <li>
+                  <!-- Additional "smart-select" class -->
+                  <a href="#" class="item-link smart-select" id="id-smart-select-services" data-open-in="picker" data-back-on-select="true" data-searchbar="true" data-searchbar-placeholder="Search Services">
+                      <!--<a href="#" class="item-link " id="id-smart-select-city" >-->
+                      <!-- select -->
+                      <select name="serviceID" id="form_entry_services">
+                          <!--<option value="cebu">cebu</option>-->
+                      </select>
+                      <div class="item-content">
+                          <div class="item-media"><i class="icon f7-icons">Services</i></div>
+                          <div class="item-inner" id="id-click-services">
+                              <div class="item-title label">Services</div>
+                              <div class="item-input">
+
+                              </div>
+                          </div>
+                      </div>
+                  </a>
+              </li>
+
+              </ul>
+              <div class="content-block-title">Grand total : <input type="number" id="grand-total"></div>
+          </div>
+            <div class="content-block">
+              <a href="#" class="button button-fill button-raised" id="id-button-form-add-order">SUBMIT</a>
+            </div>
+        </div>
+        </form>
+
+
+        <!-- end of page content -->
       </div>
     </div>
   </div>
