@@ -11,6 +11,7 @@
   <meta name="branchName" content="">
   <meta name="service_ids" content="">
   <meta name="categories" content="">
+  <meta name="service_types" content="">
   <meta name="dynamic_services" content="">
   <title>Iwash</title>
   <!-- REFERENCE CSS-->
@@ -588,9 +589,9 @@
   <div class = "views">
     <div class = "view view-main">
       <div class = "pages">
-        <form data-page = "order-add-page" class = "page navbar-fixed">
+        <form data-page = "order-add-page" class = "page navbar-fixed" id="id-form-add-order">
           <div class="page-content">
-            <form id="order-form" class="list-block">
+
             <div class="content-block-title">Labels and inputs</div>
             <div class="list-block">
               <ul>
@@ -657,11 +658,31 @@
               </li>
 
               </ul>
-              <div class="content-block-title">Grand total : <input type="number" id="grand-total"></div>
+
           </div>
-            </form>
+            <div class="content-block">
+                <div class="item-content">
+                    <div class="item-inner">
+                        <div class="item-title label">Grand Total</div>
+                        <div class="item-input">
+                            <input type="number" placeholder="" style="border:none" readonly id="grand-total">
+                        </div>
+                    </div>
+                </div>
+            <div class="item-content">
+                <div class="item-inner">
+                    <div class="item-title label">Remarks</div>
+                    <div class="item-input">
+                        <textarea id="remarks"></textarea>
+                    </div>
+                </div>
+            </div>
+              <a href="#" class="button button-fill button-raised" id="id-button-form-add-order">SUBMIT</a>
+            </div>
         </div>
         </form>
+
+
         <!-- end of page content -->
       </div>
     </div>
