@@ -630,12 +630,17 @@ $$(document).on('pageInit', function (e) {
                     delivery_fee = v.deliveryFee;
                     rate = v.rate;
                     total_amount = v.ttlAmount;
+
+                    console.log("THE STATUS");
+                    console.log(v.status);
                 });
 
 
 
-                console.log("order details");
-                console.log(order_details);
+                //console.log("order details");
+                //console.log(order_details);
+                // var settingHtml = '<a href="customer-edit.html?id='+34+'" class="link"><i class="icon f7-icons">settings</i></a>';
+                // $$(page.container).find('.page-content').find('#id-display-category').append(settingHtml);
 
                 $$.each(order_details, function(k, v) {
                         //console.log("the data");
@@ -654,6 +659,9 @@ $$(document).on('pageInit', function (e) {
                     //             .append($$('<tbody>'))
                     //         )
                     //     )
+
+                        //'<a href="customer-edit.html?id='+v.custID+'" class="link"><i class="icon f7-icons">settings</i></a>'+
+
                     var table = $$('<div>').attr('class', "data-table data-table-init card")
                         .append($$('<div>').attr('class', "card-header")
                             .append($$('<span>').text("Type : "+v.serviceType.capitalize()+""))
@@ -1073,6 +1081,8 @@ $$(document).on('pageInit', function (e) {
     }
 
     if(page.name == 'order-add-page') {
+
+        myApp.showPreloader('Checking connection.');
         localStorage.clear();
 
         //localStorage.clear();
@@ -1244,6 +1254,7 @@ $$(document).on('pageInit', function (e) {
                                 var filterServiceId = local_service_ids.filter(function(e) {return e !== data_bind_service_id} );
                                 localStorage.setItem("service_ids", JSON.stringify(filterServiceId));
                                 $$("#"+parent).remove();
+                                calculateGrandTotal(service_ids);
                             }
                             return false;
                         });
@@ -1251,18 +1262,23 @@ $$(document).on('pageInit', function (e) {
 
                     //get categories
                     getCategories(this.value, the_id);
-                    var grand_total = $$('#grand-total').val();
 
                     $$("."+class_quantity).on('keyup', function(){
+                        //var grand_total = $$('#grand-total').val(432);
+                        //loop all services
                         var rate = $$(this).closest('li').next('li').next('li').find('input').val();
                         var total = rate * this.value;
                         $$(this).closest('li').next('li').next('li').next('li').find('input').val(total);
+                        //var result = +total + +grand_total;
+                         //$$('#grand-total').val(result);
+                        //var the_class = $$(this).parent().parent().parent().parent().parent().attr('id');
+                        var the_class = $$(this).next().attr('id');
+                        //console.log("the class", the_class);
 
-                        var result = +total + +grand_total;
-                        $$('#grand-total').val(result);
+                        //remove-id-remove-more-3regular
+                        calculateGrandTotal(service_ids);
                     });
 
-                    //calculateGrandTotal();
 
                 });
             });
@@ -1361,6 +1377,76 @@ $$(document).on('pageInit', function (e) {
     }
     if(page.name == 'order-list-page') {
         console.log("load order list page");
+        var from_date = "";
+        var to_date = "";
+        var date = "";
+
+        var calendarFrom = myApp.calendar({
+            input: '#created-calendar-from',
+            dateFormat: 'M dd yyyy',
+            onClose: function(){
+
+                if(typeof(calendarFrom.value) != "undefined")
+                {
+                    var from_day = calendarFrom.value[0].getDate();
+                    var from_month = calendarFrom.value[0].getMonth() + 1;
+                    var from_year = calendarFrom.value[0].getFullYear();
+                    from_date = from_year+"-"+from_month+"-"+from_day;
+                    date = from_date+":"+to_date;
+                    //console.log("from date");
+                    //console.log(date);
+                    getOrderDate(page, date,1);
+                }
+                else {
+                    console.log("not null");
+                }
+
+
+                //getOrderDate(data);
+
+
+            }
+        });
+
+        var calendarTo = myApp.calendar({
+            input: '#created-calendar-to',
+            dateFormat: 'M dd yyyy',
+            onClose: function(){
+                if(typeof(calendarTo.value) != "undefined")
+                {
+                    var to_day = calendarTo.value[0].getDate();
+                    var to_month = calendarTo.value[0].getMonth() + 1;
+                    var to_year = calendarTo.value[0].getFullYear();
+                    to_date = to_year+"-"+to_month+"-"+to_day;
+                    date = from_date+":"+to_date;
+                    //console.log("to date");
+                    //console.log(date);
+                    getOrderDate(page, date, 1);
+                }
+                else {
+                    console.log("empty this");
+                }
+
+            }
+        });
+
+        if(date === "") {
+
+            $$('#id-branch').val(branchName);
+            var today = new Date();
+            var dd = today.getDate();
+            var mm = today.getMonth()+1; //January is 0!
+            var yyyy = today.getFullYear();
+            if(dd<10) {
+                dd = '0'+dd
+            }
+            if(mm<10) {
+                mm = '0'+mm
+            }
+            today = yyyy+"-"+mm+"-"+dd;
+            date = today+":"+today;
+            getOrderDate(page, date, 1);
+        }
 
         //get order list
         $$('#id-add-order').on('click', function(){
@@ -1371,6 +1457,21 @@ $$(document).on('pageInit', function (e) {
     }
 });
 
+function calculateGrandTotal(service_ids)
+{
+    var sum = 0;
+    for(var i = 0; i < service_ids.length; i++) {
+        var ul_id = "#ul-class-"+service_ids[i];
+        if($$(ul_id).length) {
+
+            var ul = $$('#remove-id-remove-more-'+service_ids[i]+' > ul').attr('id');
+            var amount = $$('#'+ul+' li').next('li').next('li').next('li').find('input').val();
+            //console.log("the amount", amount);
+            sum += +amount;
+        }
+    }
+    $$("#grand-total").val(sum);
+}
 
 function removeDuplicateUsingSet(arr){
     let unique_array = Array.from(new Set(arr))
@@ -1683,11 +1784,15 @@ function getOrderDate(page, date, status)
                 $$.each(data.data, function(k, v) {
 
                     listHTML += '<li>';
-                    if(status == 4) {
-                        listHTML += '<a href="about.html?id=' + v.order_id + '" class="item-link item-content">';
+                    //listHTML += '<a href="about.html?id=' + v.order_id + '" class="item-link item-content">';
+                    // if(status == 4) {
+                    //     listHTML += '<a href="about.html?id=' + v.order_id + '" class="item-link item-content">';
+                    // }
+                    if(status == 5) {
+                         listHTML += '<a href="about-history.html?id='+ v.order_id +'" class="item-link item-content">';
                     }
-                    else if(status == 5) {
-                        listHTML += '<a href="about-history.html?id='+ v.order_id +'" class="item-link item-content">';
+                    else {
+                        listHTML += '<a href="about.html?id=' + v.order_id + '" class="item-link item-content">';
                     }
                     listHTML += '<div class = "item-inner">';
                     listHTML += '<div class = "item-title-row">';
@@ -1695,7 +1800,6 @@ function getOrderDate(page, date, status)
                     listHTML += '<div class="item-after">'+v.date+'</div>';
                     listHTML += '</div>';
                     listHTML += '<div class="item-subtitle"> Branch : '+ v.branch_name +'</div>';
-                    listHTML += '<div class="item-text"> Service Type : '+ v.service_type+'</div>';
                     listHTML += '</div>';
                     listHTML += '</a>';
                     listHTML += '</li>';
@@ -2233,8 +2337,10 @@ function getServices(servinceID)
             //console.log(data);
             $$('meta[name="service_ids"]').attr("content", data_service_ids);
             $$('meta[name="service_types"]').attr("content", service_type_data);
-
-
+            myApp.hidePreloader();
+        },
+        error: function(exr){
+            console.log("ERROR REQUEST");
         }
     });
 }

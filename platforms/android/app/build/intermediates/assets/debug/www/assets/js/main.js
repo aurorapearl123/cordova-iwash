@@ -1073,6 +1073,8 @@ $$(document).on('pageInit', function (e) {
     }
 
     if(page.name == 'order-add-page') {
+
+        myApp.showPreloader('Checking connection.');
         localStorage.clear();
 
         //localStorage.clear();
@@ -1251,18 +1253,23 @@ $$(document).on('pageInit', function (e) {
 
                     //get categories
                     getCategories(this.value, the_id);
-                    var grand_total = $$('#grand-total').val();
 
                     $$("."+class_quantity).on('keyup', function(){
+                        //var grand_total = $$('#grand-total').val(432);
+                        //loop all services
                         var rate = $$(this).closest('li').next('li').next('li').find('input').val();
                         var total = rate * this.value;
                         $$(this).closest('li').next('li').next('li').next('li').find('input').val(total);
+                        //var result = +total + +grand_total;
+                         //$$('#grand-total').val(result);
+                        //var the_class = $$(this).parent().parent().parent().parent().parent().attr('id');
+                        var the_class = $$(this).next().attr('id');
+                        //console.log("the class", the_class);
 
-                        var result = +total + +grand_total;
-                        $$('#grand-total').val(result);
+                        //remove-id-remove-more-3regular
+                        calculateGrandTotal(service_ids);
                     });
 
-                    //calculateGrandTotal();
 
                 });
             });
@@ -1371,6 +1378,21 @@ $$(document).on('pageInit', function (e) {
     }
 });
 
+function calculateGrandTotal(service_ids)
+{
+    var sum = 0;
+    for(var i = 0; i < service_ids.length; i++) {
+        var ul_id = "#ul-class-"+service_ids[i];
+        if($$(ul_id).length) {
+
+            var ul = $$('#remove-id-remove-more-'+service_ids[i]+' > ul').attr('id');
+            var amount = $$('#'+ul+' li').next('li').next('li').next('li').find('input').val();
+            //console.log("the amount", amount);
+            sum += +amount;
+        }
+    }
+    $$("#grand-total").val(sum);
+}
 
 function removeDuplicateUsingSet(arr){
     let unique_array = Array.from(new Set(arr))
@@ -2233,8 +2255,10 @@ function getServices(servinceID)
             //console.log(data);
             $$('meta[name="service_ids"]').attr("content", data_service_ids);
             $$('meta[name="service_types"]').attr("content", service_type_data);
-
-
+            myApp.hidePreloader();
+        },
+        error: function(exr){
+            console.log("ERROR REQUEST");
         }
     });
 }
