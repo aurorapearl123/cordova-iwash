@@ -11,6 +11,7 @@
   <meta name="branchName" content="">
   <meta name="service_ids" content="">
   <meta name="categories" content="">
+  <meta name="service_types" content="">
   <meta name="dynamic_services" content="">
   <title>Iwash</title>
   <!-- REFERENCE CSS-->
@@ -38,7 +39,7 @@
             <a href="#" class="link" id="id-add-customer"> <i class="f7-icons color-default">persons</i></a>
           </span>
           <span id="span-order">
-            <a href="#" class="link" id="id-add-order"> <i class="f7-icons color-default">add_round_fill</i></a>
+            <a href="#" class="link" id="id-order-list"> <i class="f7-icons color-default">add_round_fill</i></a>
           </span>
           <a href="#" class="link" id="id-history"> <i class="icon icon-bars"></i></a>
 
@@ -588,9 +589,9 @@
   <div class = "views">
     <div class = "view view-main">
       <div class = "pages">
-        <form data-page = "order-add-page" class = "page navbar-fixed">
+        <form data-page = "order-add-page" class = "page navbar-fixed" id="id-form-add-order">
           <div class="page-content">
-            <form id="order-form" class="list-block">
+
             <div class="content-block-title">Labels and inputs</div>
             <div class="list-block">
               <ul>
@@ -657,16 +658,98 @@
               </li>
 
               </ul>
-              <div class="content-block-title">Grand total : <input type="number" id="grand-total"></div>
+
           </div>
-            </form>
+            <div class="content-block">
+                <div class="item-content">
+                    <div class="item-inner">
+                        <div class="item-title label">Grand Total</div>
+                        <div class="item-input">
+                            <input type="number" placeholder="" style="border:none" readonly id="grand-total">
+                        </div>
+                    </div>
+                </div>
+            <div class="item-content">
+                <div class="item-inner">
+                    <div class="item-title label">Remarks</div>
+                    <div class="item-input">
+                        <textarea id="remarks"></textarea>
+                    </div>
+                </div>
+            </div>
+              <a href="#" class="button button-fill button-raised" id="id-button-form-add-order">SUBMIT</a>
+            </div>
         </div>
         </form>
+
+
         <!-- end of page content -->
       </div>
     </div>
   </div>
 </script>
+
+
+<script type="text/template" id="id-page-order-list">
+    <div class = "views">
+        <div class = "view view-main">
+            <div class = "pages">
+                <div data-page = "order-list-page" class = "page navbar-fixed">
+                    <!-- start of page content -->
+                    <!-- Search Bar -->
+                    <form data-search-list=".list-block-search" data-search-in=".item-title" class="searchbar searchbar-init">
+                        <div class="searchbar-input">
+                            <input type="search" placeholder="Search"><a href="#" class="searchbar-clear"></a>
+                        </div><a href="#" class="searchbar-cancel">Cancel</a>
+                    </form>
+
+                    <!-- Search Bar overlay -->
+                    <div class="searchbar-overlay"></div>
+
+                    <div class="page-content pull-to-refresh-content" data-ptr-distance="55">
+
+                        <!-- Default pull to refresh layer-->
+                        <div class="pull-to-refresh-layer">
+                            <div class="preloader"></div>
+                            <div class="pull-to-refresh-arrow"></div>
+                        </div>
+
+                        <!-- This block will be displayed if nothing found -->
+                        <div class="content-block searchbar-not-found">
+                            <div class="content-block-inner">Nothing found</div>
+                        </div>
+
+                        <!-- This block will be displayed if anything found, and this list block is used a searbar target -->
+                        <div class="list-block list-block-search searchbar-found">
+                            <ul>
+                                <!--<li class="item-content">-->
+                                <!--<div class="item-inner">-->
+                                <!--<div class="item-title">Acura </div>-->
+                                <!--</div>-->
+                                <!--</li>-->
+                                <!--<li class="item-content">-->
+                                <!--<div class="item-inner">-->
+                                <!--<div class="item-title">Audi</div>-->
+                                <!--</div>-->
+                                <!--</li>-->
+
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Floating Action Button -->
+                    <a href="#" class="floating-button color-pink" id="id-add-order">
+                        <i class="icon icon-plus"></i>
+                    </a>
+                    <!-- end of page content -->
+                </div>
+
+            </div>
+        </div>
+    </div>
+</script>
+
+
 
 <script type="text/javascript" src="assets/js/framework7.min.js"></script>
 <script type="text/javascript" src="assets/js/main.js"></script>
