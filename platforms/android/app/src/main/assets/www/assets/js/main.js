@@ -19,7 +19,7 @@ var $$ = Dom7;
 
 //var base_url = 'http://192.168.84.2/iwash';
 
-// var  base_url = "http://192.168.1.44/iwash/";
+//var  base_url = "http://192.168.1.44/iwash/";
 
 var  base_url = "http://192.168.1.224/iwash/";
 
@@ -169,19 +169,17 @@ $$(document).on('pageInit', function (e) {
 
                         listHTML += '<li>';
                         listHTML += '<a href="about.html?id='+ v.order_id +'" class="item-link item-content">';
-                        listHTML += '<div class="item-media"><span class="moname">Sep<span class="moday">23</span></span></div>';
                         listHTML += '<div class = "item-inner">';
                         listHTML += '<div class = "item-title-row">';
                         listHTML += '<div class = "item-title">'+v.suffix+" "+ v.fname +" "+v.mname+" "+v.lname+'</div>';
-                        // listHTML += '<div class="item-after">'+v.date+'</div>';
+                        listHTML += '<div class="item-after">'+v.date+'</div>';
                         listHTML += '</div>';
-                        listHTML += '<div class="item-subtitle">'+ v.branch_name +'</div>';
-                        listHTML += '<div class="item-text">'+ v.service_type+'</div>';
+                        listHTML += '<div class="item-subtitle"> Branch : '+ v.branch_name +'</div>';
+                        listHTML += '<div class="item-text"> Service Type : '+ v.service_type+'</div>';
                         listHTML += '</div>';
                         listHTML += '</a>';
                         listHTML += '</li>';
 
-                        listHTML += '<li>';
                     });
 
                     listHTML += '</ul>';
@@ -226,6 +224,15 @@ $$(document).on('pageInit', function (e) {
             mainView.router.loadContent($$('#dashboard').html());
 
         });
+
+        //PLEASE MODIFY ME AFTER LIST ORDER
+        $$('#id-order-list').on('click', function(){
+            //console.log("order list");
+            mainView.router.loadContent($$('#id-page-order-list').html());
+
+            //mainView.router.loadContent($$('#id-add-order-page').html());
+        });
+
         $$('#id-logout').on('click', function(e){
 
             if(e.handled !== true) // This will prevent event triggering more then once
@@ -277,7 +284,7 @@ $$(document).on('pageInit', function (e) {
         // Append option
         //get province
         var provinceID = "";
-        var default_province = getProvince();
+        var default_province = getProvince(provinceID);
 
         console.log("get first value province");
         console.log(default_province);
@@ -312,7 +319,7 @@ $$(document).on('pageInit', function (e) {
                     // console.log("province id",provinceID);
                     // console.log("city id", this.value);
                     // console.log("you change city close me");
-                    getBarangay(provinceID, this.value);
+                    getBarangay(provinceID, this.value, "");
                 });
 
             });
@@ -392,6 +399,194 @@ $$(document).on('pageInit', function (e) {
 
         //myApp.smartSelectAddOption('#id-smart-select-city select', '<option value="jade">jade</option>');
     }
+
+    if(page.name == "customer-detail") {
+        var id = page.query.id;
+        customer_details(id, page);
+    }
+    if(page.name == 'customer-edit-page') {
+        console.log("customer edit page");
+
+        //myApp.showPreloader('Fetching data.');
+        var id = page.query.id;
+        var token= $$('meta[name="token"]').attr("content");
+        var url = base_url+"/api/customer-details/"+id;
+        var customer_data = [];
+        var profile = "";
+        var provinceID = "";
+        var cityID = "";
+        var barangayID = "";
+        $$.ajax({
+            type: "GET",
+            dataType: "json",
+            //url: 'http://192.168.1.224/iwash/api/customer',
+            url: url,
+            headers: {
+                'Authorization': token,
+            },
+            success: function (data) {
+                //console.log(data.data);
+                var formData = {};
+                $$.each(data.data, function(k,v){
+                    var isRegular = (v.isRegular == "N") ? "no" : "yes";
+                    profile = v.profile;
+                    formData = {
+                        'fname' : v.fname,
+                        'mname' : v.mname,
+                        'lname' : v.lname,
+                        'gender': v.gender,
+                        'suffix' : v.suffix,
+                        'title' : v.title,
+                        'contact' : v.contact,
+                        'address' : v.address,
+                        'bday' : v.bday,
+                        'isRegular' : ['yes'],
+                        'switch': ['yes'],
+                    }
+
+                    provinceID = v.provinceID;
+                    cityID = v.cityID;
+                    barangayID = v.barangayID;
+                });
+                var defaultImage = base_url+'/assets/img/users/noimage.gif';
+                //var picURL = v.profile;
+                var picURL = profile ? profile : defaultImage;
+                var image = document.getElementById('my-profile');
+                image.src = picURL;
+                $$("#profile-value").val(picURL);
+                myApp.formFromData('#customer-edit-form', formData);
+
+                //console.log("province this", provinceID);
+                //first cover smart-select picker, second cover full view
+                //$(document).on('click', '#ready',
+                var default_province = getProvince(provinceID);
+                //get cities
+                getCities(provinceID, cityID);
+                getBarangay(provinceID, cityID, barangayID);
+
+                //console.log("get first value province");
+                //console.log(default_province);
+                //myApp.smartSelectAddOption('#id-smart-select-province select', '<option value="jade">hey</option>');
+
+                //first cover smart-select picker, second cover full view
+                $$('#form_entry_province').on('change', function() {
+                    //console.log('Form entry item was changed was changed!');
+
+                    //detect if picker is closed after a selection is made for additional actions:
+                    $$('.picker-modal').on('close', function() {
+                        //console.log('Picker closed after selecting an item!');
+                        //additional actions here
+                        //var cars = [];
+                        $$('select[name="provinceID"] option:checked').each(function () {
+                            //get province and set select cities and barangay to zero
+                            console.log("get province clear cities");
+                            // $$('select[name="city"] option:checked').remove();
+                            //$$('select[name="barangay"] option:checked').remove();
+                            provinceID = this.value;
+
+                            getCities(provinceID, cityID);
+                            //myApp.smartSelectAddOption('#id-smart-select-city select', '<option value="jade">fuck</option>');
+                        });
+                    });
+                });
+
+                //cities picker
+                $$('#form_entry_city').on('change', function(){
+                    $$('.picker-modal').on('close', function(){
+                        $$('select[name="cityID"] option:checked').each(function(){
+                            // console.log("province id",provinceID);
+                            // console.log("city id", this.value);
+                            // console.log("you change city close me");
+                            getBarangay(provinceID, this.value, "");
+
+                        });
+
+                    });
+                });
+                //myApp.hidePreloader();
+
+                //myApp.smartSelectAddOption('#id-smart-select-province select', '<option value="apple" selected>Apple</option>', 0);
+                //myApp.smartSelectAddOption('#id-smart-select-province select', '<option value="'+v.provinceID+'">'+v.province+'</option>');
+
+            }
+        });
+
+        $$('#profile-image').on('click', function(){
+            myApp.modal({
+                title:  'Profile image',
+                text: 'Select camera or album',
+                buttons: [
+                    {
+                        text: 'CAMERA',
+                        onClick: function() {
+                            getImageFromCamera();
+                        }
+                    },
+                    {
+                        text: 'ALBUM',
+                        onClick: function() {
+                            getImageFromAlbum();
+                        }
+                    },
+                ]
+            });
+        });
+
+        //get image from camera
+        function getImageFromCamera() {
+            navigator.camera.getPicture(onSuccess, onFail, { quality: 25,
+                destinationType: Camera.DestinationType.DATA_URL,
+                targetWidth: 512,
+                targetHeight: 512,
+                //destinationType: Camera.PictureSourceType.PHOTOLIBRARY
+            });
+
+            function onSuccess(imageData) {
+                var image = document.getElementById('my-profile');
+                image.src = "data:image/jpeg;base64," + imageData;
+                $$("#profile-value").val("data:image/jpeg;base64," + imageData);
+            }
+
+            function onFail(message) {
+                alert('Failed because: ' + message);
+            }
+        }
+        //get image from album
+        function getImageFromAlbum() {
+            navigator.camera.getPicture(onSuccess, onFailure, {
+                destinationType: navigator.camera.DestinationType.DATA_URL,
+                sourceType: navigator.camera.PictureSourceType.PHOTOLIBRARY,
+                targetWidth: 512,
+                targetHeight: 512,
+            });
+        }
+
+        function onSuccess(imageURI) {
+            var image = document.getElementById('my-profile');
+            image.src = "data:image/jpeg;base64,"+imageURI;
+            $$("#profile-value").val("data:image/jpeg;base64,"+imageURI);
+
+        }
+
+        function onFailure(message) {
+            alert("Get image failed: " + message);
+        }
+
+        $$('#id-edit-customer').on('click', function(){
+            //alert("hello");
+
+            var formData = myApp.formToData('#customer-edit-form');
+            //alert(JSON.stringify(formData));
+            //var data = JSON.stringify(formData);
+            //console.log(data);
+            updateCustomer(formData, id);
+        });
+
+
+
+
+
+    }
     if(page.name == 'about') {
         console.log("this is about");
 
@@ -415,40 +610,17 @@ $$(document).on('pageInit', function (e) {
                     /// do stuff
 
                     //console.log(v.branch_name);
-                    listHTML = '<div class="list-block media-list mt-5 mb-0">';
-                    listHTML += '<ul class="profile bg-white">';
-                    listHTML += '<li>';
-                    listHTML += '<div class="item-content">';
-
-                    listHTML += '<div class="item-media py-15"><img src="http://192.168.1.224/iwash/assets/img/users/noimage.gif"></div>';
-                    listHTML += '<div class="item-inner">';
-
-                    listHTML += '<div class="item-title-row">';
-                    listHTML += '<div class="item-title">'+ v.suffix+" "+ v.fname +" "+v.mname+" "+v.lname+'</div>';
+                    listHTML = '<div class = "list-block cards-list">';
+                    listHTML += '<ul>';
+                    listHTML += '<li class = "card">';
+                    listHTML += '<div class = "card-header">'+ v.suffix+" "+ v.fname +" "+v.mname+" "+v.lname+'</div>';
+                    listHTML += '<div class = "card-content">';
+                    listHTML += '<div class = "card-content-inner">Branch :'+ v.branch_name +'</div>';
                     listHTML += '</div>';
-                    listHTML += '<div class="item-subtitle">'+ v.date +'</div>';
-
-                    listHTML += '</div>';
-
+                    listHTML += '<div class = "card-footer">'+ v.date +'</div>';
                     listHTML += '</div>';
                     listHTML += '</li>';
-
-                    listHTML += '</ul>';
-                    listHTML += '<ul class="services bg-white">';
-                    listHTML += '<li>';
-                    listHTML += '<div class="item-content">';
-
-                    listHTML += '<div class="item-inner">';
-
-                    listHTML += '<div class="item-title-row">';
-                    listHTML += '<div class="item-title">Service type :</div>';
                     listHTML += '</div>';
-                    listHTML += '<div class="item-subtitle">'+ v.service_type +'</div>';
-
-                    listHTML += '</div>';
-
-                    listHTML += '</div>';
-                    listHTML += '</li>';
                     listHTML += '</ul>';
                     listHTML += '</div>';
 
@@ -458,78 +630,142 @@ $$(document).on('pageInit', function (e) {
                     delivery_fee = v.deliveryFee;
                     rate = v.rate;
                     total_amount = v.ttlAmount;
+
+                    console.log("THE STATUS");
+                    console.log(v.status);
                 });
 
 
-                var myList = myApp.virtualList('.list-block.virtual-list', {
-                    // Array with items data
-                    items: [
 
-                    ],
-                    // Template 7 template to render each item
-                    template: '<li class="item-content">' +
-                    '<div class="item-media"><img src="{{picture}}"></div>' +
-                    '<div class="item-inner">' +
-                    '<div class="item-title">{{title}}</div>' +
-                    '</div>' +
-                    '</li>'
-                });
+                //console.log("order details");
+                //console.log(order_details);
+                // var settingHtml = '<a href="customer-edit.html?id='+34+'" class="link"><i class="icon f7-icons">settings</i></a>';
+                // $$(page.container).find('.page-content').find('#id-display-category').append(settingHtml);
 
-                $$.each(order_details, function(k, v){
-                    //console.log(v.category);
-                    if(v.qty == 0 ) {
+                $$.each(order_details, function(k, v) {
+                        //console.log("the data");
+                        //console.log(v.serviceType);
+                    var UNIT = v.unit;
+                    var REGULAR_RATE = v.regRate;
+                    var QUANTITY = v.qty;
+                    var AMOUNT = v.amount;
+                    var str = v.serviceType;
+                    str = str.replace(/ +/g, "");
+                    var the_id = v.serviceID+str;
 
-                    }
-                    else {
-                        if(v.category == 'pants') {
-                            myList.appendItem({
-                                title: v.category +" : "+ v.qty,
-                                picture: base_url+'/assets/img/mobile/'+v.category+'.png',
-                            });
-                        }
-                        else if(v.category == 'underwears') {
-                            myList.appendItem({
-                                title: v.category +" : "+ v.qty,
-                                picture: base_url+'/assets/img/mobile/'+v.category+'.png',
-                            });
-                        }
+                    // .append($$('<div>').attr('class', "card-content")
+                    //         .append($$('<table>').attr('id', 'order-table'+the_id)
+                    //             .append($$('<tr>').attr('id', 'tr-head'+the_id))
+                    //             .append($$('<tbody>'))
+                    //         )
+                    //     )
 
-                        else if(v.category == 'dress') {
-                            myList.appendItem({
-                                title: v.category +" : "+ v.qty,
-                                picture: base_url+'/assets/img/mobile/'+v.category+'.png',
-                            });
-                        }
+                        //'<a href="customer-edit.html?id='+v.custID+'" class="link"><i class="icon f7-icons">settings</i></a>'+
 
-                        else if(v.category == 'boxes') {
-                            myList.appendItem({
-                                title: v.category +" : "+ v.qty,
-                                picture: base_url+'/assets/img/mobile/'+v.category+'.png',
-                            });
-                        }
-                        else if(v.category == 'upperwears') {
-                            myList.appendItem({
-                                title: v.category +" : "+ v.qty,
-                                picture: base_url+'/assets/img/mobile/'+v.category+'.png',
-                            });
-                        }
-                        else {
-                            myList.appendItem({
-                                title: v.category +" : "+ v.qty,
-                                picture: base_url+'/assets/img/mobile/shopping.png',
-                            });
-                        }
+                    var table = $$('<div>').attr('class', "data-table data-table-init card")
+                        .append($$('<div>').attr('class', "card-header")
+                            .append($$('<span>').text("Type : "+v.serviceType.capitalize()+""))
+                        )
+                        .append($$('<div>').attr('class', "card-content")
+                            .append($$('<table>').attr('id', 'order-table'+the_id)
+                                .append($$('<tr>').attr('id', 'tr-head'+the_id))
+                                .append($$('<tbody>'))
+                            )
+                        )
+                            //quantity
+                            .append($$('<ul>')
+                                .append($$('<li>')
+                                    .append($$('<div>').attr('class', 'item-content')
+                                        .append($$('<div>').attr('class','item-inner')
+                                            .append($$('<div>').attr('class','item-title label').text("Quantity")
+                                                .append($$('<div>').attr('class', 'item-input')
+                                                    .append($$('<input>').attr('placeholder', "Please input Quantity").attr('type', 'number').attr('value', QUANTITY).attr('readonly', true).attr('style', 'border:none')
+                                                    )
+                                                )
+                                            )
+                                        )
+                                    )
+                                )
+                                //unit
+                                .append($$('<li>')
+                                    .append($$('<div>').attr('class', 'item-content')
+                                        .append($$('<div>').attr('class','item-inner')
+                                            .append($$('<div>').attr('class','item-title label').text("UNIT")
+                                                .append($$('<div>').attr('class', 'item-input')
+                                                    .append($$('<input>').attr('placeholder', "Unit").attr('value', UNIT).attr('readonly', true).attr('style', 'border:none'))
+                                                )
+                                            )
+                                        )
+                                    )
+                                )
+                                //rate
+                                .append($$('<li>')
+                                    .append($$('<div>').attr('class', 'item-content')
+                                        .append($$('<div>').attr('class','item-inner')
+                                            .append($$('<div>').attr('class','item-title label').text("RATE")
+                                                .append($$('<div>').attr('class', 'item-input')
+                                                    .append($$('<input>').attr('placeholder', "Rate").attr('value', REGULAR_RATE).attr('readonly', true).attr('style', 'border:none'))
+                                                )
+                                            )
+                                        )
+                                    )
+                                )
+                                //amount
+                                .append($$('<li>')
+                                    .append($$('<div>').attr('class', 'item-content')
+                                        .append($$('<div>').attr('class','item-inner')
+                                            .append($$('<div>').attr('class','item-title label').text("AMOUNT")
+                                                .append($$('<div>').attr('class', 'item-input')
+                                                    .append($$('<input>').attr('placeholder', "Amount").attr('readonly', true).attr('style','border:none').attr('class', 'my-amount').attr('value', AMOUNT))
+                                                )
+                                            )
+                                        )
+                                    )
+                                )
+                            );
 
-                    }}
-                );
+
+
+                        // $$.each(v.categories, function(value, index){
+                        //     console.log("the value");
+                        //     console.log(value.category);
+                        // });
+
+                        $$(page.container).find('.page-content').find('#id-display-category').append(table);
+
+                    //append table category
+                    //     console.log("THE CATEGORIES");
+                        // console.log(v.categories);
+                        v.categories.forEach(element => {
+                            console.log("the category");
+                            console.log(element.category);
+                            //console.log("the id", the_id);
+                            $$('#order-table'+the_id).find('#tr-head'+the_id).empty();
+                            $$('#order-table'+the_id).find('#tr-head'+the_id)
+                                .append($$('<th>').attr('class', 'numeric-cell').text('CATEGORY'))
+                                .append($$('<th>').attr('class', 'numeric-cell').text('QUANTITY'));
+                            var table = $$('#order-table'+the_id).find('tbody');
+                            table.append($$('<tr ">').attr('class', 'item')
+                                .append($$('<td>').attr('class', "label-cell").text(element.category.capitalize()))
+                                .append($$('<td>').attr('class', "numeric-cell")
+                                    .append($$('<input>').attr('value', element.qty).attr('type',"number").attr('class', 'quantity').css('background-color','#EFEFEF').attr('style', 'border:none').attr('readonly', true)))
+
+                            );
+                        });
+
+                        }
+                    );
+
+                //display category list
+
                 // set delivery fee
                 var delivery_fee_html = '<div class="list-block">'+
                                       '<ul>' +
                                         '<li class="item-content"> <div class="item-inner"> <div class="item-title"> Delivery Fee: '+delivery_fee+'</div></div>' +
-                                        '<li class="item-content"> <div class="item-inner"> <div class="item-title"> Rate : '+rate+'</div></div>' +
-                    '<li class="item-content"> <div class="item-inner"> <div class="item-title"> Total : '+total_amount+'</div></div>' +
+                                        '<li class="item-content"> <div class="item-inner"> <div class="item-title"> Total : '+total_amount+'</div></div>' +
                                         '</li>'+
                                       '</ul>';
+
 
                 $$(page.container).find('.page-content').find('#delivery-list').append(delivery_fee_html);
 
@@ -822,9 +1058,9 @@ $$(document).on('pageInit', function (e) {
                 // set delivery fee
                 var delivery_fee_html = '<div class="list-block">'+
                     '<ul>' +
-                    '<li class="item-content"> <div class="item-inner"><div class="item-title">Delivery Fee: '+delivery_fee+'</div></div>' +
-                    '<li class="item-content"> <div class="item-inner"><div class="item-title">Rate : '+rate+'</div></div>' +
-                    '<li class="item-content"> <div class="item-inner"><div class="item-title">Total : '+total_amount+'</div></div>' +
+                    '<li class="item-content"> <div class="item-inner"> <div class="item-title"> Delivery Fee: '+delivery_fee+'</div></div>' +
+                    '<li class="item-content"> <div class="item-inner"> <div class="item-title"> Rate : '+rate+'</div></div>' +
+                    '<li class="item-content"> <div class="item-inner"> <div class="item-title"> Total : '+total_amount+'</div></div>' +
                     '</li>'+
                     '</ul>'+
                     '<br>'+
@@ -844,70 +1080,403 @@ $$(document).on('pageInit', function (e) {
 
     }
 
-    if(page.name == "customer-detail") {
-        var id = page.query.id;
-        customer_details(id, page);
-    }
-    if(page.name == 'customer-edit-page') {
-        console.log("customer edit page");
-        var id = page.query.id;
-        var token= $$('meta[name="token"]').attr("content");
-        var url = base_url+"/api/customer-details/"+id;
-        var customer_data = [];
-        var profile = "";
-        $$.ajax({
-            type: "GET",
-            dataType: "json",
-            //url: 'http://192.168.1.224/iwash/api/customer',
-            url: url,
-            headers: {
-                'Authorization': token,
-            },
-            success: function (data) {
-                //console.log(data.data);
-                var formData = {};
-                $$.each(data.data, function(k,v){
-                    var isRegular = (v.isRegular == "N") ? "no" : "yes";
-                    profile = v.profile;
-                    formData = {
-                        'fname' : v.fname,
-                        'mname' : v.mname,
-                        'lname' : v.lname,
-                        'gender': v.gender,
-                        'suffix' : v.suffix,
-                        'title' : v.title,
-                        'contact' : v.contact,
-                        'address' : v.address,
-                        'bday' : v.bday,
-                        'isRegular' : ['yes'],
-                        'switch': ['yes'],
+    if(page.name == 'order-add-page') {
+
+        myApp.showPreloader('Checking connection.');
+        localStorage.clear();
+
+        //localStorage.clear();
+
+        var dynamic_services = "";
+
+
+
+        //console.log("get customer");
+        var branchName = $$('meta[name="branchName"]').attr("content");
+        getServices("");
+        $$('#id-branch').val(branchName);
+        var today = new Date();
+        var dd = today.getDate();
+        var mm = today.getMonth()+1; //January is 0!
+        var yyyy = today.getFullYear();
+        if(dd<10) {
+            dd = '0'+dd
+        }
+        if(mm<10) {
+            mm = '0'+mm
+        }
+        today = yyyy+"-"+mm+"-"+dd;
+        $$('#id-date').val(today);
+        getCustomerSmartSelect();
+        //get the local storage
+        var service_id = "";
+        $$('#id-click-services').on('click', function(){
+            dynamic_services = JSON.parse(localStorage.getItem("service_ids"));
+            //console.log("on change");
+            //console.log(dynamic_services);
+        });
+        //get service type
+        $$('#form_entry_services').on('change', function() {
+
+            //detect if picker is closed after a selection is made for additional actions:
+            $$('.picker-modal').on('close', function() {
+                //console.log('Picker closed after selecting an item!');
+                //additional actions here
+                //var cars = [];
+                $$('select[name="serviceID"] option:checked').each(function () {
+
+                    if(dynamic_services) {
+                        for (var i = 0; i<dynamic_services.length; i++) {
+                            if(dynamic_services[i] == this.value) {
+                                myApp.alert("Already exist");
+                                return false;
+                            }
+                        }
+                        dynamic_services.push(this.value);
+                        localStorage.setItem("service_ids", JSON.stringify(dynamic_services));
                     }
+                    else {
+                        var ids = [];
+                        ids.push(this.value);
+                        localStorage.setItem("service_ids", JSON.stringify(ids));
+                    }
+                    //get services types
+                    var service_type = $$('meta[name="service_types"]').attr("content");
+                    var service_type = JSON.parse(service_type);
+                    //console.log("THE SERVICES TYPES");
+                    //console.log(service_type);
+                    var UNIT = "";
+                    var REGULAR_RATE = "";
+                    var DISCOUNTED_RATE = "";
+                    for(var i=0; i < service_type.length; i++) {
+                        if(service_type[i].serviceID == this.value) {
+                            UNIT = service_type[i].unit;
+                            DISCOUNTED_RATE = service_type[i].discountedRate;
+                            REGULAR_RATE = service_type[i].regRate;
+                        }
+                    }
+
+                    var str = this.text;
+                    str = str.replace(/ +/g, "");
+                    var the_id = this.value+str;
+                    var remove_more_id = "id-remove-more-"+this.value+str;
+                    var id_container = "remove-"+remove_more_id;
+                    var class_quantity = "quantity-"+this.value;
+                    var class_amount = "amount-"+this.value;
+                    var ul_id = "ul-class-"+this.value+str;
+                    $$(page.container).find('.list-block')
+                        .append($$('<div data-service-id="'+this.value+'">').attr('class', "data-table data-table-init card").attr('id', id_container)
+                            .append($$('<div>').attr('class', "card-header")
+                                .append($$('<span>').text("Type : "+this.text.capitalize()).attr('name',this.value))
+                                .append($$('<div>').attr('class', "data-table-links")
+                                    .append($$('<a>').attr('class', "link icon-only").attr('class', "icon f7-icons").attr('id', remove_more_id).text("trash"))
+                                )
+                            )
+                            .append($$('<div>').attr('class', "card-content")
+                                .append($$('<table>').attr('id', 'order-table'+the_id)
+                                    .append($$('<tr>').attr('id', 'tr-head'+the_id))
+                                    .append($$('<tbody>'))
+                                )
+                            )
+                            //quantity
+                            .append($$('<ul>').attr('id', ul_id)
+                                .append($$('<li>')
+                                    .append($$('<div>').attr('class', 'item-content')
+                                        .append($$('<div>').attr('class','item-inner')
+                                            .append($$('<div>').attr('class','item-title label').text("Quantity")
+                                                .append($$('<div>').attr('class', 'item-input')
+                                                    .append($$('<input>').attr('placeholder', "Please input Quantity").attr('type', 'number').attr('class', class_quantity)
+                                                    )
+                                                )
+                                            )
+                                        )
+                                    )
+                                )
+                                //unit
+                                .append($$('<li>')
+                                    .append($$('<div>').attr('class', 'item-content')
+                                        .append($$('<div>').attr('class','item-inner')
+                                            .append($$('<div>').attr('class','item-title label').text("UNIT")
+                                                .append($$('<div>').attr('class', 'item-input')
+                                                    .append($$('<input>').attr('placeholder', "Unit").attr('value', UNIT).attr('readonly', true).attr('style', 'border:none'))
+                                                )
+                                            )
+                                        )
+                                    )
+                                )
+                                //rate
+                                .append($$('<li>')
+                                    .append($$('<div>').attr('class', 'item-content')
+                                        .append($$('<div>').attr('class','item-inner')
+                                            .append($$('<div>').attr('class','item-title label').text("RATE")
+                                                .append($$('<div>').attr('class', 'item-input')
+                                                    .append($$('<input>').attr('placeholder', "Rate").attr('value', REGULAR_RATE).attr('readonly', true).attr('style', 'border:none'))
+                                                )
+                                            )
+                                        )
+                                    )
+                                )
+                                //amount
+                                .append($$('<li>')
+                                    .append($$('<div>').attr('class', 'item-content')
+                                        .append($$('<div>').attr('class','item-inner')
+                                            .append($$('<div>').attr('class','item-title label').text("AMOUNT")
+                                                .append($$('<div>').attr('class', 'item-input')
+                                                    .append($$('<input>').attr('placeholder', "Amount").attr('readonly', true).attr('style','border:none').attr('class', class_amount).attr('class', 'my-amount'))
+                                                )
+                                            )
+                                        )
+                                    )
+                                )
+                            )
+                        );
+
+                    //getCategories(this.value);
+                    service_id = this.value;
+                    var SERVICE_TYPE = this.text;
+                    var service_ids = $$('meta[name="service_ids"]').attr("content");
+
+                    var service_ids = JSON.parse(service_ids);
+                    for(var i =0; i<service_ids.length; i++)
+                    {
+                        var id = "#id-remove-more-"+service_ids[i];
+                        //var remove_id = "remove-id-remove-more-"+service_ids[i];
+                        $$(id).on("click", function(){
+                            console.log("remove");
+                            var parent = $$(this).parent().parent().parent().attr("id");
+                            var id = $$(this).attr('id');
+                            //console.log("parent : ", parent);
+                            //console.log("id : ", id);
+                            if("remove-"+id == parent) {
+                                var data_bind_service_id = $$(this).parent().parent().parent().data('service-id');
+                                //update local storage
+                                var local_service_ids  = JSON.parse(localStorage.getItem("service_ids"));
+                                var filterServiceId = local_service_ids.filter(function(e) {return e !== data_bind_service_id} );
+                                localStorage.setItem("service_ids", JSON.stringify(filterServiceId));
+                                $$("#"+parent).remove();
+                                calculateGrandTotal(service_ids);
+                            }
+                            return false;
+                        });
+                    }
+
+                    //get categories
+                    getCategories(this.value, the_id);
+
+                    $$("."+class_quantity).on('keyup', function(){
+                        //var grand_total = $$('#grand-total').val(432);
+                        //loop all services
+                        var rate = $$(this).closest('li').next('li').next('li').find('input').val();
+                        var total = rate * this.value;
+                        $$(this).closest('li').next('li').next('li').next('li').find('input').val(total);
+                        //var result = +total + +grand_total;
+                         //$$('#grand-total').val(result);
+                        //var the_class = $$(this).parent().parent().parent().parent().parent().attr('id');
+                        var the_class = $$(this).next().attr('id');
+                        //console.log("the class", the_class);
+
+                        //remove-id-remove-more-3regular
+                        calculateGrandTotal(service_ids);
+                    });
+
+
                 });
+            });
+        });
 
-                var image = document.getElementById('my-profile');
-                image.src = profile;
-                console.log("this is profile");
-                console.log(profile);
-                //$$("#profile-value").val("data:image/jpeg;base64,"+imageURI);
+        $$('#id-button-form-add-order').on('click', function(){
 
-                console.log("this is data this");
-                console.log(formData);
-                myApp.formFromData('#customer-edit-form', formData);
+            //check for table services id
+            var service_ids = $$('meta[name="service_ids"]').attr("content");
+
+            var service_ids = JSON.parse(service_ids);
+            var data = [];
+            var category_data = [];
+            for(var i =0; i<service_ids.length; i++) {
+                // console.log("the id");
+                //console.log(service_ids[i]);
+                //var data_bind_service_id = $$(this).closest('table').parent().parent().data('service-id');
+                //get the service ids
+                var the_id = $$('#remove-id-remove-more-'+service_ids[i]).attr('id');
+                if (typeof the_id != 'undefined') {
+                    //console.log("the id",the_id);
+                    var ul = $$('#remove-id-remove-more-'+service_ids[i]+' > ul').attr('id');
+                    var unit = $$('#'+ul+' li').next('li').find('input').val();
+                    var quantity = $$('#'+ul+' li').find('input').val();
+                    var rate = $$('#'+ul+' li').next('li').next('li').find('input').val();
+                    var amount = $$('#'+ul+' li').next('li').next('li').next('li').find('input').val();
+                    var data_bind = $$('#remove-id-remove-more-'+service_ids[i]).data('service-id');
+                    //GET THE CATEGORY
+                    var table_id = "#order-table"+service_ids[i];
+                    // //console.log("the id", the_id);
+                    $$(''+table_id+' > tbody > tr.item').each(function(index, element) {
+                        var data_bind_table = $$(this).data('service-id');
+                        //console.log("SERVICE ID BIND: ", data_bind_table);
+                        var category_quantity = $$(this).find("input.quantity").val();
+                        var category_id = $$(this).find("input.category_id").val();
+                        //console.log("category_quantity", category_quantity);
+
+                        category_data.push({
+                            service_id : data_bind_table,
+                            category_quantity: category_quantity,
+                            category_id : category_id
+                        });
+                    });
+                    data.push({
+                        service_id : data_bind,
+                        amount: amount,
+                        unit : unit,
+                        rate : rate,
+                        quantity: quantity,
+                    });
+                    // console.log("UNIT", unit);
+                    // console.log("QUANTITY", quantity);
+                    // console.log("RATE", rate);
+                    // console.log("AMOUNT", amount);
+                    // console.log("SERVINCE-ID", data_bind);
+                }
+
+            }
+
+            if(data.length == 0) {
+                myApp.alert("Please add services");
+            }
+            else {
+                //console.log("THE DATA");
+                //console.log(data[0].quantity);
+                for(var i = 0; i < data.length; i++){
+                    if(data[i].quantity == "") {
+                        myApp.alert("Please add Quantity");
+                        return false;
+                    }
+                }
+                // console.log("data");
+                // console.log(data);
+                // console.log("CATEGORIES");
+                // console.log(category_data);
+                //console.log("service ids");
+                //console.log(data_service_ids);
+                //console.log("service quantity");
+                //console.log(removeDuplicateUsingSet(quantities));
+                //console.log(data);
+                var customer_id = $$('#form_entry_customer').val();
+                var grand_total = $$('#grand-total').val();
+                var remarks = $$('#remarks').val();
+                if(customer_id == "") {
+                    myApp.alert("Please add Customer");
+                    return false;
+                }
+                console.log(category_data);
+                //console.log("customer id", customer_id);
+                createOrder(data, grand_total, customer_id, remarks, category_data);
+            }
+
+            //createOrder(formData, 1);
+        });
+
+    }
+    if(page.name == 'order-list-page') {
+        console.log("load order list page");
+        var from_date = "";
+        var to_date = "";
+        var date = "";
+
+        var calendarFrom = myApp.calendar({
+            input: '#created-calendar-from',
+            dateFormat: 'M dd yyyy',
+            onClose: function(){
+
+                if(typeof(calendarFrom.value) != "undefined")
+                {
+                    var from_day = calendarFrom.value[0].getDate();
+                    var from_month = calendarFrom.value[0].getMonth() + 1;
+                    var from_year = calendarFrom.value[0].getFullYear();
+                    from_date = from_year+"-"+from_month+"-"+from_day;
+                    date = from_date+":"+to_date;
+                    //console.log("from date");
+                    //console.log(date);
+                    getOrderDate(page, date,1);
+                }
+                else {
+                    console.log("not null");
+                }
+
+
+                //getOrderDate(data);
+
+
             }
         });
 
-        // var formData = {
-        //     'name': 'John',
-        //     'email': 'john@doe.com',
-        //     'gender': 'female',
-        //     'switch': ['yes'],
-        //     'slider': 10
-        // }
+        var calendarTo = myApp.calendar({
+            input: '#created-calendar-to',
+            dateFormat: 'M dd yyyy',
+            onClose: function(){
+                if(typeof(calendarTo.value) != "undefined")
+                {
+                    var to_day = calendarTo.value[0].getDate();
+                    var to_month = calendarTo.value[0].getMonth() + 1;
+                    var to_year = calendarTo.value[0].getFullYear();
+                    to_date = to_year+"-"+to_month+"-"+to_day;
+                    date = from_date+":"+to_date;
+                    //console.log("to date");
+                    //console.log(date);
+                    getOrderDate(page, date, 1);
+                }
+                else {
+                    console.log("empty this");
+                }
+
+            }
+        });
+
+        if(date === "") {
+
+            $$('#id-branch').val(branchName);
+            var today = new Date();
+            var dd = today.getDate();
+            var mm = today.getMonth()+1; //January is 0!
+            var yyyy = today.getFullYear();
+            if(dd<10) {
+                dd = '0'+dd
+            }
+            if(mm<10) {
+                mm = '0'+mm
+            }
+            today = yyyy+"-"+mm+"-"+dd;
+            date = today+":"+today;
+            getOrderDate(page, date, 1);
+        }
+
+        //get order list
+        $$('#id-add-order').on('click', function(){
+            //console.log("add order");
+            mainView.router.loadContent($$('#id-add-order-page').html());
+        });
 
     }
-
 });
 
+function calculateGrandTotal(service_ids)
+{
+    var sum = 0;
+    for(var i = 0; i < service_ids.length; i++) {
+        var ul_id = "#ul-class-"+service_ids[i];
+        if($$(ul_id).length) {
+
+            var ul = $$('#remove-id-remove-more-'+service_ids[i]+' > ul').attr('id');
+            var amount = $$('#'+ul+' li').next('li').next('li').next('li').find('input').val();
+            //console.log("the amount", amount);
+            sum += +amount;
+        }
+    }
+    $$("#grand-total").val(sum);
+}
+
+function removeDuplicateUsingSet(arr){
+    let unique_array = Array.from(new Set(arr))
+    return unique_array
+}
 function update_order_details(id, signature)
 {
 
@@ -971,8 +1540,10 @@ $$('#login').on('click', function(){
 
             $$('meta[name="token"]').attr("content", data.data.token);
             $$('meta[name="user_group"]').attr("content", data.data.groupName);
+            $$('meta[name="branchName"]').attr("content", data.data.branchName);
             //var meta = $$('meta[name="token"]').attr("content");
             //console.log(meta);
+            localStorage.clear();
 
             myApp.closeModal('.login-screen',true);
             mainView.router.loadContent($$('#dashboard').html());
@@ -1038,14 +1609,13 @@ function refreshData(date, page, status)
 
                 listHTML += '<li>';
                 listHTML += '<a href="about.html?id='+ v.order_id +'" class="item-link item-content">';
-                listHTML += '<div class="item-media"><span class="moname">Sep<span class="moday">23</span></span></div>';
                 listHTML += '<div class = "item-inner">';
                 listHTML += '<div class = "item-title-row">';
                 listHTML += '<div class = "item-title">'+v.suffix+" "+ v.fname +" "+v.mname+" "+v.lname+'</div>';
-                // listHTML += '<div class="item-after">'+v.date+'</div>';
+                listHTML += '<div class="item-after">'+v.date+'</div>';
                 listHTML += '</div>';
-                listHTML += '<div class="item-subtitle">'+ v.branch_name +'</div>';
-                listHTML += '<div class="item-text">'+ v.service_type+'</div>';
+                listHTML += '<div class="item-subtitle"> Branch : '+ v.branch_name +'</div>';
+                listHTML += '<div class="item-text"> Service Type : '+ v.service_type+'</div>';
                 //listHTML += '<div class = "card-footer"><a href="about.html?id='+ v.order_id +'" class="link">View Details</a></div>';
                 listHTML += '</div>';
                 listHTML += '</a>';
@@ -1105,14 +1675,13 @@ function refreshDataHistory(date, page, status)
 
                 listHTML += '<li>';
                 listHTML += '<a href="about-history.html?id='+ v.order_id +'" class="item-link item-content">';
-                listHTML += '<div class="item-media"><span class="moname">Sep<span class="moday">23</span></span></div>';
                 listHTML += '<div class = "item-inner">';
                 listHTML += '<div class = "item-title-row">';
                 listHTML += '<div class = "item-title">'+v.suffix+" "+ v.fname +" "+v.mname+" "+v.lname+'</div>';
-                // listHTML += '<div class="item-after">'+v.date+'</div>';
+                listHTML += '<div class="item-after">'+v.date+'</div>';
                 listHTML += '</div>';
-                listHTML += '<div class="item-subtitle">'+ v.branch_name +'</div>';
-                listHTML += '<div class="item-text">'+ v.service_type+'</div>';
+                listHTML += '<div class="item-subtitle"> Branch : '+ v.branch_name +'</div>';
+                listHTML += '<div class="item-text"> Service Type : '+ v.service_type+'</div>';
                 //listHTML += '<div class = "card-footer"><a href="about.html?id='+ v.order_id +'" class="link">View Details</a></div>';
                 listHTML += '</div>';
                 listHTML += '</a>';
@@ -1215,20 +1784,22 @@ function getOrderDate(page, date, status)
                 $$.each(data.data, function(k, v) {
 
                     listHTML += '<li>';
-                    if(status == 4) {
+                    //listHTML += '<a href="about.html?id=' + v.order_id + '" class="item-link item-content">';
+                    // if(status == 4) {
+                    //     listHTML += '<a href="about.html?id=' + v.order_id + '" class="item-link item-content">';
+                    // }
+                    if(status == 5) {
+                         listHTML += '<a href="about-history.html?id='+ v.order_id +'" class="item-link item-content">';
+                    }
+                    else {
                         listHTML += '<a href="about.html?id=' + v.order_id + '" class="item-link item-content">';
                     }
-                    else if(status == 5) {
-                        listHTML += '<a href="about-history.html?id='+ v.order_id +'" class="item-link item-content">';
-                    }
-                    listHTML += '<div class="item-media"><span class="moname">Sep<span class="moday">23</span></span></div>';
                     listHTML += '<div class = "item-inner">';
                     listHTML += '<div class = "item-title-row">';
                     listHTML += '<div class = "item-title">'+v.suffix+" "+ v.fname +" "+v.mname+" "+v.lname+'</div>';
-                    // listHTML += '<div class="item-after">'+v.date+'</div>';
+                    listHTML += '<div class="item-after">'+v.date+'</div>';
                     listHTML += '</div>';
-                    listHTML += '<div class="item-subtitle">'+ v.branch_name +'</div>';
-                    listHTML += '<div class="item-text color-blue">'+ v.service_type +'</div>';
+                    listHTML += '<div class="item-subtitle"> Branch : '+ v.branch_name +'</div>';
                     listHTML += '</div>';
                     listHTML += '</a>';
                     listHTML += '</li>';
@@ -1294,7 +1865,7 @@ function resetData(page, token)
                     listHTML += '<div class = "item-title">'+v.suffix+" "+ v.fname +" "+v.mname+" "+v.lname+'</div>';
                     listHTML += '<div class="item-after">'+v.date+'</div>';
                     listHTML += '</div>';
-                    listHTML += '<div class="item-subtitle">'+ v.branch_name +'</div>';
+                    listHTML += '<div class="item-subtitle"> Branch : '+ v.branch_name +'</div>';
                     listHTML += '<div class="item-text"> Service Type : '+ v.service_type+'</div>';
                     listHTML += '</div>';
                     listHTML += '</a>';
@@ -1351,14 +1922,13 @@ function getDefaultHistoryList(page, token, url)
 
                     listHTML += '<li>';
                     listHTML += '<a href="about-history.html?id='+ v.order_id +'" class="item-link item-content">';
-                    listHTML += '<div class="item-media"><span class="moname">Sep<span class="moday">23</span></span></div>';
                     listHTML += '<div class = "item-inner">';
                     listHTML += '<div class = "item-title-row">';
                     listHTML += '<div class = "item-title">'+v.suffix+" "+ v.fname +" "+v.mname+" "+v.lname+'</div>';
-                    // listHTML += '<div class="item-after">'+v.date+'</div>';
+                    listHTML += '<div class="item-after">'+v.date+'</div>';
                     listHTML += '</div>';
-                    listHTML += '<div class="item-subtitle">'+ v.branch_name +'</div>';
-                    listHTML += '<div class="item-text">'+ v.service_type+'</div>';
+                    listHTML += '<div class="item-subtitle"> Branch : '+ v.branch_name +'</div>';
+                    listHTML += '<div class="item-text"> Service Type : '+ v.service_type+'</div>';
                     listHTML += '</div>';
                     listHTML += '</a>';
                     listHTML += '</li>';
@@ -1385,31 +1955,14 @@ function getDefaultHistoryList(page, token, url)
 function customerPullToRefresh(ptrContent)
 {
 
-    // Dummy Content
-    var songs = ['Yellow Submarine', 'Don\'t Stop Me Now', 'Billie Jean', 'Californication'];
-    var authors = ['Beatles', 'Queen', 'Michael Jackson', 'Red Hot Chili Peppers'];
-    // Random image
-    var picURL = 'http://localhost/iwash/assets/img/users/noimage.gif';
-    // Random song
-    var song = songs[Math.floor(Math.random() * songs.length)];
-    // Random author
-    var author = authors[Math.floor(Math.random() * authors.length)];
-    // List item html
-    var itemHTML = '<li class="item-content">' +
-        '<div class="item-media"><img src="' + picURL + '" width="44"/></div>' +
-        '<div class="item-inner">' +
-        '<div class="item-title-row">' +
-        '<div class="item-title">' + song + '</div>' +
-        '</div>' +
-        '<div class="item-subtitle">' + author + '</div>' +
-        '</div>' +
-        '</li>';
-    // Prepend new list element
-    ptrContent.find('ul').prepend(itemHTML);
+    ptrContent.find('ul').empty();
+    getCustomer(ptrContent);
+
 }
 
 function getCustomer(ptrContent)
 {
+
     var token= $$('meta[name="token"]').attr("content");
 
     var url = base_url+"/api/customer";
@@ -1433,7 +1986,7 @@ function getCustomer(ptrContent)
                 //var songs = v.fname ;
                 //var authors = ['Beatles', 'Queen', 'Michael Jackson', 'Red Hot Chili Peppers'];
                 // Random image
-                var defaultImage = 'http://192.168.1.224/iwash/assets/img/users/noimage.gif';
+                var defaultImage = base_url+'/assets/img/users/noimage.gif';
                 //var picURL = v.profile;
                 var picURL = v.profile ? v.profile : defaultImage;
                 //var picURL = v.profile;
@@ -1441,18 +1994,17 @@ function getCustomer(ptrContent)
                 var song = v.fname+" "+v.mname+" "+v.lname;
                 // Random author
                 var author = v.title;
-                var itemHTML = '<li>' +
-                    '<a href="customer-detail.html?id='+ v.custID +'"class="item-link item-content">'+
+                var itemHTML = '<a href="customer-detail.html?id='+v.custID+'" class="item-link">'+
+                    '<li class="item-content">' +
                     '<div class="item-media"><img src="' + picURL + '" width="44"/></div>' +
                     '<div class="item-inner">' +
                     '<div class="item-title-row">' +
                     '<div class="item-title">' + song + '</div>' +
                     '</div>' +
-                    '<div class="item-subtitle"> +63 923 5410 912</div>' +
-                    // '<div class="item-subtitle">' + author + '</div>' +
+                    '<div class="item-subtitle">' + author + '</div>' +
                     '</div>' +
-                    '</a>' +
-                    '</li>';
+                    '</li>'+
+                    '</a>';
                 // Prepend new list element
                 ptrContent.find('ul').prepend(itemHTML);
             });
@@ -1465,9 +2017,12 @@ function getCustomer(ptrContent)
     });
 }
 
-function getProvince()
+function getProvince(provinceID)
 {
 
+
+    console.log("THIS IS PROVINCE ID");
+    console.log(provinceID);
 
     var default_province_id = 0;
     var token= $$('meta[name="token"]').attr("content");
@@ -1493,7 +2048,13 @@ function getProvince()
                  //console.log("each");
                  //console.log(k);
                  //console.log(v.province);
-                myApp.smartSelectAddOption('#id-smart-select-province select', '<option value="'+v.provinceID+'">'+v.province+'</option>');
+                if(provinceID == v.provinceID) {
+                    myApp.smartSelectAddOption('#id-smart-select-province select', '<option value="' + v.provinceID + '" selected>' + v.province + '</option>');
+                }
+                else {
+                    myApp.smartSelectAddOption('#id-smart-select-province select', '<option value="' + v.provinceID + '">' + v.province + '</option>');
+                }
+                //myApp.smartSelectAddOption('#id-smart-select-province select', '<option value="apple" selected>Apple</option>');
                 // Dummy Content
             });
 
@@ -1506,7 +2067,7 @@ function getProvince()
     //return default_province_id;
 }
 
-function getCities(provinceID)
+function getCities(provinceID, cityID)
 {
 
     var token= $$('meta[name="token"]').attr("content");
@@ -1522,13 +2083,18 @@ function getCities(provinceID)
         success: function (data) {
 
             $$.each(data.data, function(k, v) {
-                myApp.smartSelectAddOption('#id-smart-select-city select', '<option value="'+v.cityID+'">'+v.city+'</option>');
+                if(cityID == v.cityID) {
+                    myApp.smartSelectAddOption('#id-smart-select-city select', '<option value="' + v.cityID + '" selected>' + v.city + '</option>');
+                }
+                else {
+                    myApp.smartSelectAddOption('#id-smart-select-city select', '<option value="' + v.cityID + '">' + v.city + '</option>');
+                }
             });
         }
     });
 }
 
-function getBarangay(provinceID, cityID)
+function getBarangay(provinceID, cityID, barangayID)
 {
     console.log("provinceID",provinceID);
     console.log("city id",cityID);
@@ -1547,7 +2113,12 @@ function getBarangay(provinceID, cityID)
         success: function (data) {
             $$.each(data.data, function(k, v) {
                 //myApp.smartSelectAddOption('#id-smart-select-city select', '<option value="'+v.cityID+'">'+v.city+'</option>');
-                myApp.smartSelectAddOption('#id-smart-select-barangay select', '<option value="'+v.barangayID+'">'+v.barangay+'</option>');
+                if(barangayID == v.barangayID) {
+                    myApp.smartSelectAddOption('#id-smart-select-barangay select', '<option value="' + v.barangayID + '" selected>' + v.barangay + '</option>');
+                }
+                else {
+                    myApp.smartSelectAddOption('#id-smart-select-barangay select', '<option value="' + v.barangayID + '">' + v.barangay + '</option>');
+                }
             });
         }
     });
@@ -1563,7 +2134,7 @@ function addCustomer(data)
 
     var url = base_url+"/api/customer";
 
-    myApp.showPreloader('Saving to server.')
+    myApp.showPreloader('Saving to server.');
     setTimeout(function () {
         $$.ajax({
             type: "POST",
@@ -1665,7 +2236,7 @@ function delete_customer(id){
                 'Authorization': token,
             },
             success: function (data) {
-                console.log(data);
+                //console.log(data);
 
                 mainView.router.loadContent($$('#id-customer-page').html());
             },
@@ -1676,3 +2247,189 @@ function delete_customer(id){
         });
     });
 }
+
+function updateCustomer(data, id) {
+
+    myApp.confirm('Do you want to update this customer?', function () {
+
+        var token= $$('meta[name="token"]').attr("content");
+
+        var url = base_url+"/api/customer-update/"+id;
+        $$.ajax({
+            type: "PUT",
+            url: url,
+            headers: {
+                'Authorization': token,
+            },
+            data: data,
+            success: function (data) {
+                //console.log(data);
+
+                mainView.router.loadContent($$('#id-customer-page').html());
+            },
+            error: function(xhr) {
+                console.log("error delete");
+                console.log(xhr);
+            }
+        });
+    });
+}
+
+function getCustomerSmartSelect()
+{
+
+    var token= $$('meta[name="token"]').attr("content");
+
+    var url = base_url+"/api/customer";
+    $$.ajax({
+        type: "GET",
+        dataType: "json",
+        //url: 'http://192.168.1.224/iwash/api/customer',
+        url: url,
+        headers: {
+            'Authorization': token,
+        },
+        success: function (data) {
+            //console.log("this is data");
+            //console.log(data.data);
+            //data = $$.parseJSON(data);
+            $$.each(data.data, function(k, v) {
+                myApp.smartSelectAddOption('#id-smart-select-customer select', '<option value="' + v.custID + '">' + v.fname +" "+v.mname+" "+v.lname+ '</option>');
+            });
+
+
+            //listHTML += '<a href="about-history.html?id='+ v.order_id +'" class="item-link item-content">';
+            // $$(page.container).find('.page-content').find('.list-block').find('ul').append(itemHTML);
+
+        }
+    });
+}
+
+function getServices(servinceID)
+{
+    var token= $$('meta[name="token"]').attr("content");
+
+    var url = base_url+"/api/services";
+    $$.ajax({
+        type: "GET",
+        dataType: "json",
+        //url: 'http://192.168.1.224/iwash/api/customer',
+        url: url,
+        headers: {
+            'Authorization': token,
+        },
+        success: function (data) {
+            //console.log("this is data");
+            //console.log(data.data);
+            //data = $$.parseJSON(data);
+            var services_ids = [];
+            $$.each(data.data, function(k, v) {
+                var str = v.serviceType;
+                str = str.replace(/ +/g, "");
+                services_ids.push(v.serviceID+str);
+                myApp.smartSelectAddOption('#id-smart-select-services select', '<option value="' + v.serviceID + '">' + v.serviceType +'</option>');
+            });
+
+
+
+            var data_service_ids = JSON.stringify(services_ids);
+            var service_type_data = JSON.stringify(data.data);
+            //console.log(data);
+            $$('meta[name="service_ids"]').attr("content", data_service_ids);
+            $$('meta[name="service_types"]').attr("content", service_type_data);
+            myApp.hidePreloader();
+        },
+        error: function(exr){
+            console.log("ERROR REQUEST");
+        }
+    });
+}
+
+
+function getCategories(serviceID, the_id)
+{
+    var token= $$('meta[name="token"]').attr("content");
+
+    var url = base_url+"/api/categories/"+serviceID;
+    $$.ajax({
+        type: "GET",
+        dataType: "json",
+        //url: 'http://192.168.1.224/iwash/api/customer',
+        url: url,
+        headers: {
+            'Authorization': token,
+        },
+        success: function (data) {
+
+
+            $$('#order-table'+the_id).find('#tr-head'+the_id).empty();
+            $$('#order-table'+the_id).find('#tr-head'+the_id)
+                .append($$('<th>').attr('class', 'numeric-cell').text('CATEGORY'))
+                .append($$('<th>').attr('class', 'numeric-cell').text('QUANTITY'));
+            var table = $$('#order-table'+the_id).find('tbody');
+
+            $$.each(data.data, function(k, v) {
+                //data-service-id="'+this.value+'">'
+                table.append($$('<tr data-service-id="'+serviceID+'">').attr('class', 'item')
+                    .append($$('<td>').attr('class', "label-cell").text(v.category.capitalize()))
+                    .append($$('<td>').attr('class', "numeric-cell")
+                        .append($$('<input>').attr('type',"number").attr('class', 'quantity').css('background-color','#EFEFEF')))
+                    .append($$('<td>').attr('class', "numeric-cell")
+                        .append($$('<input>').attr('type',"hidden").attr('class', 'category_id').attr('value', v.clothesCatID)))
+
+                );
+            });
+
+
+            var data_categories = JSON.stringify(data.data);
+            $$('meta[name="categories"]').attr("content", data_categories);
+
+        }
+    });
+}
+
+String.prototype.capitalize = function() {
+    return this.charAt(0).toUpperCase() + this.slice(1);
+}
+
+function createOrder(data, grand_total, customer_id, remarks, category_data)
+{
+    var token= $$('meta[name="token"]').attr("content");
+
+    var url = base_url+"/api/create-order";
+
+    myApp.showPreloader('Saving to server.');
+    setTimeout(function () {
+        $$.ajax({
+            type: "POST",
+            dataType: "json",
+            url: url,
+            headers: {
+                'Authorization': token,
+            },
+            data: { data: data, customer_id: customer_id, grand_total: grand_total, remarks: remarks, category_data: category_data},
+            success: function (data) {
+                myApp.hidePreloader();
+                console.log("result");
+                console.log(data);
+                //var result = JSON.parse(data.data);
+                //mainView.router.loadContent($$('#id-customer-page').html());
+                //myApp.alert(result);
+            },
+            error: function(xhr){
+                console.log("error creating customer");
+                myApp.hidePreloader();
+                console.log(xhr.responseText);
+                var error = JSON.parse(xhr.responseText);
+                myApp.alert(error.message, 'Error creating customer!');
+            }
+        });
+
+
+    }, 2000);
+}
+
+
+
+
+

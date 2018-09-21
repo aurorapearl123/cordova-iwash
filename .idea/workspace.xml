@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="949a967c-9d2a-43ae-914d-dc39b6c88e02" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config.xml" beforeDir="false" afterPath="$PROJECT_DIR$/config.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/platforms/android/app/src/main/assets/www/assets/js/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/android/app/src/main/assets/www/assets/js/main.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/www/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/www/index.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -27,11 +25,8 @@
       <file leaf-file-name="about.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/www/about.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1292">
-              <caret line="76" column="72" selection-start-line="76" selection-start-column="11" selection-end-line="76" selection-end-column="72" />
-              <folding>
-                <element signature="n#style#0;n#div#6;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-              </folding>
+            <state relative-caret-position="524">
+              <caret line="88" column="78" selection-start-line="89" selection-end-line="90" />
             </state>
           </provider>
         </entry>
@@ -39,8 +34,8 @@
       <file leaf-file-name="about-history.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/www/about-history.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1326">
-              <caret line="78" column="35" selection-end-line="92" />
+            <state relative-caret-position="867">
+              <caret line="51" column="70" selection-start-line="51" selection-start-column="70" selection-end-line="51" selection-end-column="70" />
             </state>
           </provider>
         </entry>
@@ -57,38 +52,18 @@
       <file leaf-file-name="my-app.css" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/www/assets/css/my-app.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="289">
-              <caret line="17" column="1" selection-start-line="17" selection-start-column="1" selection-end-line="17" selection-end-column="1" />
+            <state relative-caret-position="4964">
+              <caret line="292" column="1" selection-start-line="292" selection-start-column="1" selection-end-line="292" selection-end-column="1" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="main.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="main.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/www/assets/js/main.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="391">
-              <caret line="23" column="37" selection-start-line="23" selection-start-column="34" selection-end-line="23" selection-end-column="37" />
+            <state relative-caret-position="8958">
+              <caret line="1804" column="40" lean-forward="true" selection-start-line="1785" selection-start-column="19" selection-end-line="1804" selection-end-column="40" />
               <folding>
-                <element signature="e#1243#7651#0" />
-                <element signature="e#13033#20769#0" />
-                <element signature="e#20805#23637#0" />
-                <element signature="e#23736#24082#0" />
-                <element signature="e#24130#24281#0" />
-                <element signature="e#24340#30164#0" />
-                <element signature="n#!!block;n#update_order_details#0" />
-                <element signature="n#!!block;n#refreshData#0" />
-                <element signature="n#!!block;n#refreshDataHistory#0" />
-                <element signature="n#!!block;n#onBackKeyDown#0" />
-                <element signature="n#!!block;n#exitFromApp#0" />
-                <element signature="n#!!block;n#myFunction#0" />
-                <element signature="n#!!block;n#getOrderDate#0" />
-                <element signature="n#!!block;n#resetData#0" />
-                <element signature="n#!!block;n#getDefaultHistoryList#0" />
-                <element signature="n#!!block;n#customerPullToRefresh#0" />
-                <element signature="n#!!block;n#getCustomer#0" />
-                <element signature="n#!!block;n#getProvince#0" />
-                <element signature="n#!!block;n#getCities#0" />
-                <element signature="n#!!block;n#getBarangay#0" />
                 <element signature="n#style#0;n#img#0;n#div#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#div#0;n#div#1;n#!!top" expanded="true" />
               </folding>
@@ -96,11 +71,20 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="order-edit.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/www/order-edit.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="510">
+              <caret line="30" column="52" selection-start-line="30" selection-start-column="52" selection-end-line="30" selection-end-column="52" />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="customer-edit.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/www/customer-edit.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="306">
-              <caret line="18" column="79" selection-start-line="18" selection-start-column="79" selection-end-line="18" selection-end-column="79" />
+            <state relative-caret-position="3791">
+              <caret line="223" column="18" selection-start-line="221" selection-start-column="11" selection-end-line="223" selection-end-column="18" />
               <folding>
                 <element signature="n#style#0;n#input#0;n#a#0;n#div#0;n#div#0;n#div#0;n#li#0;n#ul#0;n#form#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
               </folding>
@@ -108,11 +92,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
+      <file leaf-file-name="index.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/www/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="7565">
-              <caret line="445" column="69" selection-start-line="435" selection-start-column="13" selection-end-line="445" selection-end-column="69" />
+            <state relative-caret-position="-10822">
+              <caret line="4" column="78" selection-start-line="4" selection-start-column="78" selection-end-line="4" selection-end-column="78" />
             </state>
           </provider>
         </entry>
@@ -128,43 +112,40 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>refreshDataH</find>
-      <find>signa</find>
-      <find>deli</find>
-      <find>reset</find>
-      <find>dashboard</find>
-      <find>navbar</find>
-      <find>list</find>
-      <find>id-hom</find>
-      <find>id-history-list</find>
-      <find>document</find>
-      <find>off</find>
-      <find>this is cu</find>
-      <find>id-logout</find>
-      <find>this is customer page</find>
-      <find>getCitei</find>
-      <find>getCities</find>
-      <find>getPro</find>
+      <find>refreshData</find>
+      <find>addMore</find>
+      <find>4</find>
+      <find>form_entry_categories</find>
       <find>login</find>
-      <find>getProvince</find>
-      <find>customer</find>
-      <find>regul</find>
-      <find>details</find>
-      <find>isRegular</find>
-      <find>addCustomer</find>
-      <find>access</find>
-      <find>create</find>
-      <find>device</find>
-      <find>profile-image</find>
+      <find>the</find>
+      <find>pieces</find>
+      <find>console.log</find>
+      <find>console</find>
       <find>getCustomer</find>
+      <find>getCate</find>
+      <find>the id</find>
+      <find>back</find>
+      <find>SERVICE-ID</find>
+      <find>signature-display</find>
+      <find>id-add</find>
+      <find>getOrderDate</find>
+      <find>about</find>
+      <find>home</find>
+      <find>grand_total</find>
+      <find>getservices</find>
+      <find>getorderDate</find>
+      <find>createOrder</find>
       <find>customer_details</find>
+      <find>getorderDAte</find>
+      <find>id-display-category</find>
+      <find>this is</find>
+      <find>get services</find>
+      <find>get</find>
+      <find>getOrderDAte</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
-  </component>
-  <component name="HighlightingSettingsPerFile">
-    <setting file="mock:///Dummy.txt" root0="SKIP_INSPECTION" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
@@ -173,7 +154,6 @@
         <option value="$PROJECT_DIR$/www/login-screen-page.html" />
         <option value="$PROJECT_DIR$/www/assets/css/signature-pad.css" />
         <option value="$PROJECT_DIR$/www/assets/css/my-app.css" />
-        <option value="$PROJECT_DIR$/www/about.html" />
         <option value="$PROJECT_DIR$/www/pages/about-history.html" />
         <option value="$PROJECT_DIR$/www/about-history.html" />
         <option value="$PROJECT_DIR$/config.xml" />
@@ -181,9 +161,12 @@
         <option value="$PROJECT_DIR$/www/assets/js/toast.js" />
         <option value="$PROJECT_DIR$/www/pages/customer-detail.html" />
         <option value="$PROJECT_DIR$/www/customer-detail.html" />
-        <option value="$PROJECT_DIR$/www/index.html" />
         <option value="$PROJECT_DIR$/www/customer-edit.html" />
+        <option value="$PROJECT_DIR$/www/add-order.html" />
+        <option value="$PROJECT_DIR$/www/order-edit.html" />
+        <option value="$PROJECT_DIR$/www/about.html" />
         <option value="$PROJECT_DIR$/www/assets/js/main.js" />
+        <option value="$PROJECT_DIR$/www/index.html" />
       </list>
     </option>
   </component>
@@ -340,8 +323,9 @@
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="-10" />
-    <option name="width" value="979" />
-    <option name="height" value="1050" />
+    <option name="y" value="-10" />
+    <option name="width" value="1940" />
+    <option name="height" value="1060" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -349,7 +333,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -365,49 +348,13 @@
             <path>
               <item name="iwash" type="b2602c69:ProjectViewProjectNode" />
               <item name="iwash" type="462c0819:PsiDirectoryNode" />
-              <item name="res" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="iwash" type="b2602c69:ProjectViewProjectNode" />
-              <item name="iwash" type="462c0819:PsiDirectoryNode" />
-              <item name="res" type="462c0819:PsiDirectoryNode" />
-              <item name="icon" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="iwash" type="b2602c69:ProjectViewProjectNode" />
-              <item name="iwash" type="462c0819:PsiDirectoryNode" />
-              <item name="res" type="462c0819:PsiDirectoryNode" />
-              <item name="icon" type="462c0819:PsiDirectoryNode" />
-              <item name="android" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="iwash" type="b2602c69:ProjectViewProjectNode" />
-              <item name="iwash" type="462c0819:PsiDirectoryNode" />
-              <item name="res" type="462c0819:PsiDirectoryNode" />
-              <item name="screen" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="iwash" type="b2602c69:ProjectViewProjectNode" />
-              <item name="iwash" type="462c0819:PsiDirectoryNode" />
               <item name="www" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="iwash" type="b2602c69:ProjectViewProjectNode" />
-              <item name="iwash" type="462c0819:PsiDirectoryNode" />
-              <item name="www" type="462c0819:PsiDirectoryNode" />
-              <item name="assets" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="iwash" type="b2602c69:ProjectViewProjectNode" />
-              <item name="iwash" type="462c0819:PsiDirectoryNode" />
-              <item name="www" type="462c0819:PsiDirectoryNode" />
-              <item name="assets" type="462c0819:PsiDirectoryNode" />
-              <item name="img" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -418,11 +365,11 @@
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\IAN\cordova\iwash\www" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\IAN\cordova\iwash\res\screen\android" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\IAN\cordova\iwash\www" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -478,12 +425,19 @@
       <workItem from="1536221397170" duration="5410000" />
       <workItem from="1536289015191" duration="5099000" />
       <workItem from="1536556367466" duration="13185000" />
-      <workItem from="1536634737619" duration="10344000" />
+      <workItem from="1536634737619" duration="18693000" />
+      <workItem from="1536715355031" duration="22160000" />
+      <workItem from="1536805753423" duration="24923000" />
+      <workItem from="1536889332248" duration="27130000" />
+      <workItem from="1537149571238" duration="33323000" />
+      <workItem from="1537323428160" duration="24036000" />
+      <workItem from="1537409964276" duration="23015000" />
+      <workItem from="1537496053330" duration="15269000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="245576000" />
+    <option name="totallyTimeSpent" value="449810000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="848" extended-state="6" />
@@ -491,46 +445,59 @@
     <layout>
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" weight="0.3292517" />
-      <window_info anchor="bottom" id="Command Line Tools Console" weight="0.3292517" />
       <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="7" />
-      <window_info anchor="bottom" id="Run" order="2" />
       <window_info id="npm" order="2" side_tool="true" />
+      <window_info anchor="bottom" id="Run" order="2" />
       <window_info anchor="bottom" id="Terminal" order="7" />
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.15755208" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.1295573" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="right" id="Database" order="3" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
+      <window_info id="npm" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.1295573" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Version Control" order="7" />
+      <window_info anchor="bottom" id="Run" order="2" />
+      <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Command Line Tools Console" order="8" weight="0.3292517" />
+      <window_info anchor="right" id="Database" order="3" />
       <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" weight="0.3292517" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="bottom" id="Terminal" order="7" />
+      <window_info id="Favorites" order="2" side_tool="true" />
     </layout>
     <layout-to-restore>
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info id="npm" order="2" side_tool="true" />
-      <window_info anchor="bottom" id="Run" order="2" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.15755208" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info anchor="bottom" id="Database Changes" order="8" show_stripe_button="false" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="bottom" id="Version Control" order="11" />
+      <window_info anchor="bottom" id="Run" order="2" />
+      <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="right" id="Database" order="3" />
       <window_info anchor="bottom" id="Terminal" order="9" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" weight="0.3292517" />
-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="Version Control" order="11" />
-      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Database Changes" order="8" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Find" order="1" />
       <window_info id="Favorites" order="3" side_tool="true" />
     </layout-to-restore>
   </component>
@@ -542,24 +509,10 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="5" />
+      <option name="time" value="9" />
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/www/about.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1394">
-          <caret line="82" selection-start-line="82" selection-end-line="82" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/www/assets/css/signature-pad.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1751">
-          <caret line="103" column="28" selection-end-line="119" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/www/index.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1275">
@@ -803,42 +756,49 @@
     <entry file="file://$PROJECT_DIR$/res/icon/windows-phone/icon-48.png">
       <provider selected="true" editor-type-id="images" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/www/assets/css/my-app.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="17" column="1" selection-start-line="17" selection-start-column="1" selection-end-line="17" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/res/icon/android/icon-36-ldpi.png">
       <provider selected="true" editor-type-id="images" />
     </entry>
     <entry file="file://$PROJECT_DIR$/res/screen/android/screen-hdpi-landscape.png">
       <provider selected="true" editor-type-id="images" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/www/about.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1292">
-          <caret line="76" column="72" selection-start-line="76" selection-start-column="11" selection-end-line="76" selection-end-column="72" />
-          <folding>
-            <element signature="n#style#0;n#div#6;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/www/assets/css/toast.css" />
     <entry file="file://$PROJECT_DIR$/www/assets/js/toast.js" />
-    <entry file="file://$PROJECT_DIR$/www/about-history.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1326">
-          <caret line="78" column="35" selection-end-line="92" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/config.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="170">
           <caret line="10" column="11" selection-start-line="10" selection-start-column="5" selection-end-line="10" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/order-edit.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="510">
+          <caret line="30" column="52" selection-start-line="30" selection-start-column="52" selection-end-line="30" selection-end-column="52" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$APPLICATION_HOME_DIR$/lib/phpstorm.jar!/resources/html5-schema/html5/web-forms2.rnc">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="236">
+          <caret line="71" column="18" selection-start-line="71" selection-start-column="18" selection-end-line="71" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/about-history.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="867">
+          <caret line="51" column="70" selection-start-line="51" selection-start-column="70" selection-end-line="51" selection-end-column="70" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/customer-edit.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3791">
+          <caret line="223" column="18" selection-start-line="221" selection-start-column="11" selection-end-line="223" selection-end-column="18" />
+          <folding>
+            <element signature="n#style#0;n#input#0;n#a#0;n#div#0;n#div#0;n#div#0;n#li#0;n#ul#0;n#form#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -849,51 +809,35 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/www/customer-edit.html">
+    <entry file="file://$PROJECT_DIR$/www/about.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="18" column="79" selection-start-line="18" selection-start-column="79" selection-end-line="18" selection-end-column="79" />
+        <state relative-caret-position="524">
+          <caret line="88" column="78" selection-start-line="89" selection-end-line="90" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/assets/css/my-app.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4964">
+          <caret line="292" column="1" selection-start-line="292" selection-start-column="1" selection-end-line="292" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/assets/js/main.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="8958">
+          <caret line="1804" column="40" lean-forward="true" selection-start-line="1785" selection-start-column="19" selection-end-line="1804" selection-end-column="40" />
           <folding>
-            <element signature="n#style#0;n#input#0;n#a#0;n#div#0;n#div#0;n#div#0;n#li#0;n#ul#0;n#form#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#img#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#1;n#!!top" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/www/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="7565">
-          <caret line="445" column="69" selection-start-line="435" selection-start-column="13" selection-end-line="445" selection-end-column="69" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/www/assets/js/main.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
-          <caret line="23" column="37" selection-start-line="23" selection-start-column="34" selection-end-line="23" selection-end-column="37" />
-          <folding>
-            <element signature="e#1243#7651#0" />
-            <element signature="e#13033#20769#0" />
-            <element signature="e#20805#23637#0" />
-            <element signature="e#23736#24082#0" />
-            <element signature="e#24130#24281#0" />
-            <element signature="e#24340#30164#0" />
-            <element signature="n#!!block;n#update_order_details#0" />
-            <element signature="n#!!block;n#refreshData#0" />
-            <element signature="n#!!block;n#refreshDataHistory#0" />
-            <element signature="n#!!block;n#onBackKeyDown#0" />
-            <element signature="n#!!block;n#exitFromApp#0" />
-            <element signature="n#!!block;n#myFunction#0" />
-            <element signature="n#!!block;n#getOrderDate#0" />
-            <element signature="n#!!block;n#resetData#0" />
-            <element signature="n#!!block;n#getDefaultHistoryList#0" />
-            <element signature="n#!!block;n#customerPullToRefresh#0" />
-            <element signature="n#!!block;n#getCustomer#0" />
-            <element signature="n#!!block;n#getProvince#0" />
-            <element signature="n#!!block;n#getCities#0" />
-            <element signature="n#!!block;n#getBarangay#0" />
-            <element signature="n#style#0;n#img#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#div#1;n#!!top" expanded="true" />
-          </folding>
+        <state relative-caret-position="-10822">
+          <caret line="4" column="78" selection-start-line="4" selection-start-column="78" selection-end-line="4" selection-end-column="78" />
         </state>
       </provider>
     </entry>

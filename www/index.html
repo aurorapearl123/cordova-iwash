@@ -1,508 +1,687 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta name = "viewport" content = "width = device-width, initial-scale = 1,
+<head>
+  <meta name = "viewport" content = "width = device-width, initial-scale = 1,
       maximum-scale = 1, minimum-scale = 1, user-scalable = no, minimal-ui" />
-    <meta name = "apple-mobile-web-app-capable" content = "yes" />
-    <meta name = "apple-mobile-web-app-status-bar-style" content = "black" />
-    <meta name="token" content="">
-    <meta name="user_group" content="">
-    <title>Iwash</title>
-    <!-- REFERENCE CSS-->
-    <link rel="stylesheet" href="assets/css/framework7.material.min.css">
-    <link rel="stylesheet" href="assets/css/framework7.material.colors.min.css">
-    <link rel="stylesheet" href="assets/icon/icons.css">
-    <link rel="stylesheet" href="assets/fonts/fonts.css">
-    <link rel="stylesheet" href="assets/css/my-app.css">
-    <link href="assets/css/jquery.signaturepad.css" rel="stylesheet">
-  </head>
-  <body onload="onLoad()">
-    <div class="statusbar-overlay"></div>
-    <div class="views">fads
-      <div class="view view-main my-main">
-        <!-- Navigation Bottom <img src="assets/img/outline-local_shipping-24px.svg"> -->
-        <div class="toolbar toolbar-bottom">
-          <div class="toolbar-inner">
+  <meta name = "apple-mobile-web-app-capable" content = "yes" />
+  <meta name = "apple-mobile-web-app-status-bar-style" content = "black" />
+  <meta name="token" content="">
+  <meta name="user_group" content="">
+  <meta name="branchName" content="">
+  <meta name="service_ids" content="">
+  <meta name="categories" content="">
+  <meta name="service_types" content="">
+  <meta name="dynamic_services" content="">
+  <title>Iwash</title>
+  <!-- REFERENCE CSS-->
+  <link rel="stylesheet" href="assets/css/framework7.material.min.css">
+  <link rel="stylesheet" href="assets/css/framework7.material.colors.min.css">
+  <link rel="stylesheet" href="assets/icon/icons.css">
+  <link rel="stylesheet" href="assets/fonts/fonts.css">
+  <link rel="stylesheet" href="assets/css/my-app.css">
+  <link href="assets/css/jquery.signaturepad.css" rel="stylesheet">
+</head>
+<body onload="onLoad()">
+<div class="statusbar-overlay"></div>
+<div class="views">
+  <div class="view view-main my-main">
+    <!-- Navigation Bottom <img src="assets/img/outline-local_shipping-24px.svg"> -->
+    <div class="toolbar toolbar-bottom">
+      <div class="toolbar-inner">
             <span>
               <a href="#" class="link active" id="id-home"><i class="material-icons">local_shipping</i></a>
             </span>
-            <span id="span-persons">
-              <a href="#" class="link" id="id-add-customer"><i class="material-icons">person2</i></a>
+        <span id="span-persons">
+              <a href="#" class="link" id="id-add-customer"><i class="material-icons">person</i></a>
             </span>
-            <span id="span-order">
-              <a href="#" class="link"><i class="icon icon-plus"></i></a>
+        <span id="span-order">
+              <a href="#" class="link" id="id-order-list"><i class="icon icon-plus"></i></a>
             </span>
-            <span>
+        <span>
               <a href="#" class="link" id="id-history"><i class="material-icons">book</i></a>
             </span>
-            <span>
+        <span>
               <a href="#" class="link" id="id-logout"><i class="material-icons">settings</i></a>
             </span>
-          </div>
-        </div>
-        <!-- Page -->
-        <div class="pages">
-          <div data-page="index" class="page">
-            <div class="page-content">
-            </div>
-          </div>
-        </div>
-        <div class="login-screen modal-in">
-          <div class="view">
-            <div class="page">
-              <div class="page-content login-screen-content">
-                <div class="login-screen-title"><img width="300" height="300" data-src="http://192.168.1.224/iwash/assets/img/main/logo-shadow.png" class="lazy"></div>
-                <form>
-                  <div class="list-block">
-                    <ul>
-                      <li class="item-content">
-                        <div class="item-inner">
-                          <div class="item-title label">Username</div>
-                          <div class="item-input">
-                            <input type = "text" name = "username" placeholder = "Enter the username" value="cashier">
-                          </div>
-                        </div>
-                      </li>
-                      <li class="item-content">
-                        <div class="item-inner">
-                          <div class="item-title label">Password</div>
-                          <div class="item-input">
-                            <input type = "password" name = "password" placeholder = "Enter the password" value="cashier123">
-                          </div>
-                        </div>
-                      </li>
-                    </ul>
-                  </div>
-                  <div class="list-block">
-                    <ul>
-                      <li>
-                        <div class="content-block">
-                          <a href="#" class="button button-fill button-raised" id="login">LOGIN</a>
-                        </div>
-                      </li>
-                    </ul>
-                  </div>
-                </form>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div id="signature-pad" class="signature-pad">
-          <div class="signature-pad--body">
-            <canvas></canvas>
-          </div>
-          <div class="signature-pad--footer">
-            <div class="description">Sign above</div>
-            <div class="signature-pad--actions">
-              <div>
-                <button type="button" class="button clear" data-action="clear">Clear</button>
-                <button type="button" class="button" data-action="change-color">Change color</button>
-                <button type="button" class="button" data-action="undo">Undo</button>
-              </div>
-              <div>
-                <button type="button" class="button save" data-action="save-png">Save as PNG</button>
-                <button type="button" class="button save" data-action="save-jpg">Save as JPG</button>
-                <button type="button" class="button save" data-action="save-svg">Save as SVG</button>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="panel-overlay"></div>
-        <div class="panel panel-left panel-reveal">
-          <div class="content-block">
-            <p>Left Panel content here</p>
-            <p><a href="#" class="panel-close">Close me</a></p>
-            <p><a href="#" class="open-right-panel">Open Right Panel</a></p>
-          </div>
-        </div>
-        <div class="panel panel-right panel-cover">
-          <div class="content-block">
-            <p>Right Panel content here</p>
-            <p><a href="#" class="panel-close">Close me</a></p>
-            <p><a href="#" class="open-left-panel">Open Left Panel</a></p>
-          </div>
-        </div>
-        <!-- end of view view main-->
       </div>
     </div>
+    <!-- Page -->
+    <div class="pages">
+      <div data-page="index" class="page">
+        <div class="page-content">
+        </div>
+      </div>
     </div>
-
-    <!--This is a home page-->
-    <script type="text/template" id="dashboard">
-      <!-- We don't need full layout in this file because this page will be parsed with Ajax. It is just enough to put here .navbar and .page -->
-      <div class="views">
-        <div class="view view-main">
-
-          <div class="pages navbar-through">
-            <div data-page="home" class="page with-subnavbar">
-              <div class="navbar">
-                <!-- Search Bar -->
-                <div class="content-block inset px-0 mt-15">
-                  <form data-search-list=".list-block-search" data-search-in=".item-title" class="searchbar searchbar-init">
-                    <div class="searchbar-input">
-                      <input type="search" placeholder="Search Delivery"><a href="#" class="searchbar-clear"></a>
+    <div class="login-screen modal-in">
+      <div class="view">
+        <div class="page">
+          <div class="page-content login-screen-content">
+            <div class="login-screen-title"><img width="300" height="300" data-src="http://192.168.1.224/iwash/assets/img/main/logo-shadow.png" class="lazy"></div>
+            <form>
+              <div class="list-block">
+                <ul>
+                  <li class="item-content">
+                    <div class="item-inner">
+                      <div class="item-title label">Username</div>
+                      <div class="item-input">
+                        <input type = "text" name = "username" placeholder = "Enter the username" value="cashier">
+                      </div>
                     </div>
-                    <a href="#" class="searchbar-cancel">Cancel</a>
-                  </form>
+                  </li>
+                  <li class="item-content">
+                    <div class="item-inner">
+                      <div class="item-title label">Password</div>
+                      <div class="item-input">
+                        <input type = "password" name = "password" placeholder = "Enter the password" value="cashier123">
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+              <div class="list-block">
+                <ul>
+                  <li>
+                    <div class="content-block">
+                      <a href="#" class="button button-fill button-raised" id="login">LOGIN</a>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="signature-pad" class="signature-pad">
+      <div class="signature-pad--body">
+        <canvas></canvas>
+      </div>
+      <div class="signature-pad--footer">
+        <div class="description">Sign above</div>
+        <div class="signature-pad--actions">
+          <div>
+            <button type="button" class="button clear" data-action="clear">Clear</button>
+            <button type="button" class="button" data-action="change-color">Change color</button>
+            <button type="button" class="button" data-action="undo">Undo</button>
+          </div>
+          <div>
+            <button type="button" class="button save" data-action="save-png">Save as PNG</button>
+            <button type="button" class="button save" data-action="save-jpg">Save as JPG</button>
+            <button type="button" class="button save" data-action="save-svg">Save as SVG</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="panel-overlay"></div>
+    <div class="panel panel-left panel-reveal">
+      <div class="content-block">
+        <p>Left Panel content here</p>
+        <p><a href="#" class="panel-close">Close me</a></p>
+        <p><a href="#" class="open-right-panel">Open Right Panel</a></p>
+      </div>
+    </div>
+    <div class="panel panel-right panel-cover">
+      <div class="content-block">
+        <p>Right Panel content here</p>
+        <p><a href="#" class="panel-close">Close me</a></p>
+        <p><a href="#" class="open-left-panel">Open Left Panel</a></p>
+      </div>
+    </div>
+    <!-- end of view view main-->
+  </div>
+</div>
+</div>
+
+<!--This is a home page-->
+<script type="text/template" id="dashboard">
+  <!-- We don't need full layout in this file because this page will be parsed with Ajax. It is just enough to put here .navbar and .page -->
+  <div class="views">
+    <div class="view view-main">
+
+      <div class="pages navbar-through">
+        <div data-page="home" class="page with-subnavbar">
+          <div class="navbar">
+            <!-- Search Bar -->
+            <div class="content-block inset px-0 mt-15">
+              <form data-search-list=".list-block-search" data-search-in=".item-title" class="searchbar searchbar-init">
+                <div class="searchbar-input">
+                  <input type="search" placeholder="Search Delivery"><a href="#" class="searchbar-clear"></a>
                 </div>
-                
-                <!-- Sub navbar -->
-                <div class="subnavbar align-items-start px-0 pt-15">
-                  <div class="content-block inset datepicker px-0 my-0">
-                    <div class="row align-items-start">
-                      <div class="col-40">
-                        <label>Start Date</label>
-                        <input type="text" readonly id="calendar-from" placeholder="Sep 23 2018">
-                      </div>
-                      <div class="col-40">
-                        <label>End Date</label>
-                        <input type="text" readonly id="calendar-to" placeholder="Sep 23 2018">
-                      </div>
-                      <div class="col-20">
-                        <a href="#" class="button button-fill button-raised" id="id-reset"><i class="la la-close"></i></a>
-                      </div>
-                    </div>
+                <a href="#" class="searchbar-cancel">Cancel</a>
+              </form>
+            </div>
+
+            <!-- Sub navbar -->
+            <div class="subnavbar align-items-start px-0 pt-15">
+              <div class="content-block inset datepicker px-0 my-0">
+                <div class="row align-items-start">
+                  <div class="col-40">
+                    <label>Start Date</label>
+                    <input type="text" readonly id="calendar-from" placeholder="Sep 23 2018">
+                  </div>
+                  <div class="col-40">
+                    <label>End Date</label>
+                    <input type="text" readonly id="calendar-to" placeholder="Sep 23 2018">
+                  </div>
+                  <div class="col-20">
+                    <a href="#" class="button button-fill button-raised" id="id-reset"><i class="la la-close"></i></a>
                   </div>
                 </div>
               </div>
-              
-              <div class="page-content pull-to-refresh-content hide-navbar-on-scroll">
-
-                <div class="pull-to-refresh-layer">
-                  <div class="preloader"></div>
-                  <div class="pull-to-refresh-arrow"></div>
-                </div>
-
-                <!-- Search Bar overlay -->
-                <div class="searchbar-overlay"></div>
-
-                <div class="list-block list-block-search searchbar-found media-list list-custom-1"></div>
-
-              </div>
             </div>
+          </div>
+
+          <div class="page-content pull-to-refresh-content hide-navbar-on-scroll">
+
+            <div class="pull-to-refresh-layer">
+              <div class="preloader"></div>
+              <div class="pull-to-refresh-arrow"></div>
+            </div>
+
+            <!-- Search Bar overlay -->
+            <div class="searchbar-overlay"></div>
+
+            <div class="list-block list-block-search searchbar-found media-list list-custom-1"></div>
+
           </div>
         </div>
       </div>
-    </script>
+    </div>
+  </div>
+</script>
 
-    <!--This is a history page-->
-    <script type="text/template" id="id-history-list">
-      <div class="views">
-        <div class="view view-main">
-          <div class="pages navbar-through">
-            <div data-page="history-list" class="page with-subnavbar">
-              <div class="navbar">
-                <!-- Search Bar -->
-                <div class="content-block inset px-0 mt-15">
-                  <form data-search-list=".list-block-search" data-search-in=".item-title" class="searchbar searchbar-init">
-                    <div class="searchbar-input">
-                      <input type="search" placeholder="Search History"><a href="#" class="searchbar-clear"></a>
-                    </div>
-                    <a href="#" class="searchbar-cancel">Cancel</a>
-                  </form>
+<!--This is a history page-->
+<script type="text/template" id="id-history-list">
+  <div class="views">
+    <div class="view view-main">
+      <div class="pages navbar-through">
+        <div data-page="history-list" class="page with-subnavbar">
+          <div class="navbar">
+            <!-- Search Bar -->
+            <div class="content-block inset px-0 mt-15">
+              <form data-search-list=".list-block-search" data-search-in=".item-title" class="searchbar searchbar-init">
+                <div class="searchbar-input">
+                  <input type="search" placeholder="Search History"><a href="#" class="searchbar-clear"></a>
                 </div>
-                
-                <!-- Sub navbar -->
-                <div class="subnavbar align-items-start px-0 pt-15">
-                  <div class="content-block inset datepicker px-0 my-0">
-                    <div class="row align-items-start">
-                      <div class="col-40">
-                        <label>Start Date</label>
-                        <input type="text" placeholder="Sep 23 2018" readonly id="history-calendar-from">
-                      </div>
-                      <div class="col-40">
-                        <label>End Date</label>
-                        <input type="text" placeholder="Sep 23 2018" readonly id="history-calendar-to">
-                      </div>
-                      <div class="col-20">
-                        <a href="#" class="button button-fill button-raised" id="history-id-reset"><i class="la la-close"></i></a>
-                      </div>
-                    </div>
+                <a href="#" class="searchbar-cancel">Cancel</a>
+              </form>
+            </div>
+
+            <!-- Sub navbar -->
+            <div class="subnavbar align-items-start px-0 pt-15">
+              <div class="content-block inset datepicker px-0 my-0">
+                <div class="row align-items-start">
+                  <div class="col-40">
+                    <label>Start Date</label>
+                    <input type="text" placeholder="Sep 23 2018" readonly id="history-calendar-from">
+                  </div>
+                  <div class="col-40">
+                    <label>End Date</label>
+                    <input type="text" placeholder="Sep 23 2018" readonly id="history-calendar-to">
+                  </div>
+                  <div class="col-20">
+                    <a href="#" class="button button-fill button-raised" id="history-id-reset"><i class="la la-close"></i></a>
                   </div>
                 </div>
               </div>
-
-              <div class="page-content pull-to-refresh-content hide-navbar-on-scroll">
-
-                  <div class="pull-to-refresh-layer">
-                    <div class="preloader"></div>
-                    <div class="pull-to-refresh-arrow"></div>
-                  </div>
-
-                  <!-- Search Bar overlay -->
-                  <div class="searchbar-overlay"></div>
-
-                  <!-- This block will be displayed if anything found, and this list block is used a searbar target -->
-                  <div class="list-block list-block-search searchbar-found media-list list-custom-1"></div>
-
-                </div>
-              </div>
             </div>
+          </div>
+
+          <div class="page-content pull-to-refresh-content hide-navbar-on-scroll">
+
+            <div class="pull-to-refresh-layer">
+              <div class="preloader"></div>
+              <div class="pull-to-refresh-arrow"></div>
+            </div>
+
+            <!-- Search Bar overlay -->
+            <div class="searchbar-overlay"></div>
+
+            <!-- This block will be displayed if anything found, and this list block is used a searbar target -->
+            <div class="list-block list-block-search searchbar-found media-list list-custom-1"></div>
+
           </div>
         </div>
       </div>
-    </script>
+    </div>
+  </div>
+  </div>
+</script>
 
-    <!--This is a customer page-->
-    <script type="text/template" id="id-customer-page">
-      <div class="views">
-        <div class="view view-main">
-          <div class="pages navbar-through">
-            <div data-page="customer-page" class="page navbar-fixed">
-              <div class="navbar">
+<!--This is a customer page-->
+<script type="text/template" id="id-customer-page">
+  <div class="views">
+    <div class="view view-main">
+      <div class="pages navbar-through">
+        <div data-page="customer-page" class="page navbar-fixed">
+          <div class="navbar">
 
-                <!-- start of page content -->
-                <!-- Search Bar -->
-                <div class="content-block inset px-0 mt-15">
-                  <form data-search-list=".list-block-search" data-search-in=".item-title" class="searchbar searchbar-init">
-                    <div class="searchbar-input">
-                      <input type="search" placeholder="Search Customer"><a href="#" class="searchbar-clear"></a>
+            <!-- start of page content -->
+            <!-- Search Bar -->
+            <div class="content-block inset px-0 mt-15">
+              <form data-search-list=".list-block-search" data-search-in=".item-title" class="searchbar searchbar-init">
+                <div class="searchbar-input">
+                  <input type="search" placeholder="Search Customer"><a href="#" class="searchbar-clear"></a>
+                </div>
+                <a href="#" class="searchbar-cancel">Cancel</a>
+              </form>
+            </div>
+          </div>
+
+          <div class="page-content pull-to-refresh-content hide-navbar-on-scroll">
+
+            <!-- Default pull to refresh layer-->
+            <div class="pull-to-refresh-layer">
+              <div class="preloader"></div>
+              <div class="pull-to-refresh-arrow"></div>
+            </div>
+
+            <!-- Search Bar overlay -->
+            <div class="searchbar-overlay"></div>
+
+            <!-- This block will be displayed if anything found, and this list block is used a searbar target -->
+            <div class="list-block media-list list-block-search searchbar-found list-custom-2">
+              <ul>
+              </ul>
+            </div>
+
+          </div>
+
+          <!-- Floating Action Button -->
+          <a href="#" class="floating-button color-red" id="id-floating-add-customer">
+            <i class="material-icons">add</i>
+          </a>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</script>
+
+<!--This is a Add customer page-->
+<script type="text/template" id="id-add-customer-page">
+  <div class="views">
+    <div class="view view-main">
+      <div class="pages">
+        <div data-page = "customer-page-add" class="page navbar-fixed">
+          <div class="page-content">
+            <!-- Search Bar -->
+            <div class="content-block-title">Customer details</div>
+            <form id="my-form" class="list-block">
+              <ul>
+                <li>
+                  <div class="item-content">
+                    <div class="item-inner">
+                      <div class="item-input">
+                        <a href="#" id="profile-image"><input type="image" src="assets/img/profile.png" style="width:100px;height:100px;" id="my-profile"></a>
+                      </div>
                     </div>
-                    <a href="#" class="searchbar-cancel">Cancel</a>
-                  </form>
-                </div>
-              </div>
-
-              <div class="page-content pull-to-refresh-content hide-navbar-on-scroll">
-
-                <!-- Default pull to refresh layer-->
-                <div class="pull-to-refresh-layer">
-                  <div class="preloader"></div>
-                  <div class="pull-to-refresh-arrow"></div>
-                </div>
-
-                <!-- Search Bar overlay -->
-                <div class="searchbar-overlay"></div>
-
-                <!-- This block will be displayed if anything found, and this list block is used a searbar target -->
-                <div class="list-block media-list list-block-search searchbar-found list-custom-2">
-                  <ul>
-                  </ul>
-                </div>
-
-              </div>
-
-              <!-- Floating Action Button -->
-              <a href="#" class="floating-button color-red" id="id-floating-add-customer">
-                <i class="material-icons">add</i>
-              </a>
-              
+                  </div>
+                </li>
+                <input type="hidden" name="profile" id="profile-value">
+                <!-- Text inputs -->
+                <li>
+                  <div class="item-content">
+                    <div class="item-media"><i class="icon f7-icons">stopwatch_fill</i></div>
+                    <div class="item-inner">
+                      <div class="item-title label">Title</div>
+                      <div class="item-input">
+                        <input type="text" placeholder="Title" id="title" name="title">
+                      </div>
+                    </div>
+                  </div>
+                </li>
+                <li>
+                  <div class="item-content">
+                    <div class="item-media"><i class="icon f7-icons">person</i></div>
+                    <div class="item-inner">
+                      <div class="item-title label">Suffix</div>
+                      <div class="item-input">
+                        <input type="text" placeholder="Suffix" id="suffix" name="suffix">
+                      </div>
+                    </div>
+                  </div>
+                </li>
+                <li>
+                  <div class="item-content">
+                    <div class="item-media"><i class="icon f7-icons">person</i></div>
+                    <div class="item-inner">
+                      <div class="item-title label">First Name</div>
+                      <div class="item-input">
+                        <input type="text" placeholder="First name" id="first_name" name="fname" required>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+                <li>
+                  <div class="item-content">
+                    <div class="item-media"><i class="icon f7-icons">person</i></div>
+                    <div class="item-inner">
+                      <div class="item-title label">Middle Name</div>
+                      <div class="item-input">
+                        <input type="text" placeholder="Middle name" id="middle_name" name="mname" required>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+                <li>
+                  <div class="item-content">
+                    <div class="item-media"><i class="icon f7-icons">person</i></div>
+                    <div class="item-inner">
+                      <div class="item-title label">Last Name</div>
+                      <div class="item-input">
+                        <input type="text" placeholder="Last name" id="last_name" name="lname" required>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+                <!-- Select -->
+                <li>
+                  <div class="item-content">
+                    <div class="item-media"><i class="icon f7-icons">persons</i></div>
+                    <div class="item-inner">
+                      <div class="item-title label">Gender</div>
+                      <div class="item-input" name="gender">
+                        <select name="gender">
+                          <option>Male</option>
+                          <option>Female</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+                <!-- Date -->
+                <li>
+                  <div class="item-content">
+                    <div class="item-media"><i class="icon f7-icons">calendar</i></div>
+                    <div class="item-inner">
+                      <div class="item-title label">Birth date</div>
+                      <div class="item-input">
+                        <input type="date" placeholder="Birth day" id="birth-date" name="bday">
+                      </div>
+                    </div>
+                  </div>
+                </li>
+                <li>
+                  <div class="item-content">
+                    <div class="item-media"><i class="icon f7-icons">phone_round</i></div>
+                    <div class="item-inner">
+                      <div class="item-title label">Contact</div>
+                      <div class="item-input">
+                        <input type="text" placeholder="contact" id="contact" name="contact">
+                      </div>
+                    </div>
+                  </div>
+                </li>
+                <!-- Switch (Checkbox) -->
+                <li>
+                  <div class="item-content">
+                    <div class="item-media"><i class="icon f7-icons">check</i></div>
+                    <div class="item-inner">
+                      <div class="item-title label">Regular</div>
+                      <div class="item-input">
+                        <label class="label-switch">
+                          <input type="checkbox" name="isRegular">
+                          <div class="checkbox"></div>
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+                <li>
+                  <div class="item-content">
+                    <div class="item-media"><i class="icon f7-icons">phone_round</i></div>
+                    <div class="item-inner">
+                      <div class="item-title label">Address</div>
+                      <div class="item-input">
+                        <input type="text" placeholder="contact" id="address" name="address">
+                      </div>
+                    </div>
+                  </div>
+                </li>
+                <!-- Smart select item -->
+                <!-- Smart select item -->
+                <li>
+                  <!-- Additional "smart-select" class -->
+                  <a href="#" class="item-link smart-select" id="id-smart-select-province"  data-open-in="picker" data-back-on-select="true" data-searchbar="true" data-searchbar-placeholder="Search Provinces">
+                    <!-- select -->
+                    <select name="provinceID" id="form_entry_province"></select>
+                    <div class="item-content">
+                      <div class="item-media"><i class="icon f7-icons">compose</i></div>
+                      <div class="item-inner">
+                        <div class="item-title label">Province</div>
+                        <div class="item-input">
+                        </div>
+                      </div>
+                    </div>
+                  </a>
+                </li>
+                <li>
+                  <!-- Additional "smart-select" class -->
+                  <a href="#" class="item-link smart-select" id="id-smart-select-city" data-open-in="picker" data-back-on-select="true" data-searchbar="true" data-searchbar-placeholder="Search Cities">
+                    <!-- select -->
+                    <select name="cityID" id="form_entry_city"></select>
+                    <div class="item-content">
+                      <div class="item-media"><i class="icon f7-icons">compose</i></div>
+                      <div class="item-inner">
+                        <div class="item-title label">City</div>
+                        <div class="item-input">
+                        </div>
+                      </div>
+                    </div>
+                  </a>
+                </li>
+                <!-- start barangay select -->
+                <li>
+                  <!-- Additional "smart-select" class -->
+                  <a href="#" class="item-link smart-select" id="id-smart-select-barangay" data-open-in="picker" data-back-on-select="true" data-searchbar="true" data-searchbar-placeholder="Search Barangay">
+                    <!--<a href="#" class="item-link " id="id-smart-select-city" >-->
+                    <!-- select -->
+                    <select name="barangayID" id="form_entry_barangay"></select>
+                    <div class="item-content">
+                      <div class="item-media"><i class="icon f7-icons">compose</i></div>
+                      <div class="item-inner">
+                        <div class="item-title label">Barangay</div>
+                        <div class="item-input">
+                        </div>
+                      </div>
+                    </div>
+                  </a>
+                </li>
+                <!-- end barangay select -->
+                <!-- Another smart selects or list view elements -->
+              </ul>
+            </form>
+            <div class="content-block">
+              <a href="#" class="button button-fill button-raised" id="id-create-customer">ADD</a>
             </div>
           </div>
         </div>
+        <!-- end of page content -->
       </div>
-    </script>
+    </div>
+  </div>
+</script>
 
-    <!--This is a Add customer page-->
-    <script type="text/template" id="id-add-customer-page">
-      <div class="views">
-        <div class="view view-main">
-          <div class="pages">
-            <div data-page = "customer-page-add" class="page navbar-fixed">
-              <div class="page-content">
-                <!-- Search Bar -->
-                <div class="content-block-title">Customer details</div>
-                <form id="my-form" class="list-block">
-                  <ul>
-                    <li>
-                      <div class="item-content">
-                        <div class="item-inner">
-                          <div class="item-input">
-                            <a href="#" id="profile-image"><input type="image" src="assets/img/profile.png" style="width:100px;height:100px;" id="my-profile"></a>
-                          </div>
+
+
+<!--This is a home page-->
+<script type="text/template" id="id-add-order-page">
+  <div class = "views">
+    <div class = "view view-main">
+      <div class = "pages">
+        <form data-page = "order-add-page" class = "page navbar-fixed" id="id-form-add-order">
+          <div class="page-content">
+
+            <div class="content-block-title">Labels and inputs</div>
+            <div class="list-block">
+              <ul>
+                <!-- Text inputs -->
+                <li>
+                  <div class="item-content">
+                    <div class="item-inner">
+                      <div class="item-title label">Branch</div>
+                      <div class="item-input">
+                        <input type="text" id="id-branch" readonly>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+                <li>
+                  <div class="item-content">
+                    <div class="item-inner">
+                      <div class="item-title label">Date</div>
+                      <div class="item-input">
+                        <input type="date" id="id-date" readonly>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+
+                <li>
+                  <!-- Additional "smart-select" class -->
+                  <a href="#" class="item-link smart-select" id="id-smart-select-customer" data-open-in="picker" data-back-on-select="true" data-searchbar="true" data-searchbar-placeholder="Search Customer">
+                    <!--<a href="#" class="item-link " id="id-smart-select-city" >-->
+                    <!-- select -->
+                    <select name="custID" id="form_entry_customer">
+                      <!--<option value="cebu">cebu</option>-->
+
+                    </select>
+                    <div class="item-content">
+                      <div class="item-media"><i class="icon f7-icons">person</i></div>
+                      <div class="item-inner">
+                        <div class="item-title label">Customer</div>
+                        <div class="item-input">
+
                         </div>
                       </div>
-                    </li>
-                    <input type="hidden" name="profile" id="profile-value">
-                    <!-- Text inputs -->
-                    <li>
-                      <div class="item-content">
-                        <div class="item-media"><i class="icon f7-icons">stopwatch_fill</i></div>
-                        <div class="item-inner">
-                          <div class="item-title label">Title</div>
-                          <div class="item-input">
-                            <input type="text" placeholder="Title" id="title" name="title">
-                          </div>
+                    </div>
+                  </a>
+                </li>
+                <li>
+                  <!-- Additional "smart-select" class -->
+                  <a href="#" class="item-link smart-select" id="id-smart-select-services" data-open-in="picker" data-back-on-select="true" data-searchbar="true" data-searchbar-placeholder="Search Services">
+                    <!--<a href="#" class="item-link " id="id-smart-select-city" >-->
+                    <!-- select -->
+                    <select name="serviceID" id="form_entry_services">
+                      <!--<option value="cebu">cebu</option>-->
+                    </select>
+                    <div class="item-content">
+                      <div class="item-media"><i class="icon f7-icons">Services</i></div>
+                      <div class="item-inner" id="id-click-services">
+                        <div class="item-title label">Services</div>
+                        <div class="item-input">
+
                         </div>
                       </div>
-                    </li>
-                    <li>
-                      <div class="item-content">
-                        <div class="item-media"><i class="icon f7-icons">person</i></div>
-                        <div class="item-inner">
-                          <div class="item-title label">Suffix</div>
-                          <div class="item-input">
-                            <input type="text" placeholder="Suffix" id="suffix" name="suffix">
-                          </div>
-                        </div>
-                      </div>
-                    </li>
-                    <li>
-                      <div class="item-content">
-                        <div class="item-media"><i class="icon f7-icons">person</i></div>
-                        <div class="item-inner">
-                          <div class="item-title label">First Name</div>
-                          <div class="item-input">
-                            <input type="text" placeholder="First name" id="first_name" name="fname" required>
-                          </div>
-                        </div>
-                      </div>
-                    </li>
-                    <li>
-                      <div class="item-content">
-                        <div class="item-media"><i class="icon f7-icons">person</i></div>
-                        <div class="item-inner">
-                          <div class="item-title label">Middle Name</div>
-                          <div class="item-input">
-                            <input type="text" placeholder="Middle name" id="middle_name" name="mname" required>
-                          </div>
-                        </div>
-                      </div>
-                    </li>
-                    <li>
-                      <div class="item-content">
-                        <div class="item-media"><i class="icon f7-icons">person</i></div>
-                        <div class="item-inner">
-                          <div class="item-title label">Last Name</div>
-                          <div class="item-input">
-                            <input type="text" placeholder="Last name" id="last_name" name="lname" required>
-                          </div>
-                        </div>
-                      </div>
-                    </li>
-                    <!-- Select -->
-                    <li>
-                      <div class="item-content">
-                        <div class="item-media"><i class="icon f7-icons">persons</i></div>
-                        <div class="item-inner">
-                          <div class="item-title label">Gender</div>
-                          <div class="item-input" name="gender">
-                            <select name="gender">
-                              <option>Male</option>
-                              <option>Female</option>
-                            </select>
-                          </div>
-                        </div>
-                      </div>
-                    </li>
-                    <!-- Date -->
-                    <li>
-                      <div class="item-content">
-                        <div class="item-media"><i class="icon f7-icons">calendar</i></div>
-                        <div class="item-inner">
-                          <div class="item-title label">Birth date</div>
-                          <div class="item-input">
-                            <input type="date" placeholder="Birth day" id="birth-date" name="bday">
-                          </div>
-                        </div>
-                      </div>
-                    </li>
-                    <li>
-                      <div class="item-content">
-                        <div class="item-media"><i class="icon f7-icons">phone_round</i></div>
-                        <div class="item-inner">
-                          <div class="item-title label">Contact</div>
-                          <div class="item-input">
-                            <input type="text" placeholder="contact" id="contact" name="contact">
-                          </div>
-                        </div>
-                      </div>
-                    </li>
-                    <!-- Switch (Checkbox) -->
-                    <li>
-                      <div class="item-content">
-                        <div class="item-media"><i class="icon f7-icons">check</i></div>
-                        <div class="item-inner">
-                          <div class="item-title label">Regular</div>
-                          <div class="item-input">
-                            <label class="label-switch">
-                              <input type="checkbox" name="isRegular">
-                              <div class="checkbox"></div>
-                            </label>
-                          </div>
-                        </div>
-                      </div>
-                    </li>
-                    <li>
-                      <div class="item-content">
-                        <div class="item-media"><i class="icon f7-icons">phone_round</i></div>
-                        <div class="item-inner">
-                          <div class="item-title label">Address</div>
-                          <div class="item-input">
-                            <input type="text" placeholder="contact" id="address" name="address">
-                          </div>
-                        </div>
-                      </div>
-                    </li>
-                    <!-- Smart select item -->
-                    <!-- Smart select item -->
-                    <li>
-                      <!-- Additional "smart-select" class -->
-                      <a href="#" class="item-link smart-select" id="id-smart-select-province"  data-open-in="picker" data-back-on-select="true" data-searchbar="true" data-searchbar-placeholder="Search Provinces">
-                        <!-- select -->
-                        <select name="provinceID" id="form_entry_province"></select>
-                        <div class="item-content">
-                          <div class="item-media"><i class="icon f7-icons">compose</i></div>
-                          <div class="item-inner">
-                            <div class="item-title label">Province</div>
-                            <div class="item-input">
-                            </div>
-                          </div>
-                        </div>
-                      </a>
-                    </li>
-                    <li>
-                      <!-- Additional "smart-select" class -->
-                      <a href="#" class="item-link smart-select" id="id-smart-select-city" data-open-in="picker" data-back-on-select="true" data-searchbar="true" data-searchbar-placeholder="Search Cities">
-                        <!-- select -->
-                        <select name="cityID" id="form_entry_city"></select>
-                        <div class="item-content">
-                          <div class="item-media"><i class="icon f7-icons">compose</i></div>
-                          <div class="item-inner">
-                            <div class="item-title label">City</div>
-                            <div class="item-input">
-                            </div>
-                          </div>
-                        </div>
-                      </a>
-                    </li>
-                    <!-- start barangay select -->
-                    <li>
-                      <!-- Additional "smart-select" class -->
-                      <a href="#" class="item-link smart-select" id="id-smart-select-barangay" data-open-in="picker" data-back-on-select="true" data-searchbar="true" data-searchbar-placeholder="Search Barangay">
-                        <!--<a href="#" class="item-link " id="id-smart-select-city" >-->
-                        <!-- select -->
-                        <select name="barangayID" id="form_entry_barangay"></select>
-                        <div class="item-content">
-                          <div class="item-media"><i class="icon f7-icons">compose</i></div>
-                          <div class="item-inner">
-                            <div class="item-title label">Barangay</div>
-                            <div class="item-input">
-                            </div>
-                          </div>
-                        </div>
-                      </a>
-                    </li>
-                    <!-- end barangay select -->
-                    <!-- Another smart selects or list view elements -->
-                  </ul>
-                </form>
-                <div class="content-block">
-                  <a href="#" class="button button-fill button-raised" id="id-create-customer">ADD</a>
+                    </div>
+                  </a>
+                </li>
+
+              </ul>
+
+            </div>
+            <div class="content-block">
+              <div class="item-content">
+                <div class="item-inner">
+                  <div class="item-title label">Grand Total</div>
+                  <div class="item-input">
+                    <input type="number" placeholder="" style="border:none" readonly id="grand-total">
+                  </div>
                 </div>
               </div>
+              <div class="item-content">
+                <div class="item-inner">
+                  <div class="item-title label">Remarks</div>
+                  <div class="item-input">
+                    <textarea id="remarks"></textarea>
+                  </div>
+                </div>
+              </div>
+              <a href="#" class="button button-fill button-raised" id="id-button-form-add-order">SUBMIT</a>
             </div>
-            <!-- end of page content -->
           </div>
-        </div>
-      </div>
-    </script>
+        </form>
 
-    <script type="text/javascript" src="assets/js/framework7.min.js"></script>
-    <script type="text/javascript" src="assets/js/main.js"></script>
-    <script src="assets/js/signature_pad.umd.js"></script>
-    <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
-    <script src="assets/js/app.js"></script>
-    <script type="text/javascript" charset="utf-8"></script>
-  </body>
+
+        <!-- end of page content -->
+      </div>
+    </div>
+  </div>
+</script>
+
+
+<script type="text/template" id="id-page-order-list">
+  <div class = "views">
+    <div class = "view view-main">
+      <div class = "pages">
+        <div data-page = "order-list-page" class = "page navbar-fixed">
+          <!-- Search Bar -->
+          <form data-search-list=".list-block-search" data-search-in=".item-title" class="searchbar searchbar-init">
+            <div class="searchbar-input">
+              <input type="search" placeholder="Search"><a href="#" class="searchbar-clear"></a>
+            </div><a href="#" class="searchbar-cancel">Cancel</a>
+
+          </form>
+
+
+
+
+
+
+          <!-- Search Bar overlay -->
+          <div class="searchbar-overlay"></div>
+
+          <div class="page-content pull-to-refresh-content">
+            <br>
+            <div class="pull-to-refresh-layer">
+              <div class="preloader"></div>
+              <!--<div class="pull-to-refresh-arrow"></div>-->
+              <!-- This block will be displayed if nothing found -->
+              <div class="content-block searchbar-not-found">
+                <div class="content-block-inner">Nothing found</div>
+              </div>
+
+              <!-- This block will be displayed if anything found, and this list block is used a searbar target -->
+
+              <!--<div class="page-content pull-to-refresh-content">-->
+              <!--<div class="pull-to-refresh-layer">-->
+              <!--<div class="preloader"></div>-->
+              <!--<div class="pull-to-refresh-arrow"></div>-->
+              <!--</div>-->
+              <div class="list-block list-block-search searchbar-found cards-list media-list">
+
+                <p class="buttons-row">
+                  <input type="text" placeholder="Date from" readonly id="created-calendar-from">
+                  <input type="text" placeholder="Date to" readonly id="created-calendar-to">
+                  <a href="#" class="button button-fill button-raised" id="created-id-reset">RESET</a>
+                </p>
+
+
+              </div>
+            </div>
+          </div>
+
+
+          <!-- Floating Action Button -->
+          <a href="#" class="floating-button color-pink" id="id-add-order">
+            <i class="icon icon-plus"></i>
+          </a>
+          <!-- end of page content -->
+        </div>
+
+      </div>
+    </div>
+  </div>
+</script>
+
+
+
+<script type="text/javascript" src="assets/js/framework7.min.js"></script>
+<script type="text/javascript" src="assets/js/main.js"></script>
+<script src="assets/js/signature_pad.umd.js"></script>
+<script type="text/javascript" charset="utf-8" src="cordova.js"></script>
+<script src="assets/js/app.js"></script>
+<script type="text/javascript" charset="utf-8"></script>
+</body>
 </html>
