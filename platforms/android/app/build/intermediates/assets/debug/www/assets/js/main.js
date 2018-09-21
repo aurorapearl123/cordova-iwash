@@ -225,10 +225,14 @@ $$(document).on('pageInit', function (e) {
 
         });
 
-        $$('#id-add-order').on('click', function(){
-            //console.log("add order");
-            mainView.router.loadContent($$('#id-add-order-page').html());
+        //PLEASE MODIFY ME AFTER LIST ORDER
+        $$('#id-order-list').on('click', function(){
+            //console.log("order list");
+            mainView.router.loadContent($$('#id-page-order-list').html());
+
+            //mainView.router.loadContent($$('#id-add-order-page').html());
         });
+
         $$('#id-logout').on('click', function(e){
 
             if(e.handled !== true) // This will prevent event triggering more then once
@@ -611,7 +615,7 @@ $$(document).on('pageInit', function (e) {
                     listHTML += '<li class = "card">';
                     listHTML += '<div class = "card-header">'+ v.suffix+" "+ v.fname +" "+v.mname+" "+v.lname+'</div>';
                     listHTML += '<div class = "card-content">';
-                    listHTML += '<div class = "card-content-inner">'+"Service type: "+ v.service_type +'</div>';
+                    listHTML += '<div class = "card-content-inner">Branch :'+ v.branch_name +'</div>';
                     listHTML += '</div>';
                     listHTML += '<div class = "card-footer">'+ v.date +'</div>';
                     listHTML += '</div>';
@@ -629,75 +633,131 @@ $$(document).on('pageInit', function (e) {
                 });
 
 
-                var myList = myApp.virtualList('.list-block.virtual-list', {
-                    // Array with items data
-                    items: [
 
-                    ],
-                    // Template 7 template to render each item
-                    template: '<li class="item-content">' +
-                    '<div class="item-media"><img src="{{picture}}"></div>' +
-                    '<div class="item-inner">' +
-                    '<div class="item-title">{{title}}</div>' +
-                    '</div>' +
-                    '</li>'
-                });
+                console.log("order details");
+                console.log(order_details);
 
-                $$.each(order_details, function(k, v){
-                    //console.log(v.category);
-                    if(v.qty == 0 ) {
+                $$.each(order_details, function(k, v) {
+                        //console.log("the data");
+                        //console.log(v.serviceType);
+                    var UNIT = v.unit;
+                    var REGULAR_RATE = v.regRate;
+                    var QUANTITY = v.qty;
+                    var AMOUNT = v.amount;
+                    var str = v.serviceType;
+                    str = str.replace(/ +/g, "");
+                    var the_id = v.serviceID+str;
 
-                    }
-                    else {
-                        if(v.category == 'pants') {
-                            myList.appendItem({
-                                title: v.category +" : "+ v.qty,
-                                picture: base_url+'/assets/img/mobile/'+v.category+'.png',
-                            });
-                        }
-                        else if(v.category == 'underwears') {
-                            myList.appendItem({
-                                title: v.category +" : "+ v.qty,
-                                picture: base_url+'/assets/img/mobile/'+v.category+'.png',
-                            });
-                        }
+                    // .append($$('<div>').attr('class', "card-content")
+                    //         .append($$('<table>').attr('id', 'order-table'+the_id)
+                    //             .append($$('<tr>').attr('id', 'tr-head'+the_id))
+                    //             .append($$('<tbody>'))
+                    //         )
+                    //     )
+                    var table = $$('<div>').attr('class', "data-table data-table-init card")
+                        .append($$('<div>').attr('class', "card-header")
+                            .append($$('<span>').text("Type : "+v.serviceType.capitalize()+""))
+                        )
+                        .append($$('<div>').attr('class', "card-content")
+                            .append($$('<table>').attr('id', 'order-table'+the_id)
+                                .append($$('<tr>').attr('id', 'tr-head'+the_id))
+                                .append($$('<tbody>'))
+                            )
+                        )
+                            //quantity
+                            .append($$('<ul>')
+                                .append($$('<li>')
+                                    .append($$('<div>').attr('class', 'item-content')
+                                        .append($$('<div>').attr('class','item-inner')
+                                            .append($$('<div>').attr('class','item-title label').text("Quantity")
+                                                .append($$('<div>').attr('class', 'item-input')
+                                                    .append($$('<input>').attr('placeholder', "Please input Quantity").attr('type', 'number').attr('value', QUANTITY).attr('readonly', true).attr('style', 'border:none')
+                                                    )
+                                                )
+                                            )
+                                        )
+                                    )
+                                )
+                                //unit
+                                .append($$('<li>')
+                                    .append($$('<div>').attr('class', 'item-content')
+                                        .append($$('<div>').attr('class','item-inner')
+                                            .append($$('<div>').attr('class','item-title label').text("UNIT")
+                                                .append($$('<div>').attr('class', 'item-input')
+                                                    .append($$('<input>').attr('placeholder', "Unit").attr('value', UNIT).attr('readonly', true).attr('style', 'border:none'))
+                                                )
+                                            )
+                                        )
+                                    )
+                                )
+                                //rate
+                                .append($$('<li>')
+                                    .append($$('<div>').attr('class', 'item-content')
+                                        .append($$('<div>').attr('class','item-inner')
+                                            .append($$('<div>').attr('class','item-title label').text("RATE")
+                                                .append($$('<div>').attr('class', 'item-input')
+                                                    .append($$('<input>').attr('placeholder', "Rate").attr('value', REGULAR_RATE).attr('readonly', true).attr('style', 'border:none'))
+                                                )
+                                            )
+                                        )
+                                    )
+                                )
+                                //amount
+                                .append($$('<li>')
+                                    .append($$('<div>').attr('class', 'item-content')
+                                        .append($$('<div>').attr('class','item-inner')
+                                            .append($$('<div>').attr('class','item-title label').text("AMOUNT")
+                                                .append($$('<div>').attr('class', 'item-input')
+                                                    .append($$('<input>').attr('placeholder', "Amount").attr('readonly', true).attr('style','border:none').attr('class', 'my-amount').attr('value', AMOUNT))
+                                                )
+                                            )
+                                        )
+                                    )
+                                )
+                            );
 
-                        else if(v.category == 'dress') {
-                            myList.appendItem({
-                                title: v.category +" : "+ v.qty,
-                                picture: base_url+'/assets/img/mobile/'+v.category+'.png',
-                            });
-                        }
 
-                        else if(v.category == 'boxes') {
-                            myList.appendItem({
-                                title: v.category +" : "+ v.qty,
-                                picture: base_url+'/assets/img/mobile/'+v.category+'.png',
-                            });
-                        }
-                        else if(v.category == 'upperwears') {
-                            myList.appendItem({
-                                title: v.category +" : "+ v.qty,
-                                picture: base_url+'/assets/img/mobile/'+v.category+'.png',
-                            });
-                        }
-                        else {
-                            myList.appendItem({
-                                title: v.category +" : "+ v.qty,
-                                picture: base_url+'/assets/img/mobile/shopping.png',
-                            });
-                        }
 
-                    }}
-                );
+                        // $$.each(v.categories, function(value, index){
+                        //     console.log("the value");
+                        //     console.log(value.category);
+                        // });
+
+                        $$(page.container).find('.page-content').find('#id-display-category').append(table);
+
+                    //append table category
+                    //     console.log("THE CATEGORIES");
+                        // console.log(v.categories);
+                        v.categories.forEach(element => {
+                            console.log("the category");
+                            console.log(element.category);
+                            //console.log("the id", the_id);
+                            $$('#order-table'+the_id).find('#tr-head'+the_id).empty();
+                            $$('#order-table'+the_id).find('#tr-head'+the_id)
+                                .append($$('<th>').attr('class', 'numeric-cell').text('CATEGORY'))
+                                .append($$('<th>').attr('class', 'numeric-cell').text('QUANTITY'));
+                            var table = $$('#order-table'+the_id).find('tbody');
+                            table.append($$('<tr ">').attr('class', 'item')
+                                .append($$('<td>').attr('class', "label-cell").text(element.category.capitalize()))
+                                .append($$('<td>').attr('class', "numeric-cell")
+                                    .append($$('<input>').attr('value', element.qty).attr('type',"number").attr('class', 'quantity').css('background-color','#EFEFEF').attr('style', 'border:none').attr('readonly', true)))
+
+                            );
+                        });
+
+                        }
+                    );
+
+                //display category list
+
                 // set delivery fee
                 var delivery_fee_html = '<div class="list-block">'+
                                       '<ul>' +
                                         '<li class="item-content"> <div class="item-inner"> <div class="item-title"> Delivery Fee: '+delivery_fee+'</div></div>' +
-                                        '<li class="item-content"> <div class="item-inner"> <div class="item-title"> Rate : '+rate+'</div></div>' +
-                    '<li class="item-content"> <div class="item-inner"> <div class="item-title"> Total : '+total_amount+'</div></div>' +
+                                        '<li class="item-content"> <div class="item-inner"> <div class="item-title"> Total : '+total_amount+'</div></div>' +
                                         '</li>'+
                                       '</ul>';
+
 
                 $$(page.container).find('.page-content').find('#delivery-list').append(delivery_fee_html);
 
@@ -1083,13 +1143,6 @@ $$(document).on('pageInit', function (e) {
                             UNIT = service_type[i].unit;
                             DISCOUNTED_RATE = service_type[i].discountedRate;
                             REGULAR_RATE = service_type[i].regRate;
-                            // console.log("found");
-                            // console.log("regular rate: ", REGULAR_RATE);
-                            // console.log("discounted rate: ", DISCOUNTED_RATE);
-                            // console.log("unit: ", REGULAR_RATE);
-                            //console.log(this.value);
-
-                            //return false;
                         }
                     }
 
@@ -1100,21 +1153,12 @@ $$(document).on('pageInit', function (e) {
                     var id_container = "remove-"+remove_more_id;
                     var class_quantity = "quantity-"+this.value;
                     var class_amount = "amount-"+this.value;
+                    var ul_id = "ul-class-"+this.value+str;
                     $$(page.container).find('.list-block')
                         .append($$('<div data-service-id="'+this.value+'">').attr('class', "data-table data-table-init card").attr('id', id_container)
                             .append($$('<div>').attr('class', "card-header")
-                                // .append($$('<ul>')
-                                //     .append($$('<li>').text("Quantity:").append($$('<input>').attr('placeholder', 'quantity')))
-                                //     .append($$('<li>').text("Unit:"))
-                                //     .append($$('<li>').text("Unit:"))
-                                // )
                                 .append($$('<span>').text("Type : "+this.text.capitalize()).attr('name',this.value))
                                 .append($$('<div>').attr('class', "data-table-links")
-                                    // .append($$('<span>').text("Type : "+this.text.capitalize()).attr('name',this.value))
-                                    // .append($$('<span>').text("Unit : "+UNIT).attr('name',this.value))
-                                    //.append($$('<div>').attr('class', 'item-input').append($$('<input>').attr('placeholder', 'quantity')))
-                                    // .append($$('<span>').text("Rate : "+DISCOUNTED_RATE).attr('name',this.value))
-                                    // .append($$('<span>').text("Amount : "+this.text).attr('name',this.value))
                                     .append($$('<a>').attr('class', "link icon-only").attr('class', "icon f7-icons").attr('id', remove_more_id).text("trash"))
                                 )
                             )
@@ -1125,7 +1169,7 @@ $$(document).on('pageInit', function (e) {
                                 )
                             )
                             //quantity
-                            .append($$('<ul>').attr('class', 'service-details')
+                            .append($$('<ul>').attr('id', ul_id)
                                 .append($$('<li>')
                                     .append($$('<div>').attr('class', 'item-content')
                                         .append($$('<div>').attr('class','item-inner')
@@ -1225,45 +1269,56 @@ $$(document).on('pageInit', function (e) {
         });
 
         $$('#id-button-form-add-order').on('click', function(){
-            var formData = myApp.formToData('#id-form-add-order');
-            //alert(JSON.stringify(formData));
-            //var data = JSON.stringify(formData);
-            //console.log(data);
-            var data = [];
+
             //check for table services id
             var service_ids = $$('meta[name="service_ids"]').attr("content");
 
             var service_ids = JSON.parse(service_ids);
+            var data = [];
+            var category_data = [];
             for(var i =0; i<service_ids.length; i++) {
-                var the_id = "#order-table"+service_ids[i];
-                //console.log("the id", the_id);
-                $$(''+the_id+' > tbody > tr.item').each(function(index, element){
-                    var category_quantity = $$(this).find("input.quantity").val();
-                    var category = $$(this).find("input.category_id").val();
-                    //check category quantity if null
+                // console.log("the id");
+                //console.log(service_ids[i]);
+                //var data_bind_service_id = $$(this).closest('table').parent().parent().data('service-id');
+                //get the service ids
+                var the_id = $$('#remove-id-remove-more-'+service_ids[i]).attr('id');
+                if (typeof the_id != 'undefined') {
+                    //console.log("the id",the_id);
+                    var ul = $$('#remove-id-remove-more-'+service_ids[i]+' > ul').attr('id');
+                    var unit = $$('#'+ul+' li').next('li').find('input').val();
+                    var quantity = $$('#'+ul+' li').find('input').val();
+                    var rate = $$('#'+ul+' li').next('li').next('li').find('input').val();
+                    var amount = $$('#'+ul+' li').next('li').next('li').next('li').find('input').val();
+                    var data_bind = $$('#remove-id-remove-more-'+service_ids[i]).data('service-id');
+                    //GET THE CATEGORY
+                    var table_id = "#order-table"+service_ids[i];
+                    // //console.log("the id", the_id);
+                    $$(''+table_id+' > tbody > tr.item').each(function(index, element) {
+                        var data_bind_table = $$(this).data('service-id');
+                        //console.log("SERVICE ID BIND: ", data_bind_table);
+                        var category_quantity = $$(this).find("input.quantity").val();
+                        var category_id = $$(this).find("input.category_id").val();
+                        //console.log("category_quantity", category_quantity);
 
-
-                    //var rate = $$(this).closest('ul').next('li').next('li').find('input').val();
-                    var quantity = 0;
-                    var amount = 0;
-                    $$(".service-details").each(function(i, items){
-                        var QUANTITY = $$(this).find("input");
-                        quantity = QUANTITY.val();
-                        amount = $$(this).find('input.my-amount').val();
+                        category_data.push({
+                            service_id : data_bind_table,
+                            category_quantity: category_quantity,
+                            category_id : category_id
+                        });
                     });
-                    //console.log("QUANTITY", quantity);
-                    //console.log("AMOUNT", amount);
-                    var name = service_ids[i];
                     data.push({
-                        table: name,
-                        //service_id: services,
-                        category_quantity : category_quantity,
-                        category_id : category,
-                        quantity : quantity,
-                        amount: amount
+                        service_id : data_bind,
+                        amount: amount,
+                        unit : unit,
+                        rate : rate,
+                        quantity: quantity,
                     });
-                    //console.log('total amount table ', amount);
-                });
+                    // console.log("UNIT", unit);
+                    // console.log("QUANTITY", quantity);
+                    // console.log("RATE", rate);
+                    // console.log("AMOUNT", amount);
+                    // console.log("SERVINCE-ID", data_bind);
+                }
 
             }
 
@@ -1279,21 +1334,48 @@ $$(document).on('pageInit', function (e) {
                         return false;
                     }
                 }
+                // console.log("data");
+                // console.log(data);
+                // console.log("CATEGORIES");
+                // console.log(category_data);
+                //console.log("service ids");
+                //console.log(data_service_ids);
+                //console.log("service quantity");
+                //console.log(removeDuplicateUsingSet(quantities));
+                //console.log(data);
                 var customer_id = $$('#form_entry_customer').val();
                 var grand_total = $$('#grand-total').val();
                 var remarks = $$('#remarks').val();
+                if(customer_id == "") {
+                    myApp.alert("Please add Customer");
+                    return false;
+                }
+                console.log(category_data);
                 //console.log("customer id", customer_id);
-                createOrder(data, grand_total, customer_id, remarks);
+                createOrder(data, grand_total, customer_id, remarks, category_data);
             }
 
             //createOrder(formData, 1);
         });
 
     }
+    if(page.name == 'order-list-page') {
+        console.log("load order list page");
+
+        //get order list
+        $$('#id-add-order').on('click', function(){
+            //console.log("add order");
+            mainView.router.loadContent($$('#id-add-order-page').html());
+        });
+
+    }
 });
 
 
-
+function removeDuplicateUsingSet(arr){
+    let unique_array = Array.from(new Set(arr))
+    return unique_array
+}
 function update_order_details(id, signature)
 {
 
@@ -2181,7 +2263,8 @@ function getCategories(serviceID, the_id)
             var table = $$('#order-table'+the_id).find('tbody');
 
             $$.each(data.data, function(k, v) {
-                table.append($$('<tr>').attr('class', 'item')
+                //data-service-id="'+this.value+'">'
+                table.append($$('<tr data-service-id="'+serviceID+'">').attr('class', 'item')
                     .append($$('<td>').attr('class', "label-cell").text(v.category.capitalize()))
                     .append($$('<td>').attr('class', "numeric-cell")
                         .append($$('<input>').attr('type',"number").attr('class', 'quantity').css('background-color','#EFEFEF')))
@@ -2203,7 +2286,7 @@ String.prototype.capitalize = function() {
     return this.charAt(0).toUpperCase() + this.slice(1);
 }
 
-function createOrder(data, grand_total, customer_id, remarks)
+function createOrder(data, grand_total, customer_id, remarks, category_data)
 {
     var token= $$('meta[name="token"]').attr("content");
 
@@ -2218,7 +2301,7 @@ function createOrder(data, grand_total, customer_id, remarks)
             headers: {
                 'Authorization': token,
             },
-            data: { data: data, customer_id: customer_id, grand_total: grand_total, remarks: remarks},
+            data: { data: data, customer_id: customer_id, grand_total: grand_total, remarks: remarks, category_data: category_data},
             success: function (data) {
                 myApp.hidePreloader();
                 console.log("result");
