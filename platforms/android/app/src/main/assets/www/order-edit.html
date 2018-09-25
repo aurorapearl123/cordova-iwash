@@ -5,104 +5,104 @@
             <div class="content-block-title">Labels and inputs</div>
             <div class="list-block">
                 <ul>
+                    <!-- Text inputs -->
+                    <li>
+                        <div class="item-content">
+                            <div class="item-inner">
+                                <div class="item-title label">Branch</div>
+                                <div class="item-input">
+                                    <input type="text" id="id-branch" readonly>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item-content">
+                            <div class="item-inner">
+                                <div class="item-title label">Date</div>
+                                <div class="item-input">
+                                    <input type="date" id="id-date" readonly>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+
                     <li>
                         <!-- Additional "smart-select" class -->
-                        <a href="#" class="item-link smart-select" id="id-smart-select-service" data-open-in="picker" data-back-on-select="true" data-searchbar="true" data-searchbar-placeholder="Search Service">
+                        <a href="#" class="item-link smart-select" id="id-smart-select-customer" data-open-in="picker" data-back-on-select="true" data-searchbar="true" data-searchbar-placeholder="Search Customer">
                             <!--<a href="#" class="item-link " id="id-smart-select-city" >-->
                             <!-- select -->
-                            <select name="service" id="form_entry_service">
+                            <select name="custID" id="form_entry_customer">
                                 <!--<option value="cebu">cebu</option>-->
 
                             </select>
                             <div class="item-content">
+                                <div class="item-media"><i class="icon f7-icons">person</i></div>
                                 <div class="item-inner">
-                                    <div class="item-title label">Service</div>
+                                    <div class="item-title label">Customer</div>
                                     <div class="item-input">
-                                        <input type="text" placeholder="Your name">
+
                                     </div>
                                 </div>
                             </div>
                         </a>
                     </li>
-                    <!-- Text inputs -->
                     <li>
-                        <div class="item-content">
-                            <div class="item-inner">
-                                <div class="item-title label">Name</div>
-                                <div class="item-input">
-                                    <input type="text" placeholder="Your name">
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="item-content">
-                            <div class="item-inner">
-                                <div class="item-title label">E-mail</div>
-                                <div class="item-input">
-                                    <input type="email" placeholder="E-mail">
-                                </div>
-                            </div>
-                        </div>
-                    </li>
+                        <!-- Additional "smart-select" class -->
+                        <a href="#" class="item-link smart-select" id="id-smart-select-services" data-open-in="picker" data-back-on-select="true" data-searchbar="true" data-searchbar-placeholder="Search Services">
+                            <!--<a href="#" class="item-link " id="id-smart-select-city" >-->
+                            <!-- select -->
+                            <select name="serviceID" id="form_entry_services">
+                                <!--<option value="cebu">cebu</option>-->
+                            </select>
+                            <div class="item-content">
+                                <div class="item-media"><i class="icon f7-icons">Services</i></div>
+                                <div class="item-inner" id="id-click-services">
+                                    <div class="item-title label">Services</div>
+                                    <div class="item-input">
 
-                    <!-- Select -->
-                    <li>
-                        <div class="item-content">
-                            <div class="item-inner">
-                                <div class="item-title label">Gender</div>
-                                <div class="item-input">
-                                    <select>
-                                        <option>Male</option>
-                                        <option>Female</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-
-                    <!-- Date -->
-                    <li>
-                        <div class="item-content">
-                            <div class="item-inner">
-                                <div class="item-title label">Birth date</div>
-                                <div class="item-input">
-                                    <input type="date" placeholder="Birth day" value="2014-04-30">
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-
-                    <!-- Switch (Checkbox) -->
-                    <li>
-                        <div class="item-content">
-                            <div class="item-inner">
-                                <div class="item-title label">Switch</div>
-                                <div class="item-input">
-                                    <label class="label-switch">
-                                        <input type="checkbox">
-                                        <div class="checkbox"></div>
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-
-                    <!-- Slider (Range input) -->
-                    <li>
-                        <div class="item-content">
-                            <div class="item-inner">
-                                <div class="item-title label">Slider</div>
-                                <div class="item-input">
-                                    <div class="range-slider">
-                                        <input type="range" min="0" max="100" value="50" step="0.1">
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </a>
                     </li>
+
                 </ul>
+
             </div>
+
+            <div id="id-display-category">
+                <!-- keep it empty -->
+            </div>
+
+            <div class="col-25">
+                <center>
+                    <span style="width:42px; height:42px" class="preloader" id="id-my-preloader" ></span>
+                </center>
+            </div>
+
+            <div class="content-block">
+                <div class="item-content">
+                    <div class="item-inner">
+                        <div class="item-title label">Grand Total</div>
+                        <div class="item-input">
+                            <input type="number" placeholder="" style="border:none" readonly id="grand-total">
+                        </div>
+                    </div>
+                </div>
+                <div class="item-content">
+                    <div class="item-inner">
+                        <div class="item-title label">Remarks</div>
+                        <div class="item-input">
+                            <textarea id="remarks"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <input type="hidden" id="id-order">
+                <a href="#" class="button button-fill button-raised" id="id-button-form-edit-order">SUBMIT</a>
+            </div>
+        </div>
+        </form>
 
         </div>
     </div>
