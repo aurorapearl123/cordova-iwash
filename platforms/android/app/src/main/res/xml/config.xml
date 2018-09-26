@@ -11,6 +11,9 @@
     <feature name="Camera">
         <param name="android-package" value="org.apache.cordova.camera.CameraLauncher" />
     </feature>
+    <feature name="NetworkStatus">
+        <param name="android-package" value="org.apache.cordova.networkinformation.NetworkManager" />
+    </feature>
     <name>iWash</name>
     <description>
         A sample Apache Cordova application that responds to the deviceready event.
@@ -27,7 +30,7 @@
     <allow-intent href="mailto:*" />
     <allow-intent href="geo:*" />
     <allow-intent href="market:*" />
-    <icon src="res/icon/android/icon-36-ldpi.png" />
+    <icon src="res/screen/android/logo_shadow_hdpi.png" />
     <splash density="hdpi" src="res/screen/android/logo_shadow_hdpi.png" />
     <splash density="mdpi" src="res/screen/android/logo_shadow_mdpi.png" />
     <splash density="xhdpi" src="res/screen/android/logo_shadow_xhdpi.png" />

@@ -49,6 +49,8 @@ $$(document).on('pageInit', function (e) {
 
     if (page.name === 'home') {
 
+        checkConnection();
+
         // Following code will be executed for page with data-page attribute equal to "about"
         //myApp.alert('Here comes About page');
         //console.log("home page");
@@ -213,7 +215,7 @@ $$(document).on('pageInit', function (e) {
             if(e.handled !== true) // This will prevent event triggering more then once
             {
                 console.log("logout");
-                myApp.confirm('Are you sure?', function () {
+                myApp.confirm('Do you want to logout?', function () {
                     navigator.app.exitApp();
                 });
                 e.handled = true;
@@ -1801,60 +1803,66 @@ $$('#login').on('click', function(){
     var username = $$('.login-screen input[name = "username"]').val();
     var password = $$('.login-screen input[name = "password"]').val();
 
-    //alert(uname+pwd);
-    //console.log("this data "+uname+pwd);
+    if(navigator.onLine){
+        //alert(uname+pwd);
+        //console.log("this data "+uname+pwd);
 
-    var data = {"username": username, "password": password };
+        var data = {"username": username, "password": password };
 
-    //myApp.closeModal('.login-screen',true);
-    //mainView.router.loadContent($$('#dashboard').html());
-    //var base_url = 'http://192.168.1.224/iwash';
+        //myApp.closeModal('.login-screen',true);
+        //mainView.router.loadContent($$('#dashboard').html());
+        //var base_url = 'http://192.168.1.224/iwash';
 
-    myApp.showPreloader('Checking connection.');
-    setTimeout(function () {
-        $$.ajax({
-            type: "POST",
-            dataType: "json",
-            url: base_url+"/api/login",
-            data: data,
-            success: function (data) {
-                //console.log(data);
-                //console.log("token");
-                //console.log(data.data.token);
-                //app.addView('.view-main');
+        myApp.showPreloader('Checking connection');
+        setTimeout(function () {
+            $$.ajax({
+                type: "POST",
+                dataType: "json",
+                url: base_url+"/api/login",
+                data: data,
+                success: function (data) {
+                    //console.log(data);
+                    //console.log("token");
+                    //console.log(data.data.token);
+                    //app.addView('.view-main');
 
-                $$('meta[name="token"]').attr("content", data.data.token);
-                $$('meta[name="user_group"]').attr("content", data.data.groupName);
-                $$('meta[name="branchName"]').attr("content", data.data.branchName);
-                //var meta = $$('meta[name="token"]').attr("content");
-                //console.log(meta);
-                localStorage.clear();
+                    $$('meta[name="token"]').attr("content", data.data.token);
+                    $$('meta[name="user_group"]').attr("content", data.data.groupName);
+                    $$('meta[name="branchName"]').attr("content", data.data.branchName);
+                    //var meta = $$('meta[name="token"]').attr("content");
+                    //console.log(meta);
+                    localStorage.clear();
 
-                myApp.closeModal('.login-screen',true);
-                myApp.hidePreloader();
-                mainView.router.loadContent($$('#dashboard').html());
+                    myApp.closeModal('.login-screen',true);
+                    myApp.hidePreloader();
+                    mainView.router.loadContent($$('#dashboard').html());
 
-            },
-            error: function (error) {
-                //console.log(error);
-                var response_message = "";
-                var message = JSON.parse(error.responseText);
-                //console.log(message);
-                // if(typeof message.error.username !== undefined) {
-                if (typeof(message.error) != "undefined"){
-                    var username_error = (message.error.username) ? message.error.username : "";
-                    var password_error = (message.error.password) ? message.error.password : "";
-                    response_message = username_error +" "+ password_error;
+                },
+                error: function (error) {
+                    //console.log(error);
+                    var response_message = "";
+                    var message = JSON.parse(error.responseText);
+                    //console.log(message);
+                    // if(typeof message.error.username !== undefined) {
+                    if (typeof(message.error) != "undefined"){
+                        var username_error = (message.error.username) ? message.error.username : "";
+                        var password_error = (message.error.password) ? message.error.password : "";
+                        response_message = username_error +" "+ password_error;
+                    }
+                    else {
+                        response_message = message.message;
+                    }
+                    myApp.alert(response_message);
                 }
-                else {
-                    response_message = message.message;
-                }
-                myApp.alert(response_message);
-            }
-        });
+            });
 
 
-    }, 2000);
+        }, 2000);
+
+        //alert('online');
+    } else {
+        myApp.alert('Please check connection');
+    }
 
 });
 
@@ -1998,6 +2006,17 @@ function onLoad() {
     //alert("deviceready");
     //exitAppPopup();
 
+}
+
+function checkConnection()
+{
+    document.addEventListener("offline", onOffline, false);
+}
+
+function onOffline() {
+    // Handle the offline event
+    console.log('offline connection...........');
+    alert("lost connection");
 }
 
 // device APIs are available
@@ -2589,10 +2608,13 @@ function updateCustomer(data, id) {
                 //console.log(data);
 
                 mainView.router.loadContent($$('#id-customer-page').html());
+
             },
             error: function(xhr) {
                 console.log("error delete");
                 console.log(xhr);
+                var error = JSON.parse(xhr.responseText);
+                myApp.alert(error.message, 'Error Updating customer!');
             }
         });
     });
