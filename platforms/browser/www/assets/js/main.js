@@ -19,10 +19,13 @@ var $$ = Dom7;
 
 //var base_url = 'http://192.168.84.2/iwash';
 
+// var  base_url = "http://192.168.1.44/iwash/";
+
 var  base_url = "http://192.168.1.224/iwash/";
 
-//jem ip
-//var  base_url = "http://192.168.84.2/iwash/";
+// var  base_url = "http://192.168.1.90/project/iwash/";
+
+
 
 
 
@@ -132,7 +135,6 @@ $$(document).on('pageInit', function (e) {
             }, 2000);
         });
 
-
         $$('#signature-pad').hide();
         $$('.infinite-scroll-preloader').hide();
 
@@ -157,9 +159,6 @@ $$(document).on('pageInit', function (e) {
             getOrderDate(page, date_local, 4);
 
         }
-
-
-
 
         //add infinite scroll
         $$(page.container).find('#id-reset').on('click', function(){
@@ -589,17 +588,24 @@ $$(document).on('pageInit', function (e) {
                     /// do stuff
 
                     //console.log(v.branch_name);
-                    listHTML = '<div class = "list-block cards-list">';
-                    listHTML += '<ul>';
-                    listHTML += '<li class = "card">';
-                    listHTML += '<div class = "card-header">'+ v.suffix+" "+ v.fname +" "+v.mname+" "+v.lname+'</div>';
-                    listHTML += '<div class = "card-content">';
-                    listHTML += '<div class = "card-content-inner">Branch :'+ v.branch_name +'</div>';
+                    listHTML = '<div class="list-block media-list mt-15 mb-0">';
+                    listHTML += '<ul class="profile bg-white">';
+                    listHTML += '<li>';
+                    listHTML += '<div class="item-content">';
+
+                    listHTML += '<div class="item-media py-15"><img src="http://192.168.1.224/iwash/assets/img/users/noimage.gif"></div>';
+                    listHTML += '<div class="item-inner">';
+
+                    listHTML += '<div class="item-title-row">';
+                    listHTML += '<div class="item-title">'+ v.suffix+" "+ v.fname +" "+v.mname+" "+v.lname+'</div>';
                     listHTML += '</div>';
-                    listHTML += '<div class = "card-footer">'+ v.date +'</div>';
+                    listHTML += '<div class="item-subtitle color-grey">'+ v.date +'</div>';
+
+                    listHTML += '</div>';
+
                     listHTML += '</div>';
                     listHTML += '</li>';
-                    listHTML += '</div>';
+
                     listHTML += '</ul>';
                     listHTML += '</div>';
 
@@ -656,25 +662,25 @@ $$(document).on('pageInit', function (e) {
 
                         //'<a href="customer-edit.html?id='+v.custID+'" class="link"><i class="icon f7-icons">settings</i></a>'+
 
-                    var table = $$('<div>').attr('class', "data-table data-table-init card")
+                    var table = $$('<div>').attr('class', "services inset")
                         .append($$('<div>').attr('class', "card-header")
-                            .append($$('<span>').text("Type : "+v.serviceType.capitalize()+""))
+                            .append($$('<span>').text(""+v.serviceType.capitalize()+""))
                         )
-                        .append($$('<div>').attr('class', "card-content")
+                        .append($$('<div>').attr('class', "card-content px-15")
                             .append($$('<table>').attr('id', 'order-table'+the_id)
                                 .append($$('<tr>').attr('id', 'tr-head'+the_id))
                                 .append($$('<tbody>'))
                             )
                         )
                             //quantity
+                            .append($$('<h4 class="px-15">Details</h4>'))
                             .append($$('<ul>')
                                 .append($$('<li>')
                                     .append($$('<div>').attr('class', 'item-content')
                                         .append($$('<div>').attr('class','item-inner')
-                                            .append($$('<div>').attr('class','item-title label').text("Quantity")
-                                                .append($$('<div>').attr('class', 'item-input')
-                                                    .append($$('<input>').attr('placeholder', "Please input Quantity").attr('type', 'number').attr('value', QUANTITY).attr('readonly', true).attr('style', 'border:none')
-                                                    )
+                                            .append($$('<div>').attr('class','item-title label color-grey').text("Quantity"))
+                                            .append($$('<div>').attr('class', 'item-input')
+                                                .append($$('<input>').attr('placeholder', "Please input Quantity").attr('type', 'number').attr('value', QUANTITY).attr('readonly', true).attr('style', 'border:none')
                                                 )
                                             )
                                         )
@@ -684,10 +690,9 @@ $$(document).on('pageInit', function (e) {
                                 .append($$('<li>')
                                     .append($$('<div>').attr('class', 'item-content')
                                         .append($$('<div>').attr('class','item-inner')
-                                            .append($$('<div>').attr('class','item-title label').text("UNIT")
-                                                .append($$('<div>').attr('class', 'item-input')
-                                                    .append($$('<input>').attr('placeholder', "Unit").attr('value', UNIT).attr('readonly', true).attr('style', 'border:none'))
-                                                )
+                                            .append($$('<div>').attr('class','item-title label color-grey').text("Unit"))
+                                            .append($$('<div>').attr('class', 'item-input')
+                                                .append($$('<input>').attr('placeholder', "Unit").attr('value', UNIT).attr('readonly', true).attr('style', 'border:none'))
                                             )
                                         )
                                     )
@@ -696,22 +701,20 @@ $$(document).on('pageInit', function (e) {
                                 .append($$('<li>')
                                     .append($$('<div>').attr('class', 'item-content')
                                         .append($$('<div>').attr('class','item-inner')
-                                            .append($$('<div>').attr('class','item-title label').text("RATE")
-                                                .append($$('<div>').attr('class', 'item-input')
-                                                    .append($$('<input>').attr('placeholder', "Rate").attr('value', REGULAR_RATE).attr('readonly', true).attr('style', 'border:none'))
-                                                )
+                                            .append($$('<div>').attr('class','item-title label color-grey').text("Rate"))
+                                            .append($$('<div>').attr('class', 'item-input')
+                                                .append($$('<input>').attr('placeholder', "Rate").attr('value', REGULAR_RATE).attr('readonly', true).attr('style', 'border:none'))
                                             )
                                         )
                                     )
                                 )
                                 //amount
                                 .append($$('<li>')
-                                    .append($$('<div>').attr('class', 'item-content')
+                                    .append($$('<div>').attr('class', 'item-content last')
                                         .append($$('<div>').attr('class','item-inner')
-                                            .append($$('<div>').attr('class','item-title label').text("AMOUNT")
-                                                .append($$('<div>').attr('class', 'item-input')
-                                                    .append($$('<input>').attr('placeholder', "Amount").attr('readonly', true).attr('style','border:none').attr('class', 'my-amount').attr('value', AMOUNT))
-                                                )
+                                            .append($$('<div>').attr('class','item-title label color-grey').text("Amount"))
+                                            .append($$('<div>').attr('class', 'item-input')
+                                                .append($$('<input>').attr('placeholder', "Amount").attr('readonly', true).attr('style','border:none').attr('class', 'my-amount').attr('value', AMOUNT))
                                             )
                                         )
                                     )
@@ -736,11 +739,11 @@ $$(document).on('pageInit', function (e) {
                             //console.log("the id", the_id);
                             $$('#order-table'+the_id).find('#tr-head'+the_id).empty();
                             $$('#order-table'+the_id).find('#tr-head'+the_id)
-                                .append($$('<th>').attr('class', 'numeric-cell').text('CATEGORY'))
-                                .append($$('<th>').attr('class', 'numeric-cell').text('QUANTITY'));
+                                .append($$('<th>').attr('class', 'text-align-left pl-0').text('Category'))
+                                .append($$('<th>').attr('class', 'text-align-right pr-0').text('Quantity'));
                             var table = $$('#order-table'+the_id).find('tbody');
-                            table.append($$('<tr ">').attr('class', 'item')
-                                .append($$('<td>').attr('class', "label-cell").text(element.category.capitalize()))
+                            table.append($$('<tr>').attr('class', 'item')
+                                .append($$('<td>').attr('class', "label-cell color-grey").text(element.category.capitalize()))
                                 .append($$('<td>').attr('class', "numeric-cell")
                                     .append($$('<input>').attr('value', element.qty).attr('type',"number").attr('class', 'quantity').css('background-color','#EFEFEF').attr('style', 'border:none').attr('readonly', true)))
 
@@ -753,10 +756,10 @@ $$(document).on('pageInit', function (e) {
                 //display category list
 
                 // set delivery fee
-                var delivery_fee_html = '<div class="list-block">'+
+                var delivery_fee_html = '<div class="list-block inset total">'+
                                       '<ul>' +
-                                        '<li class="item-content"> <div class="item-inner"> <div class="item-title"> Delivery Fee: '+delivery_fee+'</div></div>' +
-                                        '<li class="item-content"> <div class="item-inner"> <div class="item-title"> Total : '+total_amount+'</div></div>' +
+                                        '<li class="item-content pr-15"><div class="pr-0 item-inner"><div class="item-title">Delivery Fee</div><div class="item-after">'+delivery_fee+'</div></div>' +
+                                        '<li class="item-content pr-15"><div class="pr-0 item-inner total-amount"> <div class="item-title">Total</div><div class="item-after">'+total_amount+'</div></div>' +
                                         '</li>'+
                                       '</ul>';
 
@@ -1904,13 +1907,14 @@ function refreshData(date, page, status)
 
                 listHTML += '<li>';
                 listHTML += '<a href="about.html?id='+ v.order_id +'" class="item-link item-content">';
+                listHTML += '<div class="item-media"><span class="moname">Sep<span class="moday">23</span></span></div>';
                 listHTML += '<div class = "item-inner">';
                 listHTML += '<div class = "item-title-row">';
                 listHTML += '<div class = "item-title">'+v.suffix+" "+ v.fname +" "+v.mname+" "+v.lname+'</div>';
-                listHTML += '<div class="item-after">'+v.date+'</div>';
+                // listHTML += '<div class="item-after">'+v.date+'</div>';
                 listHTML += '</div>';
-                listHTML += '<div class="item-subtitle"> Branch : '+ v.branch_name +'</div>';
-                listHTML += '<div class="item-text"> Service Type : '+ v.service_type+'</div>';
+                listHTML += '<div class="item-subtitle">'+ v.branch_name +'</div>';
+                listHTML += '<div class="item-text">'+ v.service_type+'</div>';
                 //listHTML += '<div class = "card-footer"><a href="about.html?id='+ v.order_id +'" class="link">View Details</a></div>';
                 listHTML += '</div>';
                 listHTML += '</a>';
@@ -1970,13 +1974,14 @@ function refreshDataHistory(date, page, status)
 
                 listHTML += '<li>';
                 listHTML += '<a href="about-history.html?id='+ v.order_id +'" class="item-link item-content">';
+                listHTML += '<div class="item-media"><span class="moname">Sep<span class="moday">23</span></span></div>';
                 listHTML += '<div class = "item-inner">';
                 listHTML += '<div class = "item-title-row">';
                 listHTML += '<div class = "item-title">'+v.suffix+" "+ v.fname +" "+v.mname+" "+v.lname+'</div>';
-                listHTML += '<div class="item-after">'+v.date+'</div>';
+                // listHTML += '<div class="item-after">'+v.date+'</div>';
                 listHTML += '</div>';
-                listHTML += '<div class="item-subtitle"> Branch : '+ v.branch_name +'</div>';
-                listHTML += '<div class="item-text"> Service Type : '+ v.service_type+'</div>';
+                listHTML += '<div class="item-subtitle">'+ v.branch_name +'</div>';
+                listHTML += '<div class="item-text">'+ v.service_type+'</div>';
                 //listHTML += '<div class = "card-footer"><a href="about.html?id='+ v.order_id +'" class="link">View Details</a></div>';
                 listHTML += '</div>';
                 listHTML += '</a>';
@@ -2100,12 +2105,14 @@ function getOrderDate(page, date, status)
                     else {
                         listHTML += '<a href="about.html?id=' + v.order_id + '" class="item-link item-content">';
                     }
+                    listHTML += '<div class="item-media"><span class="moname">Sep<span class="moday">23</span></span></div>';
                     listHTML += '<div class = "item-inner">';
                     listHTML += '<div class = "item-title-row">';
                     listHTML += '<div class = "item-title">'+v.suffix+" "+ v.fname +" "+v.mname+" "+v.lname+'</div>';
-                    listHTML += '<div class="item-after">'+v.date+'</div>';
+                    // listHTML += '<div class="item-after">'+v.date+'</div>';
                     listHTML += '</div>';
-                    listHTML += '<div class="item-subtitle"> Branch : '+ v.branch_name +'</div>';
+                    listHTML += '<div class="item-subtitle">'+ v.branch_name +'</div>';
+                    listHTML += '<div class="item-text color-blue">'+ v.service_type +'</div>';
                     listHTML += '</div>';
                     listHTML += '</a>';
                     listHTML += '</li>';
@@ -2171,7 +2178,7 @@ function resetData(page, token)
                     listHTML += '<div class = "item-title">'+v.suffix+" "+ v.fname +" "+v.mname+" "+v.lname+'</div>';
                     listHTML += '<div class="item-after">'+v.date+'</div>';
                     listHTML += '</div>';
-                    listHTML += '<div class="item-subtitle"> Branch : '+ v.branch_name +'</div>';
+                    listHTML += '<div class="item-subtitle">'+ v.branch_name +'</div>';
                     listHTML += '<div class="item-text"> Service Type : '+ v.service_type+'</div>';
                     listHTML += '</div>';
                     listHTML += '</a>';
@@ -2228,13 +2235,14 @@ function getDefaultHistoryList(page, token, url)
 
                     listHTML += '<li>';
                     listHTML += '<a href="about-history.html?id='+ v.order_id +'" class="item-link item-content">';
+                    listHTML += '<div class="item-media"><span class="moname">Sep<span class="moday">23</span></span></div>';
                     listHTML += '<div class = "item-inner">';
                     listHTML += '<div class = "item-title-row">';
                     listHTML += '<div class = "item-title">'+v.suffix+" "+ v.fname +" "+v.mname+" "+v.lname+'</div>';
-                    listHTML += '<div class="item-after">'+v.date+'</div>';
+                    // listHTML += '<div class="item-after">'+v.date+'</div>';
                     listHTML += '</div>';
-                    listHTML += '<div class="item-subtitle"> Branch : '+ v.branch_name +'</div>';
-                    listHTML += '<div class="item-text"> Service Type : '+ v.service_type+'</div>';
+                    listHTML += '<div class="item-subtitle">'+ v.branch_name +'</div>';
+                    listHTML += '<div class="item-text">'+ v.service_type+'</div>';
                     listHTML += '</div>';
                     listHTML += '</a>';
                     listHTML += '</li>';
@@ -2300,17 +2308,18 @@ function getCustomer(ptrContent)
                 var song = v.fname+" "+v.mname+" "+v.lname;
                 // Random author
                 var author = v.title;
-                var itemHTML = '<a href="customer-detail.html?id='+v.custID+'" class="item-link">'+
-                    '<li class="item-content">' +
+                var itemHTML = '<li>' +
+                    '<a href="customer-detail.html?id='+ v.custID +'"class="item-link item-content">'+
                     '<div class="item-media"><img src="' + picURL + '" width="44"/></div>' +
                     '<div class="item-inner">' +
                     '<div class="item-title-row">' +
                     '<div class="item-title">' + song + '</div>' +
                     '</div>' +
-                    '<div class="item-subtitle">' + author + '</div>' +
+                    '<div class="item-subtitle"> +63 923 5410 912</div>' +
+                    // '<div class="item-subtitle">' + author + '</div>' +
                     '</div>' +
-                    '</li>'+
-                    '</a>';
+                    '</a>' +
+                    '</li>';
                 // Prepend new list element
                 ptrContent.find('ul').prepend(itemHTML);
             });
@@ -3251,8 +3260,3 @@ function updateOrder(data, grand_total, customer_id, remarks, category_data, ord
     }, 2000);
 
 }
-
-
-
-
-
