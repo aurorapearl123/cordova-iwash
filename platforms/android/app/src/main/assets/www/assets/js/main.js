@@ -19,11 +19,18 @@ var $$ = Dom7;
 
 //var base_url = 'http://192.168.84.2/iwash';
 
+<<<<<<< HEAD
 // var  base_url = "http://192.168.1.44/iwash/";
 
 var  base_url = "http://192.168.1.224/iwash/";
 
 // var  base_url = "http://192.168.1.90/project/iwash/";
+=======
+var  base_url = "http://192.168.1.224/iwash/";
+
+//jem ip
+//var  base_url = "http://192.168.84.2/iwash/";
+>>>>>>> 41e225b4f9dba878977f02feae12e7d82d7913c3
 
 
 
@@ -50,18 +57,22 @@ $$(document).on('pageInit', function (e) {
 
     if (page.name === 'home') {
 
+        checkConnection();
+
         // Following code will be executed for page with data-page attribute equal to "about"
         //myApp.alert('Here comes About page');
         //console.log("home page");
 
-        var token= $$('meta[name="token"]').attr("content");
+        setUpDate(page.name, '#calendar-from', '#calendar-to');
 
+        var token= $$('meta[name="token"]').attr("content");
         var groupName= $$('meta[name="user_group"]').attr("content");
         //console.log("this is a token",token);
        console.log("this is home");
        var from_date = "";
        var to_date = "";
        var date = "";
+       var data_date = [];
 
         var calendarFrom = myApp.calendar({
             input: '#calendar-from',
@@ -77,16 +88,14 @@ $$(document).on('pageInit', function (e) {
                     date = from_date+":"+to_date;
                     console.log("from date");
                     console.log(date);
+
+                    localStorage.setItem(page.name, date);
                     getOrderDate(page, date,4);
                 }
                 else {
                     console.log("not null");
                 }
-
-
                 //getOrderDate(data);
-
-
             }
         });
 
@@ -103,26 +112,15 @@ $$(document).on('pageInit', function (e) {
                     date = from_date+":"+to_date;
                     console.log("to date");
                     console.log(date);
+
+                    localStorage.setItem(page.name, date);
                     getOrderDate(page, date, 4);
                 }
                 else {
                     console.log("empty this");
                 }
-
             }
         });
-
-        //console.log(from_date);
-
-
-       //search by date
-
-        //var date_filter = "";
-        //var date_filter = searchByDate();
-
-        //console.log(date_filter);
-
-
 
 
 // Pull to refresh content
@@ -143,6 +141,7 @@ $$(document).on('pageInit', function (e) {
         });
 
 
+<<<<<<< HEAD
         var url = base_url+"/api/order";
         $$.ajax({
             type: "GET",
@@ -188,20 +187,33 @@ $$(document).on('pageInit', function (e) {
                     });
 
                     listHTML += '</ul>';
+=======
+        $$('#signature-pad').hide();
+        $$('.infinite-scroll-preloader').hide();
+>>>>>>> 41e225b4f9dba878977f02feae12e7d82d7913c3
 
-                    $$(page.container).find('.page-content').find('.list-block').append(listHTML);
+        var today = new Date();
+        var dd = today.getDate();
+        var mm = today.getMonth()+1; //January is 0!
+        var yyyy = today.getFullYear();
+        if(dd<10) {
+            dd = '0'+dd
+        }
+        if(mm<10) {
+            mm = '0'+mm
+        }
+        today = yyyy+"-"+mm+"-"+dd;
+        var date = today+":"+today;
 
-                    $$('.infinite-scroll-preloader').hide();
-                    $$('#signature-pad').hide();
+        var date_local = localStorage.getItem(page.name);
+        if(date_local == null) {
+            getOrderDate(page, date, 4);
+        }
+        else {
+            getOrderDate(page, date_local, 4);
 
-                }
+        }
 
-            },
-            error: function (error) {
-                console.log("error");
-                console.log(error);
-            }
-        });
 
 
 
@@ -209,9 +221,24 @@ $$(document).on('pageInit', function (e) {
         $$(page.container).find('#id-reset').on('click', function(){
             //mainView.router.loadContent($$('#dashboard').html());
             console.log("reset data");
-            $$('#calendar-from').val("");
-            $$('#calendar-to').val("");
-            date = "";
+            localStorage.removeItem(page.name)
+            setUpDate(page.name, '#calendar-from', '#calendar-to');
+            var today = new Date();
+            var dd = today.getDate();
+            var mm = today.getMonth()+1; //January is 0!
+            var yyyy = today.getFullYear();
+            if(dd<10) {
+                dd = '0'+dd
+            }
+            if(mm<10) {
+                mm = '0'+mm
+            }
+            today = yyyy+"-"+mm+"-"+dd;
+            date = today+":"+today;
+
+            // $$('#calendar-from').val("");
+            // $$('#calendar-to').val("");
+
             resetData(page, token);
 
         });
@@ -221,29 +248,30 @@ $$(document).on('pageInit', function (e) {
             $$('#span-order').hide();
         }
 
-        $$('#id-add-customer').on('click', function(){
+        $$(document).on('click', '#id-add-customer', function(){
             console.log("add customer");
             mainView.router.loadContent($$('#id-customer-page').html());
         });
-        $$('#id-home').on('click', function(){
+        $$(document).on('click', '#id-home', function(){
             mainView.router.loadContent($$('#dashboard').html());
+
 
         });
 
         //PLEASE MODIFY ME AFTER LIST ORDER
-        $$('#id-order-list').on('click', function(){
+        $$(document).on('click', '#id-order-list',function(){
             //console.log("order list");
             mainView.router.loadContent($$('#id-page-order-list').html());
 
             //mainView.router.loadContent($$('#id-add-order-page').html());
         });
 
-        $$('#id-logout').on('click', function(e){
+        $$(document).on('click','#id-logout', function(e){
 
             if(e.handled !== true) // This will prevent event triggering more then once
             {
                 console.log("logout");
-                myApp.confirm('Are you sure?', function () {
+                myApp.confirm('Do you want to logout?', function () {
                     navigator.app.exitApp();
                 });
                 e.handled = true;
@@ -274,7 +302,7 @@ $$(document).on('pageInit', function (e) {
         });
 
         // got to add customer page
-        $$('#id-floating-add-customer').on('click',function(){
+        $$(document).on('click', '#id-floating-add-customer', function(){
             //console.log("add customer");
             mainView.router.loadContent($$('#id-add-customer-page').html())
 
@@ -330,7 +358,7 @@ $$(document).on('pageInit', function (e) {
             });
         });
 
-        $$('#id-create-customer').on('click', function(){
+        $$(document).on('click', '#id-create-customer',  function(){
             console.log("you click");
             var formData = myApp.formToData('#my-form');
             //alert(JSON.stringify(formData));
@@ -599,6 +627,8 @@ $$(document).on('pageInit', function (e) {
         var url = base_url+"/api/order-details/"+id;
         var token= $$('meta[name="token"]').attr("content");
         var listHTML = '';
+        var STATUS = "";
+        var ORDER_ID = "";
         $$.ajax({
             type: "GET",
             dataType: "json",
@@ -643,11 +673,26 @@ $$(document).on('pageInit', function (e) {
                     rate = v.rate;
                     total_amount = v.ttlAmount;
 
-                    console.log("THE STATUS");
-                    console.log(v.status);
+
+                    STATUS = v.status;
+                    ORDER_ID = v.order_id;
+
                 });
 
 
+
+                if(STATUS == 1) {
+                    //console.log("order id");
+                    //console.log(ORDER_ID);
+                    //'<a href="javascript:delete_customer('+v.custID+');" class="link" id="id-delete"><i class="icon f7-icons">trash</i></a>'+
+                    var settingHtml = '<center>' +
+                        '<a href="order-edit.html?id='+ORDER_ID+'" class="link" ><i class="icon f7-icons">settings</i></a>' +
+                        '<a href="javascript:delete_order('+ORDER_ID+');" class="link" id="id-delete"><i class="icon f7-icons">trash</i></a>'+
+                        '</center>';
+                    $$(page.container).find('.page-content').find('#id-display-category').append(settingHtml);
+
+                    $$('#container-signpad').html("")
+                }
 
                 //console.log("order details");
                 //console.log(order_details);
@@ -746,8 +791,8 @@ $$(document).on('pageInit', function (e) {
                     //     console.log("THE CATEGORIES");
                         // console.log(v.categories);
                         v.categories.forEach(element => {
-                            console.log("the category");
-                            console.log(element.category);
+                            //console.log("the category");
+                            //console.log(element.category);
                             //console.log("the id", the_id);
                             $$('#order-table'+the_id).find('#tr-head'+the_id).empty();
                             $$('#order-table'+the_id).find('#tr-head'+the_id)
@@ -854,7 +899,7 @@ $$(document).on('pageInit', function (e) {
         //alert("hello index");
         console.log("history-list");
         //var base_url = 'http://192.168.1.224/iwash';
-        var url = base_url+"/api/order-history";
+        //var url = base_url+"/api/order-history";
         var token= $$('meta[name="token"]').attr("content");
         var from_date = "";
         var to_date = "";
@@ -872,9 +917,10 @@ $$(document).on('pageInit', function (e) {
                     var from_year = calendarFrom.value[0].getFullYear();
                     from_date = from_year+"-"+from_month+"-"+from_day;
                     date = from_date+":"+to_date;
-                    console.log("from date");
+                    console.log("from date history");
                     console.log(date);
                     //get history
+                    localStorage.setItem(page.name, date);
                     getOrderDate(page, date, 5);
                 }
                 else {
@@ -899,9 +945,10 @@ $$(document).on('pageInit', function (e) {
                     var to_year = calendarTo.value[0].getFullYear();
                     to_date = to_year+"-"+to_month+"-"+to_day;
                     date = from_date+":"+to_date;
-                    console.log("to date");
+                    console.log("to date history");
                     console.log(date);
                     //get history
+                    localStorage.setItem(page.name, date);
                     getOrderDate(page, date, 5);
                 }
                 else {
@@ -919,7 +966,32 @@ $$(document).on('pageInit', function (e) {
             // Emulate 2s loading
             setTimeout(function () {
                 //refreshData history
-                refreshDataHistory(date, page, 5);
+                var today = new Date();
+                var dd = today.getDate();
+                var mm = today.getMonth()+1; //January is 0!
+                var yyyy = today.getFullYear();
+                if(dd<10) {
+                    dd = '0'+dd
+                }
+                if(mm<10) {
+                    mm = '0'+mm
+                }
+                today = yyyy+"-"+mm+"-"+dd;
+                var date = today+":"+today;
+
+                var date_local = localStorage.getItem(page.name);
+                if(date_local == null) {
+                    //getOrderDate(page, date, 5);
+                    var url = base_url+"/api/order-history";
+                    //getDefaultHistoryList(page, token, url);
+                    refreshDataHistory("", page, 5);
+                }
+                else {
+                    getOrderDate(page, date_local, 5);
+
+                }
+
+                // refreshDataHistory(date, page, 5);
                 // When loading done, we need to reset it
                 myApp.pullToRefreshDone();
             }, 2000);
@@ -927,7 +999,34 @@ $$(document).on('pageInit', function (e) {
 
         //var url = "http://192.168.1.224/iwash/api/order";
         //get history list default current day
-        getDefaultHistoryList(page, token, url);
+        var today = new Date();
+        var dd = today.getDate();
+        var mm = today.getMonth()+1; //January is 0!
+        var yyyy = today.getFullYear();
+        if(dd<10) {
+            dd = '0'+dd
+        }
+        if(mm<10) {
+            mm = '0'+mm
+        }
+        today = yyyy+"-"+mm+"-"+dd;
+        var date = today+":"+today;
+
+        var date_local = localStorage.getItem(page.name);
+        if(date_local == null) {
+            //getOrderDate(page, date, 5);
+            var url = base_url+"/api/order-history";
+            getDefaultHistoryList(page, token, url);
+        }
+        else {
+            getOrderDate(page, date_local, 5);
+
+        }
+        //getOrderDate(page, date, 5);
+
+        //var url = base_url+"/api/order-date/"+date+":"+5;
+        // var url = base_url+"/api/order-history";
+        // getDefaultHistoryList(page, token, url);
 
 
     }
@@ -935,12 +1034,16 @@ $$(document).on('pageInit', function (e) {
     //add infinite scroll
     $$(page.container).find('#history-id-reset').on('click', function(){
         //mainView.router.loadContent($$('#dashboard').html());
-        console.log("reset data history");
-        $$('#history-calendar-from').val("");
-        $$('#history-calendar-to').val("");
-        date = "";
+        // console.log("reset data history");
+        // $$('#history-calendar-from').val("");
+        // $$('#history-calendar-to').val("");
+        // date = "";
+        setUpDate('#history-calendar-from', '#history-calendar-to');
+        localStorage.removeItem(page.name);
         //console.log("reset history");
         //resetData(page, token);
+        var token= $$('meta[name="token"]').attr("content");
+        var url = base_url+"/api/order-history";
         getDefaultHistoryList(page, token, url);
     });
 
@@ -970,11 +1073,12 @@ $$(document).on('pageInit', function (e) {
             success: function (data) {
                 //console.log(data.data);
                 console.log("about history details");
-                console.log(data);
+                //console.log(data);
                 //var listHTML = '';
                 var order_details = [];
                 var delivery_fee = 0, rate = 0, total_amount = 0;
                 var custsign = "";
+                var remarks = "";
                 $$.each(data.data, function(k, v) {
                     /// do stuff
                     custsign = v.custsign;
@@ -1000,83 +1104,142 @@ $$(document).on('pageInit', function (e) {
                     delivery_fee = v.deliveryFee;
                     rate = v.rate;
                     total_amount = v.ttlAmount;
+                    remarks = v.remarks;
                 });
 
 
-                var myList = myApp.virtualList('.list-block.virtual-list', {
-                    // Array with items data
-                    items: [
+                $$.each(order_details, function(k, v) {
+                        //console.log("the data");
+                        //console.log(v.serviceType);
+                        var UNIT = v.unit;
+                        var REGULAR_RATE = v.regRate;
+                        var QUANTITY = v.qty;
+                        var AMOUNT = v.amount;
+                        var str = v.serviceType;
+                        str = str.replace(/ +/g, "");
+                        var the_id = v.serviceID+str;
 
-                    ],
-                    // Template 7 template to render each item
-                    template: '<li class="item-content">' +
-                    '<div class="item-media"><img src="{{picture}}"></div>' +
-                    '<div class="item-inner">' +
-                    '<div class="item-title">{{title}}</div>' +
-                    '</div>' +
-                    '</li>'
-                });
+                        // .append($$('<div>').attr('class', "card-content")
+                        //         .append($$('<table>').attr('id', 'order-table'+the_id)
+                        //             .append($$('<tr>').attr('id', 'tr-head'+the_id))
+                        //             .append($$('<tbody>'))
+                        //         )
+                        //     )
 
-                $$.each(order_details, function(k, v){
-                    //console.log(v.category);
-                    if(v.qty == 0 ) {
+                        //'<a href="customer-edit.html?id='+v.custID+'" class="link"><i class="icon f7-icons">settings</i></a>'+
+
+                        var table = $$('<div>').attr('class', "data-table data-table-init card")
+                            .append($$('<div>').attr('class', "card-header")
+                                .append($$('<span>').text("Type : "+v.serviceType.capitalize()+""))
+                            )
+                            .append($$('<div>').attr('class', "card-content")
+                                .append($$('<table>').attr('id', 'order-table'+the_id)
+                                    .append($$('<tr>').attr('id', 'tr-head'+the_id))
+                                    .append($$('<tbody>'))
+                                )
+                            )
+                            //quantity
+                            .append($$('<ul>')
+                                .append($$('<li>')
+                                    .append($$('<div>').attr('class', 'item-content')
+                                        .append($$('<div>').attr('class','item-inner')
+                                            .append($$('<div>').attr('class','item-title label').text("Quantity")
+                                                .append($$('<div>').attr('class', 'item-input')
+                                                    .append($$('<input>').attr('placeholder', "Please input Quantity").attr('type', 'number').attr('value', QUANTITY).attr('readonly', true).attr('style', 'border:none')
+                                                    )
+                                                )
+                                            )
+                                        )
+                                    )
+                                )
+                                //unit
+                                .append($$('<li>')
+                                    .append($$('<div>').attr('class', 'item-content')
+                                        .append($$('<div>').attr('class','item-inner')
+                                            .append($$('<div>').attr('class','item-title label').text("UNIT")
+                                                .append($$('<div>').attr('class', 'item-input')
+                                                    .append($$('<input>').attr('placeholder', "Unit").attr('value', UNIT).attr('readonly', true).attr('style', 'border:none'))
+                                                )
+                                            )
+                                        )
+                                    )
+                                )
+                                //rate
+                                .append($$('<li>')
+                                    .append($$('<div>').attr('class', 'item-content')
+                                        .append($$('<div>').attr('class','item-inner')
+                                            .append($$('<div>').attr('class','item-title label').text("RATE")
+                                                .append($$('<div>').attr('class', 'item-input')
+                                                    .append($$('<input>').attr('placeholder', "Rate").attr('value', REGULAR_RATE).attr('readonly', true).attr('style', 'border:none'))
+                                                )
+                                            )
+                                        )
+                                    )
+                                )
+                                //amount
+                                .append($$('<li>')
+                                    .append($$('<div>').attr('class', 'item-content')
+                                        .append($$('<div>').attr('class','item-inner')
+                                            .append($$('<div>').attr('class','item-title label').text("AMOUNT")
+                                                .append($$('<div>').attr('class', 'item-input')
+                                                    .append($$('<input>').attr('placeholder', "Amount").attr('readonly', true).attr('style','border:none').attr('class', 'my-amount').attr('value', AMOUNT))
+                                                )
+                                            )
+                                        )
+                                    )
+                                )
+                            );
+
+
+
+                        // $$.each(v.categories, function(value, index){
+                        //     console.log("the value");
+                        //     console.log(value.category);
+                        // });
+
+                        $$(page.container).find('.page-content').find('#id-display-category').append(table);
+
+                        //append table category
+                        //     console.log("THE CATEGORIES");
+                        // console.log(v.categories);
+                        v.categories.forEach(element => {
+                            //console.log("the category");
+                            //console.log(element.category);
+                            //console.log("the id", the_id);
+                            $$('#order-table'+the_id).find('#tr-head'+the_id).empty();
+                            $$('#order-table'+the_id).find('#tr-head'+the_id)
+                                .append($$('<th>').attr('class', 'numeric-cell').text('CATEGORY'))
+                                .append($$('<th>').attr('class', 'numeric-cell').text('QUANTITY'));
+                            var table = $$('#order-table'+the_id).find('tbody');
+                            table.append($$('<tr ">').attr('class', 'item')
+                                .append($$('<td>').attr('class', "label-cell").text(element.category.capitalize()))
+                                .append($$('<td>').attr('class', "numeric-cell")
+                                    .append($$('<input>').attr('value', element.qty).attr('type',"number").attr('class', 'quantity').css('background-color','#EFEFEF').attr('style', 'border:none').attr('readonly', true)))
+
+                            );
+                        });
 
                     }
-                    else {
-                        if(v.category == 'pants') {
-                            myList.appendItem({
-                                title: v.category +" : "+ v.qty,
-                                picture: base_url+'/assets/img/mobile/'+v.category+'.png',
-                            });
-                        }
-                        else if(v.category == 'underwears') {
-                            myList.appendItem({
-                                title: v.category +" : "+ v.qty,
-                                picture: base_url+'/assets/img/mobile/'+v.category+'.png',
-                            });
-                        }
-
-                        else if(v.category == 'dress') {
-                            myList.appendItem({
-                                title: v.category +" : "+ v.qty,
-                                picture: base_url+'/assets/img/mobile/'+v.category+'.png',
-                            });
-                        }
-
-                        else if(v.category == 'boxes') {
-                            myList.appendItem({
-                                title: v.category +" : "+ v.qty,
-                                picture: base_url+'/assets/img/mobile/'+v.category+'.png',
-                            });
-                        }
-                        else if(v.category == 'upperwears') {
-                            myList.appendItem({
-                                title: v.category +" : "+ v.qty,
-                                picture: base_url+'/assets/img/mobile/'+v.category+'.png',
-                            });
-                        }
-                        else {
-                            myList.appendItem({
-                                title: v.category +" : "+ v.qty,
-                                picture: base_url+'/assets/img/mobile/shopping.png',
-                            });
-                        }
-
-                    }}
                 );
+
+                //display category list
+
                 // set delivery fee
                 var delivery_fee_html = '<div class="list-block">'+
                     '<ul>' +
                     '<li class="item-content"> <div class="item-inner"> <div class="item-title"> Delivery Fee: '+delivery_fee+'</div></div>' +
-                    '<li class="item-content"> <div class="item-inner"> <div class="item-title"> Rate : '+rate+'</div></div>' +
                     '<li class="item-content"> <div class="item-inner"> <div class="item-title"> Total : '+total_amount+'</div></div>' +
                     '</li>'+
                     '</ul>'+
                     '<br>'+
+                    '<span>Remarks: '+remarks+'</span>'+
                     '<div class="content-block-title">Signature</div>'+
                     '<img src="'+custsign+'" width="300" height="300"/>';
 
+
                 $$(page.container).find('.page-content').find('#delivery-list').append(delivery_fee_html);
+
+                $$(page.container).find('.page-content').find('#signature-display').append(listHTML);
 
 
             },
@@ -1377,15 +1540,130 @@ $$(document).on('pageInit', function (e) {
                 }
                 console.log(category_data);
                 //console.log("customer id", customer_id);
-                createOrder(data, grand_total, customer_id, remarks, category_data);
+               createOrder(data, grand_total, customer_id, remarks, category_data);
             }
 
             //createOrder(formData, 1);
         });
 
     }
+    if(page.name == 'order-edit-page') {
+        console.log("edit order");
+        //get all data first
+        var order_id = page.query.id;
+        console.log("order id fds", order_id);
+        myApp.showPreloader('Checking connection.');
+        //localStorage.clear();
+        getServices("");
+        //get order function
+        getOrderForEdit(order_id, page);
+        //create function
+        checkCreateOrder(page);
+        //button edit submit
+        $$("#id-button-form-edit-order").on("click" , function () {
+            console.log("this is edit");
+            //check for table services id
+            var service_ids = $$('meta[name="service_ids"]').attr("content");
+
+            var service_ids = JSON.parse(service_ids);
+            var data = [];
+            var category_data = [];
+            for(var i =0; i<service_ids.length; i++) {
+                // console.log("the id");
+                //console.log(service_ids[i]);
+                //var data_bind_service_id = $$(this).closest('table').parent().parent().data('service-id');
+                //get the service ids
+                var the_id = $$('#remove-id-remove-more-'+service_ids[i]).attr('id');
+                if (typeof the_id != 'undefined') {
+                    //console.log("the id",the_id);
+                    var ul = $$('#remove-id-remove-more-'+service_ids[i]+' > ul').attr('id');
+                    var unit = $$('#'+ul+' li').next('li').find('input').val();
+                    var quantity = $$('#'+ul+' li').find('input').val();
+                    var rate = $$('#'+ul+' li').next('li').next('li').find('input').val();
+                    var amount = $$('#'+ul+' li').next('li').next('li').next('li').find('input').val();
+                    var data_bind = $$('#remove-id-remove-more-'+service_ids[i]).data('service-id');
+                    //GET THE CATEGORY
+                    var table_id = "#order-table"+service_ids[i];
+                    // //console.log("the id", the_id);
+                    $$(''+table_id+' > tbody > tr.item').each(function(index, element) {
+                        var data_bind_table = $$(this).data('service-id');
+                        //console.log("SERVICE ID BIND: ", data_bind_table);
+                        var category_quantity = $$(this).find("input.quantity").val();
+                        var category_id = $$(this).find("input.category_id").val();
+                        //console.log("category_quantity", category_quantity);
+                        if(typeof category_id != 'undefined')
+                        {
+                            category_data.push({
+                                service_id : data_bind,
+                                category_quantity: category_quantity,
+                                category_id : category_id
+                            });
+                        }
+
+                    });
+                    data.push({
+                        service_id : data_bind,
+                        amount: amount,
+                        unit : unit,
+                        rate : rate,
+                        quantity: quantity,
+                    });
+                    // console.log("UNIT", unit);
+                    // console.log("QUANTITY", quantity);
+                    // console.log("RATE", rate);
+                    // console.log("AMOUNT", amount);
+                    // console.log("SERVINCE-ID", data_bind);
+                }
+
+            }
+
+            if(data.length == 0) {
+                myApp.alert("Please add services");
+            }
+            else {
+                //console.log("THE DATA");
+                //console.log(data[0].quantity);
+                for(var i = 0; i < data.length; i++){
+                    if(data[i].quantity == "") {
+                        myApp.alert("Please add Quantity");
+                        return false;
+                    }
+                }
+                // console.log("data");
+                // console.log(data);
+                // console.log("CATEGORIES");
+                //console.log(category_data);
+                //console.log("service ids");
+                //console.log(data_service_ids);
+                //console.log("service quantity");
+                //console.log(removeDuplicateUsingSet(quantities));
+                //console.log(data);
+                var customer_id = $$('#form_entry_customer').val();
+                var grand_total = $$('#grand-total').val();
+                var remarks = $$('#remarks').val();
+                if(customer_id == "") {
+                    myApp.alert("Please add Customer");
+                    return false;
+                }
+                //console.log("order id", );
+
+                var order_id = $$('#id-order').val();
+                //console.log("order id is", order_id);
+                //console.log(category_data);
+                // //console.log("customer id", customer_id);
+                updateOrder(data, grand_total, customer_id, remarks, category_data, order_id);
+
+            }
+
+         });
+
+    }
     if(page.name == 'order-list-page') {
-        console.log("load order list page");
+        //console.log("load order list page");
+        //$$('#created-calendar-from').val(today);
+        //$$('#created-calendar-to').val(today);
+
+        setUpDate(page.name, '#created-calendar-from', '#created-calendar-to');
         var from_date = "";
         var to_date = "";
         var date = "";
@@ -1404,6 +1682,7 @@ $$(document).on('pageInit', function (e) {
                     date = from_date+":"+to_date;
                     //console.log("from date");
                     //console.log(date);
+                    localStorage.setItem(page.name, date);
                     getOrderDate(page, date,1);
                 }
                 else {
@@ -1430,6 +1709,7 @@ $$(document).on('pageInit', function (e) {
                     date = from_date+":"+to_date;
                     //console.log("to date");
                     //console.log(date);
+                    localStorage.setItem(page.name, date);
                     getOrderDate(page, date, 1);
                 }
                 else {
@@ -1453,14 +1733,66 @@ $$(document).on('pageInit', function (e) {
                 mm = '0'+mm
             }
             today = yyyy+"-"+mm+"-"+dd;
-            date = today+":"+today;
-            getOrderDate(page, date, 1);
+            var date = today+":"+today;
+
+            var date_local = localStorage.getItem(page.name);
+            if(date_local == null) {
+                getOrderDate(page, date, 1);
+            }
+            else {
+                getOrderDate(page, date_local, 1);
+
+            }
+            //getOrderDate(page, date, 1);
         }
 
+        var ptrContent = $$(page.container).find('.pull-to-refresh-content');
+        //$$(page.container).find('.page-content').find('.list-block').append(listHTML);
+
+// Add 'refresh' listener on it
+        ptrContent.on('ptr:refresh', function (e) {
+            // Emulate 2s loading
+            setTimeout(function () {
+                var date_from = $$('#created-calendar-from').val();
+                var date_to = $$('#created-calendar-to').val();
+                //please format date
+                date = date_from+":"+date_to;
+                getOrderDate(page, date, 1);
+                //console.log("REFRESH DATA", date);
+                //refreshData(date, page, 4);
+                // When loading done, we need to reset it
+                myApp.pullToRefreshDone();
+            }, 2000);
+        });
+
         //get order list
-        $$('#id-add-order').on('click', function(){
+        $$(document).on('click', '#id-add-order', function(){
             //console.log("add order");
             mainView.router.loadContent($$('#id-add-order-page').html());
+        });
+
+        $$(document).on('click', '#created-id-reset', function(){
+
+            var today = new Date();
+            var dd = today.getDate();
+            var mm = today.getMonth()+1; //January is 0!
+            var yyyy = today.getFullYear();
+            if(dd<10) {
+                dd = '0'+dd
+            }
+            if(mm<10) {
+                mm = '0'+mm
+            }
+            today = yyyy+"-"+mm+"-"+dd;
+            date = today+":"+today;
+
+            $$('#created-calendar-from').val(today);
+            $$('#created-calendar-to').val(today);
+
+            localStorage.removeItem(page.name);
+
+            getOrderDate(page, date,1);
+
         });
 
     }
@@ -1468,9 +1800,12 @@ $$(document).on('pageInit', function (e) {
 
 function calculateGrandTotal(service_ids)
 {
+    //console.log("the services");
+    //console.log(service_ids);
     var sum = 0;
     for(var i = 0; i < service_ids.length; i++) {
         var ul_id = "#ul-class-"+service_ids[i];
+        //console.log(ul_id);
         if($$(ul_id).length) {
 
             var ul = $$('#remove-id-remove-more-'+service_ids[i]+' > ul').attr('id');
@@ -1528,55 +1863,66 @@ $$('#login').on('click', function(){
     var username = $$('.login-screen input[name = "username"]').val();
     var password = $$('.login-screen input[name = "password"]').val();
 
-    //alert(uname+pwd);
-    //console.log("this data "+uname+pwd);
+    if(navigator.onLine){
+        //alert(uname+pwd);
+        //console.log("this data "+uname+pwd);
 
-    var data = {"username": username, "password": password };
+        var data = {"username": username, "password": password };
 
-    //myApp.closeModal('.login-screen',true);
-    //mainView.router.loadContent($$('#dashboard').html());
-    //var base_url = 'http://192.168.1.224/iwash';
-    $$.ajax({
-        type: "POST",
-        dataType: "json",
-        url: base_url+"/api/login",
-        data: data,
-        success: function (data) {
-            //console.log(data);
-            //console.log("token");
-            //console.log(data.data.token);
-            //app.addView('.view-main');
+        //myApp.closeModal('.login-screen',true);
+        //mainView.router.loadContent($$('#dashboard').html());
+        //var base_url = 'http://192.168.1.224/iwash';
 
-            $$('meta[name="token"]').attr("content", data.data.token);
-            $$('meta[name="user_group"]').attr("content", data.data.groupName);
-            $$('meta[name="branchName"]').attr("content", data.data.branchName);
-            //var meta = $$('meta[name="token"]').attr("content");
-            //console.log(meta);
-            localStorage.clear();
+        myApp.showPreloader('Checking connection');
+        setTimeout(function () {
+            $$.ajax({
+                type: "POST",
+                dataType: "json",
+                url: base_url+"/api/login",
+                data: data,
+                success: function (data) {
+                    //console.log(data);
+                    //console.log("token");
+                    //console.log(data.data.token);
+                    //app.addView('.view-main');
 
-            myApp.closeModal('.login-screen',true);
-            mainView.router.loadContent($$('#dashboard').html());
+                    $$('meta[name="token"]').attr("content", data.data.token);
+                    $$('meta[name="user_group"]').attr("content", data.data.groupName);
+                    $$('meta[name="branchName"]').attr("content", data.data.branchName);
+                    //var meta = $$('meta[name="token"]').attr("content");
+                    //console.log(meta);
+                    localStorage.clear();
 
-        },
-        error: function (error) {
-            //console.log(error);
-            var response_message = "";
-            var message = JSON.parse(error.responseText);
-            //console.log(message);
-            // if(typeof message.error.username !== undefined) {
-            if (typeof(message.error) != "undefined"){
-                var username_error = (message.error.username) ? message.error.username : "";
-                var password_error = (message.error.password) ? message.error.password : "";
-                response_message = username_error +" "+ password_error;
-            }
-            else {
-                response_message = message.message;
-            }
-            myApp.alert(response_message);
-        }
-    });
+                    myApp.closeModal('.login-screen',true);
+                    myApp.hidePreloader();
+                    mainView.router.loadContent($$('#dashboard').html());
+
+                },
+                error: function (error) {
+                    //console.log(error);
+                    var response_message = "";
+                    var message = JSON.parse(error.responseText);
+                    //console.log(message);
+                    // if(typeof message.error.username !== undefined) {
+                    if (typeof(message.error) != "undefined"){
+                        var username_error = (message.error.username) ? message.error.username : "";
+                        var password_error = (message.error.password) ? message.error.password : "";
+                        response_message = username_error +" "+ password_error;
+                    }
+                    else {
+                        response_message = message.message;
+                    }
+                    myApp.alert(response_message);
+                }
+            });
 
 
+        }, 2000);
+
+        //alert('online');
+    } else {
+        myApp.alert('Please check connection');
+    }
 
 });
 
@@ -1722,6 +2068,17 @@ function onLoad() {
     //alert("deviceready");
     //exitAppPopup();
 
+}
+
+function checkConnection()
+{
+    document.addEventListener("offline", onOffline, false);
+}
+
+function onOffline() {
+    // Handle the offline event
+    console.log('offline connection...........');
+    alert("lost connection");
 }
 
 // device APIs are available
@@ -2261,7 +2618,43 @@ function delete_customer(id){
             }
         });
     });
+
+
 }
+
+
+function delete_order(id){
+    myApp.confirm('Are you sure?', function () {
+        myApp.showPreloader('Deleting data.');
+        setTimeout(function () {
+            console.log("delete customer", id);
+            var token= $$('meta[name="token"]').attr("content");
+
+            var url = base_url+"api/order-delete/"+id;
+            $$.ajax({
+                type: "DELETE",
+                //url: 'http://192.168.1.224/iwash/api/customer',
+                url: url,
+                headers: {
+                    'Authorization': token,
+                },
+                success: function (data) {
+                    //console.log(data);
+                    myApp.hidePreloader();
+                    mainView.router.loadContent($$('#id-page-order-list').html());
+                },
+                error: function(xhr) {
+                    myApp.hidePreloader();
+                    console.log("error delete");
+                    console.log(xhr);
+                }
+            });
+
+        }, 2000);
+    });
+
+}
+
 
 function updateCustomer(data, id) {
 
@@ -2281,16 +2674,19 @@ function updateCustomer(data, id) {
                 //console.log(data);
 
                 mainView.router.loadContent($$('#id-customer-page').html());
+
             },
             error: function(xhr) {
                 console.log("error delete");
                 console.log(xhr);
+                var error = JSON.parse(xhr.responseText);
+                myApp.alert(error.message, 'Error Updating customer!');
             }
         });
     });
 }
 
-function getCustomerSmartSelect()
+function getCustomerSmartSelect(custID)
 {
 
     var token= $$('meta[name="token"]').attr("content");
@@ -2309,12 +2705,16 @@ function getCustomerSmartSelect()
             //console.log(data.data);
             //data = $$.parseJSON(data);
             $$.each(data.data, function(k, v) {
-                myApp.smartSelectAddOption('#id-smart-select-customer select', '<option value="' + v.custID + '">' + v.fname +" "+v.mname+" "+v.lname+ '</option>');
+                if(v.custID == custID) {
+                    //myApp.smartSelectAddOption('#id-smart-select-customer select selected', '<option value="' + v.custID + '">' + v.fname +" "+v.mname+" "+v.lname+ '</option>',0);
+                    myApp.smartSelectAddOption('#id-smart-select-customer select', '<option value="' + v.custID + '">' + v.fname +" "+v.mname+" "+v.lname+ 'selected</option>',0);
+                }
+                else {
+                    //console.log("NOT EQUEL");
+                    myApp.smartSelectAddOption('#id-smart-select-customer select', '<option value="' + v.custID + '">' + v.fname +" "+v.mname+" "+v.lname+ '</option>');
+                }
+
             });
-
-
-            //listHTML += '<a href="about-history.html?id='+ v.order_id +'" class="item-link item-content">';
-            // $$(page.container).find('.page-content').find('.list-block').find('ul').append(itemHTML);
 
         }
     });
@@ -2363,6 +2763,9 @@ function getServices(servinceID)
 
 function getCategories(serviceID, the_id)
 {
+    console.log("GET CATEGORIES");
+    console.log("SERVICE ID", serviceID);
+    console.log("THE ID", the_id);
     var token= $$('meta[name="token"]').attr("content");
 
     var url = base_url+"/api/categories/"+serviceID;
@@ -2376,7 +2779,7 @@ function getCategories(serviceID, the_id)
         },
         success: function (data) {
 
-
+            console.log("the id of table", the_id);
             $$('#order-table'+the_id).find('#tr-head'+the_id).empty();
             $$('#order-table'+the_id).find('#tr-head'+the_id)
                 .append($$('<th>').attr('class', 'numeric-cell').text('CATEGORY'))
@@ -2385,6 +2788,9 @@ function getCategories(serviceID, the_id)
 
             $$.each(data.data, function(k, v) {
                 //data-service-id="'+this.value+'">'
+                console.log("categories value");
+                console.log(v.category);
+                console.log('--service id', serviceID);
                 table.append($$('<tr data-service-id="'+serviceID+'">').attr('class', 'item')
                     .append($$('<td>').attr('class', "label-cell").text(v.category.capitalize()))
                     .append($$('<td>').attr('class', "numeric-cell")
@@ -2425,11 +2831,8 @@ function createOrder(data, grand_total, customer_id, remarks, category_data)
             data: { data: data, customer_id: customer_id, grand_total: grand_total, remarks: remarks, category_data: category_data},
             success: function (data) {
                 myApp.hidePreloader();
-                console.log("result");
-                console.log(data);
-                //var result = JSON.parse(data.data);
-                //mainView.router.loadContent($$('#id-customer-page').html());
-                //myApp.alert(result);
+
+                mainView.router.loadContent($$('#id-page-order-list').html());
             },
             error: function(xhr){
                 console.log("error creating customer");
@@ -2442,6 +2845,477 @@ function createOrder(data, grand_total, customer_id, remarks, category_data)
 
 
     }, 2000);
+}
+
+function getOrderForEdit(order_id, page) {
+    var url = base_url + "/api/order-details/" + order_id;
+    var token = $$('meta[name="token"]').attr("content");
+
+    setTimeout(function () {
+        $$.ajax({
+            type: "GET",
+            dataType: "json",
+            url: url,
+            headers: {
+                'Authorization': token,
+            },
+            success: function (data) {
+                //console.log(data.data);
+                //var listHTML = '';
+                var order_details = [];
+                var delivery_fee = 0, rate = 0, total_amount = 0;
+                //console.log("the data");
+
+                //localStorage.clear();
+                var dynamic_services = "";
+                //console.log("get customer");
+                var branchName = $$('meta[name="branchName"]').attr("content");
+                $$('#id-branch').val(branchName);
+                var today = new Date();
+                var dd = today.getDate();
+                var mm = today.getMonth()+1; //January is 0!
+                var yyyy = today.getFullYear();
+                if(dd<10) {
+                    dd = '0'+dd
+                }
+                if(mm<10) {
+                    mm = '0'+mm
+                }
+                today = yyyy+"-"+mm+"-"+dd;
+                $$('#id-date').val(today);
+
+                //set up table and details
+                $$.each(data.data, function (k, v) {
+                    //console.log("order details");
+                    //console.log(v);
+                    //get the service from order details
+                    // var service_ids = [];
+
+                    //add services ids to local
+                    getCustomerSmartSelect(v.custID);
+
+                    var ids = [];
+                    v.order_details.forEach(element =>{
+                        //get service id
+                        //add service id to localStorage
+                        //console.log("push id", element.serviceID);
+                        //service_ids.push(element.serviceID);
+                        ids.push(element.serviceID);
+                    });
+                    localStorage.setItem("service_ids", JSON.stringify(ids));
+
+
+                    var categories = [];
+                    v.order_details.forEach(element =>{
+                        //get service id
+                        //console.log("SERVICES");
+                        //console.log(element.serviceID);
+
+                        var service_ids = $$('meta[name="service_ids"]').attr("content");
+                        //console.log(service_ids);
+                        //console.log("the services");
+                        var service_ids = JSON.parse(service_ids);
+
+                        createTableForServices(element.serviceID, element.serviceType, page, element.unit, element.rate, element.regRate, element.qty, element.amount, element.categories, service_ids);
+                    });
+                    var service_ids = $$('meta[name="service_ids"]').attr("content");
+                    //console.log(service_ids);
+                    //console.log("the services");
+                    var service_ids = JSON.parse(service_ids);
+                    //console.log(service_ids);
+                    for(var i =0; i<service_ids.length; i++)
+                    {
+                        var id = "#id-remove-more-"+service_ids[i];
+                        //var remove_id = "remove-id-remove-more-"+service_ids[i];
+                        $$(document).on("click", id, function(){
+                            console.log("remove");
+                            var parent = $$(this).parent().parent().parent().attr("id");
+                            var id = $$(this).attr('id');
+                            if("remove-"+id == parent) {
+                                var data_bind_service_id = $$(this).parent().parent().parent().data('service-id');
+                                console.log(data_bind_service_id);
+                                console.log("remove me");
+                                //update local storage
+                                var local_service_ids  = JSON.parse(localStorage.getItem("service_ids"));
+                                //console.log(local_service_ids);
+                                var filterServiceId = local_service_ids.filter(function(e) {return e !== data_bind_service_id} );
+                                localStorage.setItem("service_ids", JSON.stringify(filterServiceId));
+                                //$$("#"+parent).remove();
+                                var elem = document.getElementById(parent);
+                                elem.remove();
+                                calculateGrandTotal(service_ids);
+                            }
+                            return false;
+                        });
+                    }
+                    //calculate grand total
+                    calculateGrandTotal(service_ids);
+                    $$('#remarks').val(v.remarks);
+                    $$('#id-order').val(order_id);
+
+                    $$('#id-my-preloader').hide();
+                });
+
+
+            },
+            error: function(xhr) {
+                $$('#id-my-preloader').hide();
+                console.log("error get order");
+                //console.log(xhr);
+            }
+        });
+
+
+    }, 2000);
+
+
+}
+
+
+function createTableForServices(value, text, page, unit, rate, regRate, qty, amount, categories, service_ids)
+{
+    var str = text;
+    str = str.replace(/ +/g, "");
+    var the_id = value+str;
+    var remove_more_id = "id-remove-more-"+value+str;
+    var id_container = "remove-"+remove_more_id;
+    var class_quantity = "quantity-"+value;
+    var class_amount = "amount-"+value;
+    var ul_id = "ul-class-"+value+str;
+
+    var UNIT = unit;
+    var REGULAR_RATE = rate;
+    var DISCOUNTED_RATE = regRate;
+
+
+    var table = $$('<div data-service-id="'+value+'">').attr('class', "data-table data-table-init card").attr('id', id_container)
+        .append($$('<div>').attr('class', "card-header")
+            .append($$('<span>').text("Type : "+text.capitalize()).attr('name',value))
+            .append($$('<div>').attr('class', "data-table-links")
+                .append($$('<a>').attr('class', "link icon-only").attr('class', "icon f7-icons").attr('id', remove_more_id).text("trash"))
+            )
+        )
+        .append($$('<div>').attr('class', "card-content")
+            .append($$('<table>').attr('id', 'order-table'+the_id)
+                .append($$('<tr>').attr('id', 'tr-head'+the_id))
+                .append($$('<tbody>'))
+            )
+        )
+        //quantity
+        .append($$('<ul>').attr('id', ul_id)
+            .append($$('<li>')
+                .append($$('<div>').attr('class', 'item-content')
+                    .append($$('<div>').attr('class','item-inner')
+                        .append($$('<div>').attr('class','item-title label').text("Quantity")
+                            .append($$('<div>').attr('class', 'item-input')
+                                .append($$('<input>').attr('placeholder', "Please input Quantity").attr('type', 'number').attr('value', qty).attr('style', 'border:none').attr('class', class_quantity)
+                                )
+                            )
+                        )
+                    )
+                )
+            )
+            //unit
+            .append($$('<li>')
+                .append($$('<div>').attr('class', 'item-content')
+                    .append($$('<div>').attr('class','item-inner')
+                        .append($$('<div>').attr('class','item-title label').text("UNIT")
+                            .append($$('<div>').attr('class', 'item-input')
+                                .append($$('<input>').attr('placeholder', "Unit").attr('value', UNIT).attr('readonly', true).attr('style', 'border:none'))
+                            )
+                        )
+                    )
+                )
+            )
+            //rate
+            .append($$('<li>')
+                .append($$('<div>').attr('class', 'item-content')
+                    .append($$('<div>').attr('class','item-inner')
+                        .append($$('<div>').attr('class','item-title label').text("RATE")
+                            .append($$('<div>').attr('class', 'item-input')
+                                .append($$('<input>').attr('placeholder', "Rate").attr('value', REGULAR_RATE).attr('readonly', true).attr('style', 'border:none'))
+                            )
+                        )
+                    )
+                )
+            )
+            //amount
+            .append($$('<li>')
+                .append($$('<div>').attr('class', 'item-content')
+                    .append($$('<div>').attr('class','item-inner')
+                        .append($$('<div>').attr('class','item-title label').text("AMOUNT")
+                            .append($$('<div>').attr('class', 'item-input')
+                                .append($$('<input>').attr('placeholder', "Amount").attr('readonly', true).attr('style','border:none').attr('class', 'my-amount').attr('value', amount))
+                            )
+                        )
+                    )
+                )
+            )
+        );
+
+
+    $$(page.container).find('.page-content').find('#id-display-category').append(table);
+
+    categories.forEach(element => {
+        $$('#order-table'+the_id, document).find('#tr-head'+the_id).empty();
+        $$('#order-table'+the_id, document).find('#tr-head'+the_id)
+            .append($$('<th>').attr('class', 'numeric-cell').text('CATEGORY'))
+            .append($$('<th>').attr('class', 'numeric-cell').text('QUANTITY'));
+        var table = $$('#order-table'+the_id, document).find('tbody');
+        table.append($$('<tr ">').attr('class', 'item')
+            .append($$('<td>').attr('class', "label-cell").text(element.category.capitalize()))
+            .append($$('<td>').attr('class', "numeric-cell")
+                .append($$('<input>').attr('value', element.qty).attr('type',"number").attr('class', 'quantity').css('background-color','#EFEFEF').attr('style', 'border:none')))
+            .append($$('<td>').attr('class', "numeric-cell")
+                .append($$('<input>').attr('type',"hidden").attr('class', 'category_id').attr('value', element.clothesCatID)))
+
+        );
+    });
+
+
+    $$("."+class_quantity).on('keyup', function(){
+
+        //loop all services
+        var rate = $$(this).closest('li').next('li').next('li').find('input').val();
+        var total = rate * this.value;
+        $$(this).closest('li').next('li').next('li').next('li').find('input').val(total);
+
+        calculateGrandTotal(service_ids);
+    });
+}
+
+function checkCreateOrder(page)
+{
+    var dynamic_services = "";
+    $$('#id-click-services').on('click', function(){
+        dynamic_services = JSON.parse(localStorage.getItem("service_ids"));
+        console.log("on click");
+        //console.log(dynamic_services);
+    });
+
+    //get service type
+    $$('#form_entry_services').on('change', function() {
+
+        //detect if picker is closed after a selection is made for additional actions:
+        $$('.picker-modal').on('close', function() {
+            //console.log('Picker closed after selecting an item!');
+            //additional actions here
+            //var cars = [];
+            $$('select[name="serviceID"] option:checked').each(function () {
+
+                if(dynamic_services) {
+                    for (var i = 0; i<dynamic_services.length; i++) {
+                        if(dynamic_services[i] == this.value) {
+                            myApp.alert("Already exist");
+                            return false;
+                        }
+                    }
+                    dynamic_services.push(this.value);
+                    localStorage.setItem("service_ids", JSON.stringify(dynamic_services));
+                }
+                else {
+                    var ids = [];
+                    ids.push(this.value);
+                    localStorage.setItem("service_ids", JSON.stringify(ids));
+                }
+                //get services types
+                var service_type = $$('meta[name="service_types"]').attr("content");
+                var service_type = JSON.parse(service_type);
+                //console.log("THE SERVICES TYPES");
+                //console.log(service_type);
+                var UNIT = "";
+                var REGULAR_RATE = "";
+                var DISCOUNTED_RATE = "";
+                for(var i=0; i < service_type.length; i++) {
+                    if(service_type[i].serviceID == this.value) {
+                        UNIT = service_type[i].unit;
+                        DISCOUNTED_RATE = service_type[i].discountedRate;
+                        REGULAR_RATE = service_type[i].regRate;
+                    }
+                }
+
+                var str = this.text;
+                str = str.replace(/ +/g, "");
+                var the_id = this.value+str;
+                var remove_more_id = "id-remove-more-"+this.value+str;
+                var id_container = "remove-"+remove_more_id;
+                var class_quantity = "quantity-"+this.value;
+                var class_amount = "amount-"+this.value;
+                var ul_id = "ul-class-"+this.value+str;
+                $$(page.container).find('.list-block')
+                    .append($$('<div data-service-id="'+this.value+'">').attr('class', "data-table data-table-init card").attr('id', id_container)
+                        .append($$('<div>').attr('class', "card-header")
+                            .append($$('<span>').text("Type : "+this.text.capitalize()).attr('name',this.value))
+                            .append($$('<div>').attr('class', "data-table-links")
+                                .append($$('<a>').attr('class', "link icon-only").attr('class', "icon f7-icons").attr('id', remove_more_id).text("trash"))
+                            )
+                        )
+                        .append($$('<div>').attr('class', "card-content")
+                            .append($$('<table>').attr('id', 'order-table'+the_id)
+                                .append($$('<tr>').attr('id', 'tr-head'+the_id))
+                                .append($$('<tbody>'))
+                            )
+                        )
+                        //quantity
+                        .append($$('<ul>').attr('id', ul_id)
+                            .append($$('<li>')
+                                .append($$('<div>').attr('class', 'item-content')
+                                    .append($$('<div>').attr('class','item-inner')
+                                        .append($$('<div>').attr('class','item-title label').text("Quantity")
+                                            .append($$('<div>').attr('class', 'item-input')
+                                                .append($$('<input>').attr('placeholder', "Please input Quantity").attr('type', 'number').attr('class', class_quantity)
+                                                )
+                                            )
+                                        )
+                                    )
+                                )
+                            )
+                            //unit
+                            .append($$('<li>')
+                                .append($$('<div>').attr('class', 'item-content')
+                                    .append($$('<div>').attr('class','item-inner')
+                                        .append($$('<div>').attr('class','item-title label').text("UNIT")
+                                            .append($$('<div>').attr('class', 'item-input')
+                                                .append($$('<input>').attr('placeholder', "Unit").attr('value', UNIT).attr('readonly', true).attr('style', 'border:none'))
+                                            )
+                                        )
+                                    )
+                                )
+                            )
+                            //rate
+                            .append($$('<li>')
+                                .append($$('<div>').attr('class', 'item-content')
+                                    .append($$('<div>').attr('class','item-inner')
+                                        .append($$('<div>').attr('class','item-title label').text("RATE")
+                                            .append($$('<div>').attr('class', 'item-input')
+                                                .append($$('<input>').attr('placeholder', "Rate").attr('value', REGULAR_RATE).attr('readonly', true).attr('style', 'border:none'))
+                                            )
+                                        )
+                                    )
+                                )
+                            )
+                            //amount
+                            .append($$('<li>')
+                                .append($$('<div>').attr('class', 'item-content')
+                                    .append($$('<div>').attr('class','item-inner')
+                                        .append($$('<div>').attr('class','item-title label').text("AMOUNT")
+                                            .append($$('<div>').attr('class', 'item-input')
+                                                .append($$('<input>').attr('placeholder', "Amount").attr('readonly', true).attr('style','border:none').attr('class', class_amount).attr('class', 'my-amount'))
+                                            )
+                                        )
+                                    )
+                                )
+                            )
+                        )
+                    );
+
+                //getCategories(this.value);
+                service_id = this.value;
+                var SERVICE_TYPE = this.text;
+                var service_ids = $$('meta[name="service_ids"]').attr("content");
+
+                var service_ids = JSON.parse(service_ids);
+                for(var i =0; i<service_ids.length; i++)
+                {
+                    var id = "#id-remove-more-"+service_ids[i];
+                    //var remove_id = "remove-id-remove-more-"+service_ids[i];
+                    $$(id).on("click", function(){
+                        console.log("remove");
+                        var parent = $$(this).parent().parent().parent().attr("id");
+                        var id = $$(this).attr('id');
+                        //console.log("parent : ", parent);
+                        //console.log("id : ", id);
+                        if("remove-"+id == parent) {
+                            var data_bind_service_id = $$(this).parent().parent().parent().data('service-id');
+                            //update local storage
+                            var local_service_ids  = JSON.parse(localStorage.getItem("service_ids"));
+                            var filterServiceId = local_service_ids.filter(function(e) {return e !== data_bind_service_id} );
+                            localStorage.setItem("service_ids", JSON.stringify(filterServiceId));
+                            $$("#"+parent).remove();
+                            calculateGrandTotal(service_ids);
+                        }
+                        return false;
+                    });
+                }
+
+                //get categories
+                getCategories(this.value, the_id);
+
+                $$("."+class_quantity).on('keyup', function(){
+                    //var grand_total = $$('#grand-total').val(432);
+                    //loop all services
+                    var rate = $$(this).closest('li').next('li').next('li').find('input').val();
+                    var total = rate * this.value;
+                    $$(this).closest('li').next('li').next('li').next('li').find('input').val(total);
+                    //var result = +total + +grand_total;
+                    //$$('#grand-total').val(result);
+                    //var the_class = $$(this).parent().parent().parent().parent().parent().attr('id');
+                    var the_class = $$(this).next().attr('id');
+                    //console.log("the class", the_class);
+
+                    //remove-id-remove-more-3regular
+                    calculateGrandTotal(service_ids);
+                });
+
+
+            });
+        });
+    });
+}
+
+function setUpDate(page, from_id, to_id)
+{
+
+    var today = new Date();
+    var dd = today.getDate();
+    var mm = today.getMonth()+1; //January is 0!
+    var yyyy = today.getFullYear();
+    if(dd<10) {
+        dd = '0'+dd
+    }
+    if(mm<10) {
+        mm = '0'+mm
+    }
+    today = yyyy+"-"+mm+"-"+dd;
+    //date = today+":"+today;
+
+    $$(from_id).val(today);
+    $$(to_id).val(today);
+}
+
+function updateOrder(data, grand_total, customer_id, remarks, category_data, order_id)
+{
+    var token= $$('meta[name="token"]').attr("content");
+
+    var url = base_url+"/api/order-details-update";
+
+    myApp.showPreloader('Saving to server.');
+    setTimeout(function () {
+        $$.ajax({
+            type: "POST",
+            dataType: "json",
+            url: url,
+            headers: {
+                'Authorization': token,
+            },
+            data: { data: data, customer_id: customer_id, grand_total: grand_total, remarks: remarks, category_data: category_data, order_id: order_id},
+            success: function (data) {
+                myApp.hidePreloader();
+
+                mainView.router.loadContent($$('#id-page-order-list').html());
+            },
+            error: function(xhr){
+                console.log("error creating customer");
+                myApp.hidePreloader();
+                console.log(xhr.responseText);
+                var error = JSON.parse(xhr.responseText);
+                myApp.alert(error.message, 'Error creating customer!');
+            }
+        });
+
+
+    }, 2000);
+
 }
 
 
