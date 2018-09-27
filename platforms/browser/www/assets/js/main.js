@@ -19,18 +19,13 @@ var $$ = Dom7;
 
 //var base_url = 'http://192.168.84.2/iwash';
 
-<<<<<<< HEAD
 // var  base_url = "http://192.168.1.44/iwash/";
 
 var  base_url = "http://192.168.1.224/iwash/";
 
 // var  base_url = "http://192.168.1.90/project/iwash/";
-=======
-var  base_url = "http://192.168.1.224/iwash/";
 
-//jem ip
-//var  base_url = "http://192.168.84.2/iwash/";
->>>>>>> 41e225b4f9dba878977f02feae12e7d82d7913c3
+
 
 
 
@@ -140,57 +135,8 @@ $$(document).on('pageInit', function (e) {
             }, 2000);
         });
 
-
-<<<<<<< HEAD
-        var url = base_url+"/api/order";
-        $$.ajax({
-            type: "GET",
-            dataType: "json",
-            url: url,
-            headers: {
-                'Authorization': token,
-            },
-            success: function (data) {
-                //console.log(data.data);
-                var size = Object.keys(data.data).length;
-                if(size == 0) {
-                    $$('#signature-pad').hide();
-                    $$('.infinite-scroll-preloader').hide();
-
-                }
-                else {
-
-                    $$(page.container).find('#loader-here').hide();
-                    $$('#signature-pad').hide();
-                    //var listHTML = '';
-
-                    //var listHTML = '<div class = "list-block media-list">';
-                    var listHTML = '<ul>';
-                    $$.each(data.data, function(k, v) {
-
-                        listHTML += '<li>';
-                        listHTML += '<a href="about.html?id='+ v.order_id +'" class="item-link item-content">';
-                        listHTML += '<div class="item-media"><span class="moname">Sep<span class="moday">23</span></span></div>';
-                        listHTML += '<div class = "item-inner">';
-                        listHTML += '<div class = "item-title-row">';
-                        listHTML += '<div class = "item-title">'+v.suffix+" "+ v.fname +" "+v.mname+" "+v.lname+'</div>';
-                        // listHTML += '<div class="item-after">'+v.date+'</div>';
-                        listHTML += '</div>';
-                        listHTML += '<div class="item-subtitle">'+ v.branch_name +'</div>';
-                        listHTML += '<div class="item-text">'+ v.service_type+'</div>';
-                        listHTML += '</div>';
-                        listHTML += '</a>';
-                        listHTML += '</li>';
-
-                        listHTML += '<li>';
-
-                    });
-
-                    listHTML += '</ul>';
-=======
         $$('#signature-pad').hide();
         $$('.infinite-scroll-preloader').hide();
->>>>>>> 41e225b4f9dba878977f02feae12e7d82d7913c3
 
         var today = new Date();
         var dd = today.getDate();
@@ -213,9 +159,6 @@ $$(document).on('pageInit', function (e) {
             getOrderDate(page, date_local, 4);
 
         }
-
-
-
 
         //add infinite scroll
         $$(page.container).find('#id-reset').on('click', function(){
@@ -3317,8 +3260,3 @@ function updateOrder(data, grand_total, customer_id, remarks, category_data, ord
     }, 2000);
 
 }
-
-
-
-
-
