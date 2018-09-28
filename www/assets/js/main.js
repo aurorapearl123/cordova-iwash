@@ -21,13 +21,9 @@ var $$ = Dom7;
 
 // var  base_url = "http://192.168.1.44/iwash/";
 
-var  base_url = "http://192.168.1.224/iwash/";
+// var  base_url = "http://192.168.1.224/iwash/";
 
-// var  base_url = "http://192.168.1.90/project/iwash/";
-
-
-
-
+var  base_url = "http://192.168.1.90/project/iwash/";
 
 // Add view
 var mainView = myApp.addView('.view-main', {
@@ -2508,28 +2504,104 @@ function customer_details(id, page)
 
                 // Random author
                 var author = v.title;
-                var itemHTML = '<div class="content-block-title"><img src="'+picURL+'" style="width:100px;height:100px;"></div>'+
-                                '<div class="card demo-card-header-pic">'+
-                                '<div style="background-image:url(http://192.168.1.224/iwash/assets/img/mobile/person.jpg)" valign="bottom" class="card-header color-white no-border">'+customer_name+'</div>'+
-                                '<div class="card-content">'+
-                                '<div class="card-content-inner">'+
-                                '<p class="color-gray">Birth date: '+v.bday+'</p>'+
-                                '<p>Title : '+title+'</p>'+
-                                '<p>Province : '+province_name+'</p>'+
-                                '<p>Barangay : '+barangay_name+'</p>'+
-                                '<p>City : '+city_name+'</p>'+
-                                '<p>Address : '+address+'</p>'+
-                                '<p>Telephone : '+telephone+'</p>'+
-                                '<p>Contact : '+contact+'</p>'+
-                                '<p>Regular : '+regular+'</p>'+
+                var itemHTML = '<div class="item-media mt-5"><img src="'+picURL+'"></div>'+
+                                '<div class="list-block media-list list-view mt-10 mb-30">'+
+                                '<ul>'+
+                                '<li>'+
+                                    '<div class="item-content">'+
+                                        '<div class="item-inner">'+
+                                            '<div class="item-subtitle">Name</div>'+
+                                            '<div class="item-title-row">'+
+                                                '<div class="item-title">'+customer_name+'</div>'+
+                                            '</div>'+
+                                        '</div>'+
+                                    '</div>'+
+                                '</li>'+
+                                '<li>'+
+                                    '<div class="item-content">'+
+                                        '<div class="item-inner">'+
+                                            '<div class="item-subtitle">Birth date</div>'+
+                                            '<div class="item-title-row">'+
+                                                '<div class="item-title">'+v.bday+'</div>'+
+                                            '</div>'+
+                                        '</div>'+
+                                    '</div>'+
+                                '</li>'+
+                                '<li>'+
+                                    '<div class="item-content">'+
+                                        '<div class="item-inner">'+
+                                            '<div class="item-subtitle">Province</div>'+
+                                            '<div class="item-title-row">'+
+                                                '<div class="item-title">'+province_name+'</div>'+
+                                            '</div>'+
+                                        '</div>'+
+                                    '</div>'+
+                                '</li>'+
+                                '<li>'+
+                                    '<div class="item-content">'+
+                                        '<div class="item-inner">'+
+                                            '<div class="item-subtitle">Province</div>'+
+                                            '<div class="item-title-row">'+
+                                                '<div class="item-title">'+barangay_name+'</div>'+
+                                            '</div>'+
+                                        '</div>'+
+                                    '</div>'+
+                                '</li>'+
+                                '<li>'+
+                                    '<div class="item-content">'+
+                                        '<div class="item-inner">'+
+                                            '<div class="item-subtitle">City</div>'+
+                                            '<div class="item-title-row">'+
+                                                '<div class="item-title">'+city_name+'</div>'+
+                                            '</div>'+
+                                        '</div>'+
+                                    '</div>'+
+                                '</li>'+
+                                '<li>'+
+                                    '<div class="item-content">'+
+                                        '<div class="item-inner">'+
+                                            '<div class="item-subtitle">Address</div>'+
+                                            '<div class="item-title-row">'+
+                                                '<div class="item-title">'+address+'</div>'+
+                                            '</div>'+
+                                        '</div>'+
+                                    '</div>'+
+                                '</li>'+
+                                '<li>'+
+                                    '<div class="item-content">'+
+                                        '<div class="item-inner">'+
+                                            '<div class="item-subtitle">Telephone</div>'+
+                                            '<div class="item-title-row">'+
+                                                '<div class="item-title">'+telephone+'</div>'+
+                                            '</div>'+
+                                        '</div>'+
+                                    '</div>'+
+                                '</li>'+
+                                '<li>'+
+                                    '<div class="item-content">'+
+                                        '<div class="item-inner">'+
+                                            '<div class="item-subtitle">Contact</div>'+
+                                            '<div class="item-title-row">'+
+                                                '<div class="item-title">'+contact+'</div>'+
+                                            '</div>'+
+                                        '</div>'+
+                                    '</div>'+
+                                '</li>'+
+                                '<li>'+
+                                    '<div class="item-content">'+
+                                        '<div class="item-inner">'+
+                                            '<div class="item-subtitle">Regular</div>'+
+                                            '<div class="item-title-row">'+
+                                                '<div class="item-title">'+regular+'</div>'+
+                                            '</div>'+
+                                        '</div>'+
+                                    '</div>'+
+                                '</li>'+
+                                '</ul>'+
                                 '</div>'+
                                 '</div>'+
-                                '<div class="card-footer">'+
-                                '<a href="customer-edit.html?id='+v.custID+'" class="link"><i class="icon f7-icons">settings</i></a>'+
-                                '<a href="javascript:delete_customer('+v.custID+');" class="link" id="id-delete"><i class="icon f7-icons">trash</i></a>'+
-                                '</div>'+
-                                '</div>';
-                $$(page.container).find('.page-content').find('.list-block').append(itemHTML);
+                                '<div class="content-block px-20"><a href="javascript:delete_customer('+v.custID+');" class="button button-fill button-raised button-round color-red" id="id-delete">Delete</a></div>';
+                $$(page.container).find('.page-content').find('.profile').append(itemHTML);
 
             });
 
