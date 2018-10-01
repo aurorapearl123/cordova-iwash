@@ -3533,7 +3533,9 @@ html.pixel-ratio-3 .list-block li:last-child li .item-inner:after {
 .list-block.inputs-list .floating-label,
 .list-block.inputs-list .label {
     width: 100%;
-    font-size: 12px
+    font-size: 11px;
+    text-transform: uppercase;
+    margin-bottom: 7px
 }
 
 .list-block .input-item .floating-label,
@@ -3554,13 +3556,13 @@ html.pixel-ratio-3 .list-block li:last-child li .item-inner:after {
 
 .list-block .focus-state .floating-label,
 .list-block .not-empty-state .floating-label {
-    color: rgba(0, 0, 0, .65);
+    color: #9E9E9E;
     -webkit-transform: scale(1) translateY(0);
     transform: scale(1) translateY(0)
 }
 
 .list-block .focus-state.item-inner .label {
-    color: #099be6
+    color: rgba(0, 0, 0, .65)
 }
 
 .list-block .focus-state .item-input-field:after,
@@ -3570,7 +3572,7 @@ html.pixel-ratio-3 .list-block li:last-child li .item-inner:after {
 
 .list-block .focus-state .floating-label,
 .list-block .focus-state .label {
-    color: #099be6
+    color: rgba(0, 0, 0, .65)
 }
 
 .list-block .not-empty-state.item-inner .label {
