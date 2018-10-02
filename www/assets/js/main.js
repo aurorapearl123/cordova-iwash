@@ -608,8 +608,6 @@ $$(document).on('pageInit', function (e) {
 
                 });
 
-
-
                 if(STATUS == 1) {
                     var settingHtml = '<center>' +
                         '<a href="order-edit.html?id='+ORDER_ID+'" class="link" ><i class="icon f7-icons">settings</i></a>' +
@@ -770,25 +768,15 @@ $$(document).on('pageInit', function (e) {
 
         document.getElementById('save-jpeg').addEventListener('click', function () {
             if (signaturePad.isEmpty()) {
-                //return alert("Please provide a signature first.");
                 myApp.alert('Please provide a signature first.');
                 return null;
             }
 
             var data = signaturePad.toDataURL('image/jpeg');
-            //console.log("the id");
-            //console.log(id);
-            //console.log(data);
 
             myApp.confirm('Are you sure?', function () {
-                //myApp.alert('You clicked Ok button');
                 update_order_details(id, data);
-                //console.log("this is data");
-                //console.log(data);
             });
-
-
-            //window.open(data);
         });
 
 
@@ -800,10 +788,6 @@ $$(document).on('pageInit', function (e) {
             mainView.router.loadContent($$('#dashboard').html());
             //myApp.closeModal($$(".popup"),true);
         });
-
-
-
-
     }
     if(page.name == 'history-list'){
         //alert("hello index");
@@ -836,11 +820,6 @@ $$(document).on('pageInit', function (e) {
                 else {
                     console.log("not null");
                 }
-
-
-                //getOrderDate(data);
-
-
             }
         });
 
@@ -900,15 +879,10 @@ $$(document).on('pageInit', function (e) {
                     getOrderDate(page, date_local, 5);
 
                 }
-
-                // refreshDataHistory(date, page, 5);
-                // When loading done, we need to reset it
                 myApp.pullToRefreshDone();
             }, 2000);
         });
 
-        //var url = "http://192.168.1.224/iwash/api/order";
-        //get history list default current day
         var today = new Date();
         var dd = today.getDate();
         var mm = today.getMonth()+1; //January is 0!
@@ -932,26 +906,13 @@ $$(document).on('pageInit', function (e) {
             getOrderDate(page, date_local, 5);
 
         }
-        //getOrderDate(page, date, 5);
-
-        //var url = base_url+"/api/order-date/"+date+":"+5;
-        // var url = base_url+"/api/order-history";
-        // getDefaultHistoryList(page, token, url);
-
 
     }
 
     //add infinite scroll
     $$(page.container).find('#history-id-reset').on('click', function(){
-        //mainView.router.loadContent($$('#dashboard').html());
-        // console.log("reset data history");
-        // $$('#history-calendar-from').val("");
-        // $$('#history-calendar-to').val("");
-        // date = "";
         setUpDate('#history-calendar-from', '#history-calendar-to');
         localStorage.removeItem(page.name);
-        //console.log("reset history");
-        //resetData(page, token);
         var token= $$('meta[name="token"]').attr("content");
         var url = base_url+"/api/order-history";
         getDefaultHistoryList(page, token, url);
@@ -1019,8 +980,7 @@ $$(document).on('pageInit', function (e) {
 
 
                 $$.each(order_details, function(k, v) {
-                        //console.log("the data");
-                        //console.log(v.serviceType);
+
                         var UNIT = v.unit;
                         var REGULAR_RATE = v.regRate;
                         var QUANTITY = v.qty;
@@ -1028,15 +988,6 @@ $$(document).on('pageInit', function (e) {
                         var str = v.serviceType;
                         str = str.replace(/ +/g, "");
                         var the_id = v.serviceID+str;
-
-                        // .append($$('<div>').attr('class', "card-content")
-                        //         .append($$('<table>').attr('id', 'order-table'+the_id)
-                        //             .append($$('<tr>').attr('id', 'tr-head'+the_id))
-                        //             .append($$('<tbody>'))
-                        //         )
-                        //     )
-
-                        //'<a href="customer-edit.html?id='+v.custID+'" class="link"><i class="icon f7-icons">settings</i></a>'+
 
                         var table = $$('<div>').attr('class', "data-table data-table-init card")
                             .append($$('<div>').attr('class', "card-header")
@@ -1100,22 +1051,9 @@ $$(document).on('pageInit', function (e) {
                                 )
                             );
 
-
-
-                        // $$.each(v.categories, function(value, index){
-                        //     console.log("the value");
-                        //     console.log(value.category);
-                        // });
-
                         $$(page.container).find('.page-content').find('#id-display-category').append(table);
 
-                        //append table category
-                        //     console.log("THE CATEGORIES");
-                        // console.log(v.categories);
                         v.categories.forEach(element => {
-                            //console.log("the category");
-                            //console.log(element.category);
-                            //console.log("the id", the_id);
                             $$('#order-table'+the_id).find('#tr-head'+the_id).empty();
                             $$('#order-table'+the_id).find('#tr-head'+the_id)
                                 .append($$('<th>').attr('class', 'numeric-cell').text('CATEGORY'))
@@ -2309,7 +2247,7 @@ function customer_details(id, page)
 
                 // Random author
                 var author = v.title;
-                var itemHTML = '<div class="item-media mt-5"><img src="'+picURL+'"></div>'+
+                var itemHTML = '<div class="profile mt-5"><div class="item-media"><img src="'+picURL+'"></div></div>'+
                                 '<div class="list-block media-list list-view mt-10 mb-30">'+
                                 '<ul>'+
                                 '<li>'+
@@ -2406,7 +2344,7 @@ function customer_details(id, page)
                                 '</div>'+
                                 '</div>'+
                                 '<div class="content-block px-20 mb-0"><a href="customer-edit.html?id='+v.custID+'" class="link"><i class="material-icons">create</i></a><a href="javascript:delete_customer('+v.custID+');" class="button button-fill button-raised button-round color-red" id="id-delete">Delete</a></div>';
-                $$(page.container).find('.page-content').find('.profile').append(itemHTML);
+                $$(page.container).find('.page-content').find('.content-block-inner').append(itemHTML);
             });
 
         }

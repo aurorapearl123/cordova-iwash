@@ -241,7 +241,10 @@ ul.profile:before,
 ul.profile:after,
 .list-view ul:before,
 form.list-block ul:before,
-form.list-block .item-input:after{
+form.list-block .item-input:after,
+.content-block-inner:before,
+.content-block-inner:after,
+.smart-select-picker .list-block .item-inner:after{
   display:none
 }
 .list-custom-1 li.media-item .item-link .item-title-row,
@@ -317,8 +320,8 @@ ul.profile .item-media img{
 }
 .list-view .item-subtitle{
   color: #9E9E9E;
-  font-size:11px;
-  text-transform:uppercase;
+  font-size:12px;
+  margin-bottom: 4px
 }
 form.list-block{
   margin:0
@@ -496,6 +499,12 @@ ul.profile .item-title{
   color:#099be6;
   font-weight:600
 }
+div.profile{
+  width:90px;
+  height:90px;
+  margin:0 auto 10px auto;
+  position:relative;
+}
 div.profile > .item-media{
   width:90px;
   height:90px;
@@ -505,4 +514,28 @@ div.profile > .item-media a,
 div.profile > .item-media input{
   width:100%;
   height:90px
+}
+div.profile > .item-media a .chip-media{
+  position:absolute;
+  bottom:0;
+  right:0;
+  width:25px;
+  height:25px;
+}
+.smart-select-picker .toolbar .right span{
+  font-size:14px;
+  color:#fff
+}
+.smart-select-picker .searchbar{
+  box-shadow: 0 0 0 0;
+  border-radius:0;
+  border-bottom:1px solid #f5f5f5;
+}
+.smart-select-picker .list-block .label-radio{
+  background:#fff;
+  margin:0 5px 5px 5px;
+  border-radius:7px;
+}
+.smart-select-picker .list-block .item-media+.item-inner{
+  margin-left: 0
 }
