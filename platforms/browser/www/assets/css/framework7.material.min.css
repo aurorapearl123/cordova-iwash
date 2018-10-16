@@ -2487,7 +2487,7 @@ html:not(.watch-active-state) .chip-delete:active {
 
 .content-block {
     margin: 32px 0;
-    padding: 0 10px;
+    padding: 0 15px;
     box-sizing: border-box
 }
 
@@ -2511,7 +2511,7 @@ html:not(.watch-active-state) .chip-delete:active {
     text-overflow: ellipsis;
     font-size: 12px;
     line-height: 1;
-    margin: 16px 16px 16px;
+    margin: 16px 10px 16px 10px;
     padding-top: 16px;
     line-height: 16px;
     font-weight: 500;
@@ -2530,7 +2530,8 @@ html:not(.watch-active-state) .chip-delete:active {
     padding: 16px 16px;
     margin-left: -16px;
     width: 100%;
-    position: relative
+    position: relative;
+    background:#fff;
 }
 
 .content-block-inner:before {
@@ -3163,8 +3164,8 @@ html:not(.watch-active-state) .list-block .list-button:active {
 .list-block li.media-item .item-inner,
 .list-block.media-list .item-inner {
     display: block;
-    padding-top: 14px;
-    padding-bottom: 14px;
+    padding-top: 10px;
+    padding-bottom: 8px;
     -ms-flex-item-align: stretch;
     -webkit-align-self: stretch;
     align-self: stretch
@@ -3532,7 +3533,9 @@ html.pixel-ratio-3 .list-block li:last-child li .item-inner:after {
 .list-block.inputs-list .floating-label,
 .list-block.inputs-list .label {
     width: 100%;
-    font-size: 12px
+    font-size: 11px;
+    text-transform: uppercase;
+    margin-bottom: 7px
 }
 
 .list-block .input-item .floating-label,
@@ -3553,13 +3556,13 @@ html.pixel-ratio-3 .list-block li:last-child li .item-inner:after {
 
 .list-block .focus-state .floating-label,
 .list-block .not-empty-state .floating-label {
-    color: rgba(0, 0, 0, .65);
+    color: #9E9E9E;
     -webkit-transform: scale(1) translateY(0);
     transform: scale(1) translateY(0)
 }
 
 .list-block .focus-state.item-inner .label {
-    color: #099be6
+    color: rgba(0, 0, 0, .65)
 }
 
 .list-block .focus-state .item-input-field:after,
@@ -3569,7 +3572,7 @@ html.pixel-ratio-3 .list-block li:last-child li .item-inner:after {
 
 .list-block .focus-state .floating-label,
 .list-block .focus-state .label {
-    color: #099be6
+    color: rgba(0, 0, 0, .65)
 }
 
 .list-block .not-empty-state.item-inner .label {
@@ -3712,7 +3715,7 @@ textarea.resizable {
     text-align: center;
     display: block;
     border-radius: 2px;
-    line-height: 36px;
+    line-height: 38px;
     box-sizing: border-box;
     -webkit-appearance: none;
     -moz-appearance: none;
