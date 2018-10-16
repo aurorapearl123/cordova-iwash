@@ -1,111 +1,101 @@
-
 <div class="pages">
-    <div data-page="order-edit-page" class="page">
-        <div class="page-content">
-            <div class="content-block-title">Labels and inputs</div>
-            <div class="list-block">
-                <ul>
-                    <!-- Text inputs -->
-                    <li>
-                        <div class="item-content">
-                            <div class="item-inner">
-                                <div class="item-title label">Branch</div>
-                                <div class="item-input">
-                                    <input type="text" id="id-branch" readonly>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="item-content">
-                            <div class="item-inner">
-                                <div class="item-title label">Date</div>
-                                <div class="item-input">
-                                    <input type="date" id="id-date" readonly>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-
-                    <li>
-                        <!-- Additional "smart-select" class -->
-                        <a href="#" class="item-link smart-select" id="id-smart-select-customer" data-open-in="picker" data-back-on-select="true" data-searchbar="true" data-searchbar-placeholder="Search Customer">
-                            <!--<a href="#" class="item-link " id="id-smart-select-city" >-->
-                            <!-- select -->
-                            <select name="custID" id="form_entry_customer">
-                                <!--<option value="cebu">cebu</option>-->
-
-                            </select>
-                            <div class="item-content">
-                                <div class="item-media"><i class="icon f7-icons">person</i></div>
-                                <div class="item-inner">
-                                    <div class="item-title label">Customer</div>
-                                    <div class="item-input">
-
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <!-- Additional "smart-select" class -->
-                        <a href="#" class="item-link smart-select" id="id-smart-select-services" data-open-in="picker" data-back-on-select="true" data-searchbar="true" data-searchbar-placeholder="Search Services">
-                            <!--<a href="#" class="item-link " id="id-smart-select-city" >-->
-                            <!-- select -->
-                            <select name="serviceID" id="form_entry_services">
-                                <!--<option value="cebu">cebu</option>-->
-                            </select>
-                            <div class="item-content">
-                                <div class="item-media"><i class="icon f7-icons">Services</i></div>
-                                <div class="item-inner" id="id-click-services">
-                                    <div class="item-title label">Services</div>
-                                    <div class="item-input">
-
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-                    </li>
-
-                </ul>
-
-            </div>
-
-            <div id="id-display-category">
-                <!-- keep it empty -->
-            </div>
-
-            <div class="col-25">
-                <center>
-                    <span style="width:42px; height:42px" class="preloader" id="id-my-preloader" ></span>
-                </center>
-            </div>
-
-            <div class="content-block">
-                <div class="item-content">
-                    <div class="item-inner">
-                        <div class="item-title label">Grand Total</div>
-                        <div class="item-input">
-                            <input type="number" placeholder="" style="border:none" readonly id="grand-total">
-                        </div>
-                    </div>
-                </div>
-                <div class="item-content">
-                    <div class="item-inner">
-                        <div class="item-title label">Remarks</div>
-                        <div class="item-input">
-                            <textarea id="remarks"></textarea>
-                        </div>
-                    </div>
-                </div>
-                <input type="hidden" id="id-order">
-                <a href="#" class="button button-fill button-raised" id="id-button-form-edit-order">SUBMIT</a>
-            </div>
+  <div data-page="order-edit-page" class="page navbar-static">
+    <div class="page-content">
+      <!-- Navbar top -->
+      <div class="navbar">
+        <div class="navbar-inner">
+          <div class="left">
+            <a href="#" class="link back">
+              <i class="la la-long-arrow-left"></i>
+            </a>
+          </div>
+          <div class="center">Edit Order</div>
+          <div class="right"></div>
         </div>
-        </form>
+      </div>
 
+      <form class="list-block">
+        <div class="content-block m-0">
+          <div class="content-block-inner">
+            <ul>
+              <li>
+                <div class="item-content">
+                  <div class="item-inner">
+                    <div class="item-title label">Branch</div>
+                    <div class="item-input">
+                      <input type="text" id="id-branch" readonly>
+                    </div>
+                  </div>
+                </div>
+              </li>
+              <li>
+                <div class="item-content">
+                  <div class="item-inner">
+                    <div class="item-title label">Date</div>
+                    <div class="item-input">
+                      <input type="date" id="id-date" readonly>
+                    </div>
+                  </div>
+                </div>
+              </li>
+              <li>
+                <div class="item-title label mt-10">Customer</div>
+                <a href="#" class="item-link smart-select" id="id-smart-select-customer" data-open-in="picker" data-picker-height="100%" data-back-on-select="true" data-searchbar="true" data-searchbar-placeholder="Search Customer">
+                  <select name="custID" id="form_entry_customer"></select>
+                  <div class="item-content">
+                    <div class="item-inner">
+                      <span class="caret"><i class="la la-angle-down"></i></span>
+                    </div>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <div class="item-title label mt-15">Services</div>
+                <a href="#" class="item-link smart-select" id="id-smart-select-services" data-open-in="picker" data-picker-height="100%" data-back-on-select="true" data-searchbar="true" data-searchbar-placeholder="Search Services">
+                  <select name="serviceID" id="form_entry_services"></select>
+                  <div class="item-content">
+                    <div class="item-inner" id="id-click-services">
+                      <span class="caret"><i class="la la-angle-down"></i></span>
+                    </div>
+                  </div>
+                </a>
+              </li>
+            </ul>
+            <div id="id-display-category" class="card-group"></div>
+            <div class="col-25 mt-20">
+              <center>
+                <span style="width:42px; height:42px" class="preloader" id="id-my-preloader" ></span>
+              </center>
+            </div>
+            <ul class="mt-10">
+              <li>
+                <div class="item-content">
+                  <div class="item-inner">
+                    <div class="item-title label">Grand Total</div>
+                    <div class="item-input">
+                      <input type="number" readonly id="grand-total">
+                    </div>
+                  </div>
+                </div>
+              </li>
+              <li>
+                <div class="item-content">
+                  <div class="item-inner mb-0">
+                    <div class="item-title label">Remarks</div>
+                    <div class="item-input mb-0">
+                      <textarea id="remarks"></textarea>
+                    </div>
+                  </div>
+                </div>
+              </li>
+            </ul>
+            <div class="content-block px-20 mb-0">
+              <input type="hidden" id="id-order">
+              <a class="button button-fill button-raised button-round button-big" id="id-button-form-edit-order">Save</a>
+            </div>
+          </div>
         </div>
+      </div>
     </div>
+  </div>
 </div>
-
-

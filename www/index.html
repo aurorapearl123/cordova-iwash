@@ -285,7 +285,7 @@
           </div>
 
           <!-- Floating Action Button -->
-          <a href="#" class="floating-button color-black" id="id-floating-add-customer">
+          <a href="#" class="floating-button" id="id-floating-add-customer">
             <i class="material-icons">add</i>
           </a>
 
@@ -309,7 +309,7 @@
                     <i class="la la-long-arrow-left"></i>
                   </a>
                 </div>
-                <div class="center">Add Customer</div>
+                <div class="center">Add New Customer</div>
                 <div class="right"></div>
               </div>
             </div>
@@ -485,174 +485,164 @@
   </div>
 </script>
 
-<!--This is a order page-->
+<!--This is a order add page-->
 <script type="text/template" id="id-add-order-page">
   <div class="views">
     <div class="view view-main">
       <div class="pages">
-        <form data-page="order-add-page" class = "page navbar-fixed" id="id-form-add-order">
+        <div data-page="order-add-page" class="page navbar-static">
           <div class="page-content">
 
-            <div class="content-block-title">Labels and inputs</div>
-            <div class="list-block">
-              <ul>
-                <!-- Text inputs -->
-                <li>
-                  <div class="item-content">
-                    <div class="item-inner">
-                      <div class="item-title label">Branch</div>
-                      <div class="item-input">
-                        <input type="text" id="id-branch" readonly>
-                      </div>
-                    </div>
-                  </div>
-                </li>
-                <li>
-                  <div class="item-content">
-                    <div class="item-inner">
-                      <div class="item-title label">Date</div>
-                      <div class="item-input">
-                        <input type="date" id="id-date" readonly>
-                      </div>
-                    </div>
-                  </div>
-                </li>
-
-                <li>
-                  <!-- Additional "smart-select" class -->
-                  <a href="#" class="item-link smart-select" id="id-smart-select-customer" data-open-in="picker" data-back-on-select="true" data-searchbar="true" data-searchbar-placeholder="Search Customer">
-                    <select name="custID" id="form_entry_customer">
-                      <!--<option value="cebu">cebu</option>-->
-
-                    </select>
-                    <div class="item-content">
-                      <div class="item-media"><i class="icon f7-icons">person</i></div>
-                      <div class="item-inner">
-                        <div class="item-title label">Customer</div>
-                        <div class="item-input">
-
-                        </div>
-                      </div>
-                    </div>
+            <!-- Navbar top -->
+            <div class="navbar">
+              <div class="navbar-inner">
+                <div class="left">
+                  <a href="#" class="link back">
+                    <i class="la la-long-arrow-left"></i>
                   </a>
-                </li>
-                <li>
-                  <!-- Additional "smart-select" class -->
-                  <a href="#" class="item-link smart-select" id="id-smart-select-services" data-open-in="picker" data-back-on-select="true" data-searchbar="true" data-searchbar-placeholder="Search Services">
-                    <!--<a href="#" class="item-link " id="id-smart-select-city" >-->
-                    <!-- select -->
-                    <select name="serviceID" id="form_entry_services">
-                      <!--<option value="cebu">cebu</option>-->
-                    </select>
-                    <div class="item-content">
-                      <div class="item-media"><i class="icon f7-icons">Services</i></div>
-                      <div class="item-inner" id="id-click-services">
-                        <div class="item-title label">Services</div>
-                        <div class="item-input">
-
-                        </div>
-                      </div>
-                    </div>
-                  </a>
-                </li>
-
-              </ul>
-
+                </div>
+                <div class="center">Add New Order</div>
+                <div class="right"></div>
+              </div>
             </div>
-            <div class="content-block">
-              <div class="item-content">
-                <div class="item-inner">
-                  <div class="item-title label">Grand Total</div>
-                  <div class="item-input">
-                    <input type="number" placeholder="" style="border:none" readonly id="grand-total">
+
+            <form id="id-form-add-order" class="list-block">
+              <div class="content-block m-0">
+                <div class="content-block-inner">
+                  <ul>
+                    <li>
+                      <div class="item-content">
+                        <div class="item-inner">
+                          <div class="item-title label">Branch</div>
+                          <div class="item-input">
+                            <input type="text" id="id-branch" readonly>
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+                    <li>
+                      <div class="item-content">
+                        <div class="item-inner">
+                          <div class="item-title label">Date</div>
+                          <div class="item-input">
+                            <input type="date" id="id-date" readonly>
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+                    <li>
+                      <div class="item-title label mt-5">Customer</div>
+                      <a href="#" class="item-link smart-select" id="id-smart-select-customer" data-open-in="picker" data-picker-height="100%" data-back-on-select="true" data-searchbar="true" data-searchbar-placeholder="Search Customer">
+                        <select name="custID" id="form_entry_customer"></select>
+                        <div class="item-content">
+                          <div class="item-inner">
+                            <span class="caret"><i class="la la-angle-down"></i></span>
+                          </div>
+                        </div>
+                      </a>
+                    </li>
+                    <li>
+                      <div class="item-title label mt-15">Services</div>
+                      <a href="#" class="item-link smart-select" id="id-smart-select-services" data-open-in="picker" data-picker-height="100%" data-back-on-select="true" data-searchbar="true" data-searchbar-placeholder="Search Services">
+                        <select name="serviceID" id="form_entry_services"></select>
+                        <div class="item-content">
+                          <div class="item-inner" id="id-click-services">
+                            <span class="caret"><i class="la la-angle-down"></i></span>
+                          </div>
+                        </div>
+                      </a>
+                    </li>
+                  </ul>
+                  <div class="card-group"></div>
+                  <ul class="mt-10">
+                    <li>
+                      <div class="item-content">
+                        <div class="item-inner">
+                          <div class="item-title label">Grand Total</div>
+                          <div class="item-input">
+                            <input type="number" placeholder="" readonly id="grand-total">
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+                    <li>
+                      <div class="item-content">
+                        <div class="item-inner mb-0">
+                          <div class="item-title label">Remarks</div>
+                          <div class="item-input mb-0">
+                            <textarea id="remarks"></textarea>
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+                  </ul>
+                  <div class="content-block px-20 mb-0">
+                    <a href="#" class="button button-fill button-raised button-round button-big" id="id-button-form-add-order">Save</a>
                   </div>
                 </div>
               </div>
-              <div class="item-content">
-                <div class="item-inner">
-                  <div class="item-title label">Remarks</div>
-                  <div class="item-input">
-                    <textarea id="remarks"></textarea>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</script>
+
+<!--This is a order list page-->
+<script type="text/template" id="id-page-order-list">
+  <div class="views">
+    <div class="view view-main">
+      <div class="pages navbar-through">
+        <div data-page="order-list-page" class="page with-subnavbar">
+          <!-- Search Bar -->
+          <div class="navbar">
+            <!-- Search Bar -->
+            <div class="content-block inset px-0 mt-15">
+              <form data-search-list=".list-block-search" data-search-in=".item-title" class="searchbar searchbar-init">
+                <div class="searchbar-input">
+                  <input type="search" placeholder="Search Delivery"><a href="#" class="searchbar-clear"></a>
+                </div>
+                <a href="#" class="searchbar-cancel">Cancel</a>
+              </form>
+            </div>
+            <!-- Sub navbar -->
+            <div class="subnavbar align-items-start px-0 pt-15">
+              <div class="content-block inset datepicker px-0 my-0">
+                <div class="row align-items-start">
+                  <div class="col-40">
+                    <label>Start Date</label>
+                    <input type="text" readonly id="created-calendar-from" >
+                  </div>
+                  <div class="col-40">
+                    <label>End Date</label>
+                    <input type="text" readonly id="created-calendar-to" >
+                  </div>
+                  <div class="col-20">
+                    <a href="#" class="button button-fill button-raised" id="created-id-reset"><i class="la la-close"></i></a>
                   </div>
                 </div>
               </div>
-              <a href="#" class="button button-fill button-raised" id="id-button-form-add-order">SUBMIT</a>
             </div>
           </div>
-        </form>
-
-
-        <!-- end of page content -->
-      </div>
-    </div>
-  </div>
-</script>
-
-
-<script type="text/template" id="id-page-order-list">
-  <div class = "views">
-    <div class = "view view-main">
-      <div class = "pages">
-        <div data-page = "order-list-page" class = "page navbar-fixed">
-          <!-- Search Bar -->
-            <div class="navbar">
-                <!-- Search Bar -->
-                <div class="content-block inset px-0 mt-15">
-                    <form data-search-list=".list-block-search" data-search-in=".item-title" class="searchbar searchbar-init">
-                        <div class="searchbar-input">
-                            <input type="search" placeholder="Search Delivery"><a href="#" class="searchbar-clear"></a>
-                        </div>
-                        <a href="#" class="searchbar-cancel">Cancel</a>
-                    </form>
-                </div>
-
-                <!-- Sub navbar -->
-                <div class="subnavbar align-items-start px-0 pt-15">
-                    <div class="content-block inset datepicker px-0 my-0">
-                        <div class="row align-items-start">
-                            <div class="col-40">
-                                <label>Start Date</label>
-                                <input type="text" readonly id="created-calendar-from" >
-                            </div>
-                            <div class="col-40">
-                                <label>End Date</label>
-                                <input type="text" readonly id="created-calendar-to" >
-                            </div>
-                            <div class="col-20">
-                                <a href="#" class="button button-fill button-raised" id="created-id-reset"><i class="la la-close"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+          <div class="page-content pull-to-refresh-content hide-navbar-on-scroll">
+            <div class="pull-to-refresh-layer">
+              <div class="preloader"></div>
+              <div class="pull-to-refresh-arrow"></div>
             </div>
-
-            <div class="page-content pull-to-refresh-content hide-navbar-on-scroll">
-
-                <div class="pull-to-refresh-layer">
-                    <div class="preloader"></div>
-                    <div class="pull-to-refresh-arrow"></div>
-                </div>
-
-                <!-- Search Bar overlay -->
-                <div class="searchbar-overlay"></div>
-
-                <div class="list-block list-block-search searchbar-found media-list list-custom-1"></div>
-
-
-            </div>
+            <!-- Search Bar overlay -->
+            <div class="searchbar-overlay"></div>
+            <div class="list-block list-block-search searchbar-found media-list list-custom-1"></div>
+          </div>
           <!-- Floating Action Button -->
-          <a href="#" class="floating-button color-pink" id="id-add-order">
-            <i class="icon icon-plus"></i>
+          <a href="#" class="floating-button" id="id-add-order">
+            <i class="material-icons">add</i>
           </a>
         </div>
-
       </div>
-
     </div>
   </div>
 </script>
-
-
 
 <script type="text/javascript" src="assets/js/framework7.min.js"></script>
 <script type="text/javascript" src="assets/js/main.js"></script>

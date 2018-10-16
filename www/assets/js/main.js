@@ -218,10 +218,7 @@ $$(document).on('pageInit', function (e) {
             }
 
         });
-
-
     }
-
 
     if(page.name == 'customer-page') {
         console.log("this is customer page");
@@ -363,8 +360,6 @@ $$(document).on('pageInit', function (e) {
         function onFailure(message) {
             alert("Get image failed: " + message);
         }
-
-        //myApp.smartSelectAddOption('#id-smart-select-city select', '<option value="jade">jade</option>');
     }
 
     if(page.name == "customer-detail") {
@@ -392,7 +387,7 @@ $$(document).on('pageInit', function (e) {
                 'Authorization': token,
             },
             success: function (data) {
-                //console.log(data.data);
+
                 var formData = {};
                 $$.each(data.data, function(k,v){
                     var isRegular = (v.isRegular == "N") ? "no" : "yes";
@@ -416,43 +411,26 @@ $$(document).on('pageInit', function (e) {
                     barangayID = v.barangayID;
                 });
                 var defaultImage = base_url+'/assets/img/users/noimage.gif';
-                //var picURL = v.profile;
+
                 var picURL = profile ? profile : defaultImage;
                 var image = document.getElementById('my-profile');
                 image.src = picURL;
                 $$("#profile-value").val(picURL);
                 myApp.formFromData('#customer-edit-form', formData);
 
-                //console.log("province this", provinceID);
-                //first cover smart-select picker, second cover full view
-                //$(document).on('click', '#ready',
                 var default_province = getProvince(provinceID);
-                //get cities
+
                 getCities(provinceID, cityID);
                 getBarangay(provinceID, cityID, barangayID);
 
-                //console.log("get first value province");
-                //console.log(default_province);
-                //myApp.smartSelectAddOption('#id-smart-select-province select', '<option value="jade">hey</option>');
-
-                //first cover smart-select picker, second cover full view
                 $$('#form_entry_province').on('change', function() {
-                    //console.log('Form entry item was changed was changed!');
 
-                    //detect if picker is closed after a selection is made for additional actions:
                     $$('.picker-modal').on('close', function() {
-                        //console.log('Picker closed after selecting an item!');
-                        //additional actions here
-                        //var cars = [];
                         $$('select[name="provinceID"] option:checked').each(function () {
-                            //get province and set select cities and barangay to zero
                             console.log("get province clear cities");
-                            // $$('select[name="city"] option:checked').remove();
-                            //$$('select[name="barangay"] option:checked').remove();
                             provinceID = this.value;
 
                             getCities(provinceID, cityID);
-                            //myApp.smartSelectAddOption('#id-smart-select-city select', '<option value="jade">fuck</option>');
                         });
                     });
                 });
@@ -461,20 +439,12 @@ $$(document).on('pageInit', function (e) {
                 $$('#form_entry_city').on('change', function(){
                     $$('.picker-modal').on('close', function(){
                         $$('select[name="cityID"] option:checked').each(function(){
-                            // console.log("province id",provinceID);
-                            // console.log("city id", this.value);
-                            // console.log("you change city close me");
                             getBarangay(provinceID, this.value, "");
 
                         });
 
                     });
                 });
-                //myApp.hidePreloader();
-
-                //myApp.smartSelectAddOption('#id-smart-select-province select', '<option value="apple" selected>Apple</option>', 0);
-                //myApp.smartSelectAddOption('#id-smart-select-province select', '<option value="'+v.provinceID+'">'+v.province+'</option>');
-
             }
         });
 
@@ -543,11 +513,6 @@ $$(document).on('pageInit', function (e) {
             var formData = myApp.formToData('#customer-edit-form');
             updateCustomer(formData, id);
         });
-
-
-
-
-
     }
     if(page.name == 'about') {
         console.log("this is about");
@@ -566,14 +531,10 @@ $$(document).on('pageInit', function (e) {
                 'Authorization': token,
             },
             success: function (data) {
-                //console.log(data.data);
-                //var listHTML = '';
                 var order_details = [];
                 var delivery_fee = 0, rate = 0, total_amount = 0;
                 $$.each(data.data, function(k, v) {
-                    /// do stuff
 
-                    //console.log(v.branch_name);
                     listHTML = '<div class="list-block media-list mt-15 mb-0">';
                     listHTML += '<ul class="profile bg-white">';
                     listHTML += '<li>';
@@ -595,27 +556,26 @@ $$(document).on('pageInit', function (e) {
                     listHTML += '</ul>';
                     listHTML += '</div>';
 
-                    // $$(page.container).find('.page-content').find('#signature-display').append(listHTML);
                     order_details = v.order_details;
 
                     delivery_fee = v.deliveryFee;
                     rate = v.rate;
                     total_amount = v.ttlAmount;
 
-
                     STATUS = v.status;
                     ORDER_ID = v.order_id;
-
                 });
 
                 if(STATUS == 1) {
-                    var settingHtml = '<center>' +
-                        '<a href="order-edit.html?id='+ORDER_ID+'" class="link" ><i class="icon f7-icons">settings</i></a>' +
-                        '<a href="javascript:delete_order('+ORDER_ID+');" class="link" id="id-delete"><i class="icon f7-icons">trash</i></a>'+
-                        '</center>';
-                    $$(page.container).find('.page-content').find('#id-display-category').append(settingHtml);
-
-                    $$('#container-signpad').html("")
+                    var settingHtml = '<div class="speed-dial">' +
+                        '<a href="#" class="floating-button color-red"><i class="material-icons">edit</i><i class="icon icon-close"></i></a>' +
+                        '<div class="speed-dial-buttons">' +
+                        '<a href="order-edit.html?id='+ORDER_ID+'" class="link color-black" ><i class="la la-edit"></i></a>' +
+                        '<a href="javascript:delete_order('+ORDER_ID+');" class="link color-black" id="id-delete"><i class="la la-trash-o"></i></a>' +
+                        '</div>' +
+                        '</div>';
+                    $$('#container-signpad').html("");
+                    $$(page.container).find('.page-content').append(settingHtml);
                 }
 
                 $$.each(order_details, function(k, v) {
@@ -637,7 +597,6 @@ $$(document).on('pageInit', function (e) {
                                 .append($$('<tbody>'))
                             )
                         )
-                            //quantity
                             .append($$('<h4 class="px-15">Details</h4>'))
                             .append($$('<ul>')
                                 .append($$('<li>')
@@ -686,22 +645,8 @@ $$(document).on('pageInit', function (e) {
                                 )
                             );
 
-
-
-                        // $$.each(v.categories, function(value, index){
-                        //     console.log("the value");
-                        //     console.log(value.category);
-                        // });
-
                         $$(page.container).find('.page-content').find('#id-display-category').append(table);
-
-                    //append table category
-                    //     console.log("THE CATEGORIES");
-                        // console.log(v.categories);
                         v.categories.forEach(element => {
-                            //console.log("the category");
-                            //console.log(element.category);
-                            //console.log("the id", the_id);
                             $$('#order-table'+the_id).find('#tr-head'+the_id).empty();
                             $$('#order-table'+the_id).find('#tr-head'+the_id)
                                 .append($$('<th>').attr('class', 'text-align-left pl-0').text('Category'))
@@ -711,16 +656,10 @@ $$(document).on('pageInit', function (e) {
                                 .append($$('<td>').attr('class', "label-cell color-grey").text(element.category.capitalize()))
                                 .append($$('<td>').attr('class', "numeric-cell")
                                     .append($$('<input>').attr('value', element.qty).attr('type',"number").attr('class', 'quantity').css('background-color','#EFEFEF').attr('style', 'border:none').attr('readonly', true)))
-
                             );
                         });
-
                         }
                     );
-
-                //display category list
-
-                // set delivery fee
                 var delivery_fee_html = '<div class="list-block inset total">'+
                                       '<ul>' +
                                         '<li class="item-content pr-15"><div class="pr-0 item-inner"><div class="item-title">Delivery Fee</div><div class="item-after">'+delivery_fee+'</div></div>' +
@@ -906,10 +845,7 @@ $$(document).on('pageInit', function (e) {
             getOrderDate(page, date_local, 5);
 
         }
-
     }
-
-    //add infinite scroll
     $$(page.container).find('#history-id-reset').on('click', function(){
         setUpDate('#history-calendar-from', '#history-calendar-to');
         localStorage.removeItem(page.name);
@@ -919,17 +855,12 @@ $$(document).on('pageInit', function (e) {
     });
 
     $$("#id-history").on("click", function(){
-        //alert("hello");
-
         myApp.closeModal($$('.popover'), true);
 
         mainView.router.loadContent($$('#id-history-list').html());
     });
-    //about history
     if(page.name == "about-history"){
         console.log("about history");
-        //console.log("this is about");
-
         var id = page.query.id;
         console.log("this id of order : ", id);
         var url = base_url+"/api/order-details/"+id;
@@ -942,19 +873,13 @@ $$(document).on('pageInit', function (e) {
                 'Authorization': token,
             },
             success: function (data) {
-                //console.log(data.data);
                 console.log("about history details");
-                //console.log(data);
-                //var listHTML = '';
                 var order_details = [];
                 var delivery_fee = 0, rate = 0, total_amount = 0;
                 var custsign = "";
                 var remarks = "";
                 $$.each(data.data, function(k, v) {
-                    /// do stuff
                     custsign = v.custsign;
-
-                    //console.log(v.branch_name);
                     var listHTML = '<div class = "list-block cards-list">';
                     listHTML += '<ul>';
                     listHTML += '<li class = "card">';
@@ -977,8 +902,6 @@ $$(document).on('pageInit', function (e) {
                     total_amount = v.ttlAmount;
                     remarks = v.remarks;
                 });
-
-
                 $$.each(order_details, function(k, v) {
 
                         var UNIT = v.unit;
@@ -1006,7 +929,7 @@ $$(document).on('pageInit', function (e) {
                                         .append($$('<div>').attr('class','item-inner')
                                             .append($$('<div>').attr('class','item-title label').text("Quantity")
                                                 .append($$('<div>').attr('class', 'item-input')
-                                                    .append($$('<input>').attr('placeholder', "Please input Quantity").attr('type', 'number').attr('value', QUANTITY).attr('readonly', true).attr('style', 'border:none')
+                                                    .append($$('<input>').attr('placeholder', "Please input Quantity").attr('type', 'number').attr('value', QUANTITY).attr('readonly', true)
                                                     )
                                                 )
                                             )
@@ -1019,7 +942,7 @@ $$(document).on('pageInit', function (e) {
                                         .append($$('<div>').attr('class','item-inner')
                                             .append($$('<div>').attr('class','item-title label').text("UNIT")
                                                 .append($$('<div>').attr('class', 'item-input')
-                                                    .append($$('<input>').attr('placeholder', "Unit").attr('value', UNIT).attr('readonly', true).attr('style', 'border:none'))
+                                                    .append($$('<input>').attr('placeholder', "Unit").attr('value', UNIT).attr('readonly', true))
                                                 )
                                             )
                                         )
@@ -1031,7 +954,7 @@ $$(document).on('pageInit', function (e) {
                                         .append($$('<div>').attr('class','item-inner')
                                             .append($$('<div>').attr('class','item-title label').text("RATE")
                                                 .append($$('<div>').attr('class', 'item-input')
-                                                    .append($$('<input>').attr('placeholder', "Rate").attr('value', REGULAR_RATE).attr('readonly', true).attr('style', 'border:none'))
+                                                    .append($$('<input>').attr('placeholder', "Rate").attr('value', REGULAR_RATE).attr('readonly', true))
                                                 )
                                             )
                                         )
@@ -1062,7 +985,7 @@ $$(document).on('pageInit', function (e) {
                             table.append($$('<tr ">').attr('class', 'item')
                                 .append($$('<td>').attr('class', "label-cell").text(element.category.capitalize()))
                                 .append($$('<td>').attr('class', "numeric-cell")
-                                    .append($$('<input>').attr('value', element.qty).attr('type',"number").attr('class', 'quantity').css('background-color','#EFEFEF').attr('style', 'border:none').attr('readonly', true)))
+                                    .append($$('<input>').attr('value', element.qty).attr('type',"number").attr('class', 'quantity').attr('readonly', true)))
 
                             );
                         });
@@ -1070,9 +993,6 @@ $$(document).on('pageInit', function (e) {
                     }
                 );
 
-                //display category list
-
-                // set delivery fee
                 var delivery_fee_html = '<div class="list-block">'+
                     '<ul>' +
                     '<li class="item-content"> <div class="item-inner"> <div class="item-title"> Delivery Fee: '+delivery_fee+'</div></div>' +
@@ -1084,33 +1004,20 @@ $$(document).on('pageInit', function (e) {
                     '<div class="content-block-title">Signature</div>'+
                     '<img src="'+custsign+'" width="300" height="300"/>';
 
-
                 $$(page.container).find('.page-content').find('#delivery-list').append(delivery_fee_html);
-
                 $$(page.container).find('.page-content').find('#signature-display').append(listHTML);
-
-
             },
             error: function (error) {
                 console.log("error");
                 console.log(error);
             }
         });
-
-
     }
-
     if(page.name == 'order-add-page') {
-
         myApp.showPreloader('Checking connection.');
         localStorage.clear();
 
-        //localStorage.clear();
-
         var dynamic_services = "";
-
-
-
         //console.log("get customer");
         var branchName = $$('meta[name="branchName"]').attr("content");
         getServices("");
@@ -1128,21 +1035,12 @@ $$(document).on('pageInit', function (e) {
         today = yyyy+"-"+mm+"-"+dd;
         $$('#id-date').val(today);
         getCustomerSmartSelect();
-        //get the local storage
         var service_id = "";
         $$('#id-click-services').on('click', function(){
             dynamic_services = JSON.parse(localStorage.getItem("service_ids"));
-            //console.log("on change");
-            //console.log(dynamic_services);
         });
-        //get service type
         $$('#form_entry_services').on('change', function() {
-
-            //detect if picker is closed after a selection is made for additional actions:
             $$('.picker-modal').on('close', function() {
-                //console.log('Picker closed after selecting an item!');
-                //additional actions here
-                //var cars = [];
                 $$('select[name="serviceID"] option:checked').each(function () {
 
                     if(dynamic_services) {
@@ -1160,11 +1058,8 @@ $$(document).on('pageInit', function (e) {
                         ids.push(this.value);
                         localStorage.setItem("service_ids", JSON.stringify(ids));
                     }
-                    //get services types
                     var service_type = $$('meta[name="service_types"]').attr("content");
                     var service_type = JSON.parse(service_type);
-                    //console.log("THE SERVICES TYPES");
-                    //console.log(service_type);
                     var UNIT = "";
                     var REGULAR_RATE = "";
                     var DISCOUNTED_RATE = "";
@@ -1184,12 +1079,12 @@ $$(document).on('pageInit', function (e) {
                     var class_quantity = "quantity-"+this.value;
                     var class_amount = "amount-"+this.value;
                     var ul_id = "ul-class-"+this.value+str;
-                    $$(page.container).find('.list-block')
+                    $$(page.container).find('.card-group')
                         .append($$('<div data-service-id="'+this.value+'">').attr('class', "data-table data-table-init card").attr('id', id_container)
                             .append($$('<div>').attr('class', "card-header")
-                                .append($$('<span>').text("Type : "+this.text.capitalize()).attr('name',this.value))
+                                .append($$('<span>').text(this.text.capitalize()).attr('name',this.value))
                                 .append($$('<div>').attr('class', "data-table-links")
-                                    .append($$('<a>').attr('class', "link icon-only").attr('class', "icon f7-icons").attr('id', remove_more_id).text("trash"))
+                                    .append($$('<a><i>').attr('class', "link icon-only").attr('class', "material-icons").attr('id', remove_more_id).text("clear"))
                                 )
                             )
                             .append($$('<div>').attr('class', "card-content")
@@ -1203,10 +1098,9 @@ $$(document).on('pageInit', function (e) {
                                 .append($$('<li>')
                                     .append($$('<div>').attr('class', 'item-content')
                                         .append($$('<div>').attr('class','item-inner')
-                                            .append($$('<div>').attr('class','item-title label').text("Quantity")
-                                                .append($$('<div>').attr('class', 'item-input')
-                                                    .append($$('<input>').attr('placeholder', "Please input Quantity").attr('type', 'number').attr('class', class_quantity)
-                                                    )
+                                            .append($$('<div>').attr('class','item-title label').text("Quantity"))
+                                            .append($$('<div>').attr('class', 'item-input')
+                                                .append($$('<input>').attr('placeholder', "0").attr('type', 'number').attr('class', class_quantity)
                                                 )
                                             )
                                         )
@@ -1216,10 +1110,9 @@ $$(document).on('pageInit', function (e) {
                                 .append($$('<li>')
                                     .append($$('<div>').attr('class', 'item-content')
                                         .append($$('<div>').attr('class','item-inner')
-                                            .append($$('<div>').attr('class','item-title label').text("UNIT")
-                                                .append($$('<div>').attr('class', 'item-input')
-                                                    .append($$('<input>').attr('placeholder', "Unit").attr('value', UNIT).attr('readonly', true).attr('style', 'border:none'))
-                                                )
+                                            .append($$('<div>').attr('class','item-title label').text("UNIT"))
+                                            .append($$('<div>').attr('class', 'item-input')
+                                                .append($$('<input>').attr('value', UNIT).attr('readonly', true).attr('class', 'readonly'))
                                             )
                                         )
                                     )
@@ -1228,10 +1121,9 @@ $$(document).on('pageInit', function (e) {
                                 .append($$('<li>')
                                     .append($$('<div>').attr('class', 'item-content')
                                         .append($$('<div>').attr('class','item-inner')
-                                            .append($$('<div>').attr('class','item-title label').text("RATE")
-                                                .append($$('<div>').attr('class', 'item-input')
-                                                    .append($$('<input>').attr('placeholder', "Rate").attr('value', REGULAR_RATE).attr('readonly', true).attr('style', 'border:none'))
-                                                )
+                                            .append($$('<div>').attr('class','item-title label').text("RATE"))
+                                            .append($$('<div>').attr('class', 'item-input')
+                                                .append($$('<input>').attr('value', REGULAR_RATE).attr('readonly', true).attr('class', 'readonly'))
                                             )
                                         )
                                     )
@@ -1240,10 +1132,9 @@ $$(document).on('pageInit', function (e) {
                                 .append($$('<li>')
                                     .append($$('<div>').attr('class', 'item-content')
                                         .append($$('<div>').attr('class','item-inner')
-                                            .append($$('<div>').attr('class','item-title label').text("AMOUNT")
-                                                .append($$('<div>').attr('class', 'item-input')
-                                                    .append($$('<input>').attr('placeholder', "Amount").attr('readonly', true).attr('style','border:none').attr('class', class_amount).attr('class', 'my-amount'))
-                                                )
+                                            .append($$('<div>').attr('class','item-title label').text("AMOUNT"))
+                                            .append($$('<div>').attr('class', 'item-input')
+                                                .append($$('<input>').attr('readonly', true).attr('class', class_amount).attr('class', 'readonly'))
                                             )
                                         )
                                     )
@@ -1279,27 +1170,15 @@ $$(document).on('pageInit', function (e) {
                             return false;
                         });
                     }
-
-                    //get categories
                     getCategories(this.value, the_id);
 
                     $$("."+class_quantity).on('keyup', function(){
-                        //var grand_total = $$('#grand-total').val(432);
-                        //loop all services
                         var rate = $$(this).closest('li').next('li').next('li').find('input').val();
                         var total = rate * this.value;
                         $$(this).closest('li').next('li').next('li').next('li').find('input').val(total);
-                        //var result = +total + +grand_total;
-                         //$$('#grand-total').val(result);
-                        //var the_class = $$(this).parent().parent().parent().parent().parent().attr('id');
                         var the_class = $$(this).next().attr('id');
-                        //console.log("the class", the_class);
-
-                        //remove-id-remove-more-3regular
                         calculateGrandTotal(service_ids);
                     });
-
-
                 });
             });
         });
@@ -1331,11 +1210,9 @@ $$(document).on('pageInit', function (e) {
                     // //console.log("the id", the_id);
                     $$(''+table_id+' > tbody > tr.item').each(function(index, element) {
                         var data_bind_table = $$(this).data('service-id');
-                        //console.log("SERVICE ID BIND: ", data_bind_table);
+
                         var category_quantity = $$(this).find("input.quantity").val();
                         var category_id = $$(this).find("input.category_id").val();
-                        //console.log("category_quantity", category_quantity);
-
                         category_data.push({
                             service_id : data_bind_table,
                             category_quantity: category_quantity,
@@ -1705,13 +1582,9 @@ function refreshData(date, page, status)
                 listHTML += '</div>';
                 listHTML += '</a>';
                 listHTML += '</li>';
-
-                // $$(page.container).find('.page-content').append(listHTML);
             });
 
             listHTML += '</ul>';
-
-            // $$(page.container).find('.page-content').append(listHTML);
             $$(page.container).find('.page-content').find('.list-block').append(listHTML);
 
         },
@@ -1744,20 +1617,10 @@ function refreshDataHistory(date, page, status)
             'Authorization': token,
         },
         success: function (data) {
-            //console.log(data.data);
-
-            //$$(page.container).find('.page-content').find('.list-block media-list').empty();
-
-
             $$(page.container).find('.page-content').find('.list-block').find('ul').empty();
 
-            //var listHTML = '<div class = "list-block media-list">';
             var listHTML = '<ul>';
             $$.each(data.data, function(k, v) {
-                /// do stuff
-                //console.log("data for v");
-                //console.log(v.branch_name);
-
                 listHTML += '<li>';
                 listHTML += '<a href="about-history.html?id='+ v.order_id +'" class="item-link item-content">';
                 listHTML += '<div class="item-media"><span class="moname">Sep<span class="moday">23</span></span></div>';
@@ -1772,8 +1635,6 @@ function refreshDataHistory(date, page, status)
                 listHTML += '</div>';
                 listHTML += '</a>';
                 listHTML += '</li>';
-
-                // $$(page.container).find('.page-content').append(listHTML);
             });
 
             listHTML += '</ul>';
@@ -1840,7 +1701,6 @@ function myFunction() {
     }
 }
 
-
 function getOrderDate(page, date, status)
 {
     console.log("date");
@@ -1869,10 +1729,6 @@ function getOrderDate(page, date, status)
                 $$.each(data.data, function(k, v) {
 
                     listHTML += '<li>';
-                    //listHTML += '<a href="about.html?id=' + v.order_id + '" class="item-link item-content">';
-                    // if(status == 4) {
-                    //     listHTML += '<a href="about.html?id=' + v.order_id + '" class="item-link item-content">';
-                    // }
                     if(status == 5) {
                          listHTML += '<a href="about-history.html?id='+ v.order_id +'" class="item-link item-content">';
                     }
@@ -2248,7 +2104,7 @@ function customer_details(id, page)
                 // Random author
                 var author = v.title;
                 var itemHTML = '<div class="profile mt-5"><div class="item-media"><img src="'+picURL+'"></div></div>'+
-                                '<div class="list-block media-list list-view mt-10 mb-30">'+
+                                '<div class="list-block media-list list-view mt-10 mb-0">'+
                                 '<ul>'+
                                 '<li>'+
                                     '<div class="item-content">'+
@@ -2343,7 +2199,13 @@ function customer_details(id, page)
                                 '</ul>'+
                                 '</div>'+
                                 '</div>'+
-                                '<div class="content-block px-20 mb-0"><a href="customer-edit.html?id='+v.custID+'" class="link"><i class="material-icons">create</i></a><a href="javascript:delete_customer('+v.custID+');" class="button button-fill button-raised button-round color-red" id="id-delete">Delete</a></div>';
+                                '<div class="speed-dial">' +
+                                    '<a href="#" class="floating-button color-red"><i class="material-icons">edit</i><i class="icon icon-close"></i></a>' +
+                                    '<div class="speed-dial-buttons">' +
+                                        '<a href="customer-edit.html?id='+v.custID+'" class="link color-black"><i class="la la-edit"></i></a>' +
+                                        '<a href="javascript:delete_customer('+v.custID+');" class="link color-black" id="id-delete"><i class="la la-trash-o"></i></a>' +
+                                    '</div>' +
+                                '</div>';
                 $$(page.container).find('.page-content').find('.content-block-inner').append(itemHTML);
             });
 
@@ -2698,9 +2560,9 @@ function createTableForServices(value, text, page, unit, rate, regRate, qty, amo
 
     var table = $$('<div data-service-id="'+value+'">').attr('class', "data-table data-table-init card").attr('id', id_container)
         .append($$('<div>').attr('class', "card-header")
-            .append($$('<span>').text("Type : "+text.capitalize()).attr('name',value))
+            .append($$('<span>').text(text.capitalize()).attr('name',value))
             .append($$('<div>').attr('class', "data-table-links")
-                .append($$('<a>').attr('class', "link icon-only").attr('class', "icon f7-icons").attr('id', remove_more_id).text("trash"))
+                .append($$('<a>').attr('class', "link icon-only").attr('class', "la la-trash-o").attr('id', remove_more_id))
             )
         )
         .append($$('<div>').attr('class', "card-content")
@@ -2714,12 +2576,10 @@ function createTableForServices(value, text, page, unit, rate, regRate, qty, amo
             .append($$('<li>')
                 .append($$('<div>').attr('class', 'item-content')
                     .append($$('<div>').attr('class','item-inner')
-                        .append($$('<div>').attr('class','item-title label').text("Quantity")
-                            .append($$('<div>').attr('class', 'item-input')
-                                .append($$('<input>').attr('placeholder', "Please input Quantity").attr('type', 'number').attr('value', qty).attr('style', 'border:none').attr('class', class_quantity)
-                                )
-                            )
-                        )
+                        .append($$('<div>').attr('class','item-title label').text("Quantity"))
+                        .append($$('<div>').attr('class', 'item-input')
+                            .append($$('<input>').attr('type', 'number').attr('value', qty).attr('class', class_quantity))
+                        ) 
                     )
                 )
             )
@@ -2727,10 +2587,9 @@ function createTableForServices(value, text, page, unit, rate, regRate, qty, amo
             .append($$('<li>')
                 .append($$('<div>').attr('class', 'item-content')
                     .append($$('<div>').attr('class','item-inner')
-                        .append($$('<div>').attr('class','item-title label').text("UNIT")
-                            .append($$('<div>').attr('class', 'item-input')
-                                .append($$('<input>').attr('placeholder', "Unit").attr('value', UNIT).attr('readonly', true).attr('style', 'border:none'))
-                            )
+                        .append($$('<div>').attr('class','item-title label').text("Unit"))
+                        .append($$('<div>').attr('class', 'item-input')
+                            .append($$('<input>').attr('value', UNIT).attr('readonly', true).attr('class', 'readonly'))
                         )
                     )
                 )
@@ -2739,10 +2598,9 @@ function createTableForServices(value, text, page, unit, rate, regRate, qty, amo
             .append($$('<li>')
                 .append($$('<div>').attr('class', 'item-content')
                     .append($$('<div>').attr('class','item-inner')
-                        .append($$('<div>').attr('class','item-title label').text("RATE")
-                            .append($$('<div>').attr('class', 'item-input')
-                                .append($$('<input>').attr('placeholder', "Rate").attr('value', REGULAR_RATE).attr('readonly', true).attr('style', 'border:none'))
-                            )
+                        .append($$('<div>').attr('class','item-title label').text("Rate"))
+                        .append($$('<div>').attr('class', 'item-input')
+                            .append($$('<input>').attr('value', REGULAR_RATE).attr('readonly', true).attr('class', 'readonly'))
                         )
                     )
                 )
@@ -2751,10 +2609,9 @@ function createTableForServices(value, text, page, unit, rate, regRate, qty, amo
             .append($$('<li>')
                 .append($$('<div>').attr('class', 'item-content')
                     .append($$('<div>').attr('class','item-inner')
-                        .append($$('<div>').attr('class','item-title label').text("AMOUNT")
-                            .append($$('<div>').attr('class', 'item-input')
-                                .append($$('<input>').attr('placeholder', "Amount").attr('readonly', true).attr('style','border:none').attr('class', 'my-amount').attr('value', amount))
-                            )
+                        .append($$('<div>').attr('class','item-title label').text("Amount"))
+                        .append($$('<div>').attr('class', 'item-input')
+                            .append($$('<input>').attr('readonly', true).attr('class', 'my-amount').attr('value', amount).attr('class', 'readonly'))
                         )
                     )
                 )
@@ -2773,7 +2630,7 @@ function createTableForServices(value, text, page, unit, rate, regRate, qty, amo
         table.append($$('<tr ">').attr('class', 'item')
             .append($$('<td>').attr('class', "label-cell").text(element.category.capitalize()))
             .append($$('<td>').attr('class', "numeric-cell")
-                .append($$('<input>').attr('value', element.qty).attr('type',"number").attr('class', 'quantity').css('background-color','#EFEFEF').attr('style', 'border:none')))
+                .append($$('<input>').attr('value', element.qty).attr('type',"number").attr('class', 'quantity').css('background-color','#EFEFEF')))
             .append($$('<td>').attr('class', "numeric-cell")
                 .append($$('<input>').attr('type',"hidden").attr('class', 'category_id').attr('value', element.clothesCatID)))
 
@@ -2850,12 +2707,12 @@ function checkCreateOrder(page)
                 var class_quantity = "quantity-"+this.value;
                 var class_amount = "amount-"+this.value;
                 var ul_id = "ul-class-"+this.value+str;
-                $$(page.container).find('.list-block')
-                    .append($$('<div data-service-id="'+this.value+'">').attr('class', "data-table data-table-init card").attr('id', id_container)
+                $$(page.container).find('.card-group')
+                    .prepend($$('<div data-service-id="'+this.value+'">').attr('class', "data-table data-table-init card").attr('id', id_container)
                         .append($$('<div>').attr('class', "card-header")
-                            .append($$('<span>').text("Type : "+this.text.capitalize()).attr('name',this.value))
+                            .append($$('<span>').text(this.text.capitalize()).attr('name',this.value),'<div class="chip bg-green mr-auto ml-10"><div class="chip-label color-white">New</div></div>')
                             .append($$('<div>').attr('class', "data-table-links")
-                                .append($$('<a>').attr('class', "link icon-only").attr('class', "icon f7-icons").attr('id', remove_more_id).text("trash"))
+                                .append($$('<a>').attr('class', "link icon-only").attr('class', "la la-trash-o").attr('id', remove_more_id))
                             )
                         )
                         .append($$('<div>').attr('class', "card-content")
@@ -2869,10 +2726,9 @@ function checkCreateOrder(page)
                             .append($$('<li>')
                                 .append($$('<div>').attr('class', 'item-content')
                                     .append($$('<div>').attr('class','item-inner')
-                                        .append($$('<div>').attr('class','item-title label').text("Quantity")
-                                            .append($$('<div>').attr('class', 'item-input')
-                                                .append($$('<input>').attr('placeholder', "Please input Quantity").attr('type', 'number').attr('class', class_quantity)
-                                                )
+                                        .append($$('<div>').attr('class','item-title label').text("Quantity"))
+                                        .append($$('<div>').attr('class', 'item-input')
+                                            .append($$('<input>').attr('type', 'number').attr('class', class_quantity)
                                             )
                                         )
                                     )
@@ -2882,10 +2738,9 @@ function checkCreateOrder(page)
                             .append($$('<li>')
                                 .append($$('<div>').attr('class', 'item-content')
                                     .append($$('<div>').attr('class','item-inner')
-                                        .append($$('<div>').attr('class','item-title label').text("UNIT")
-                                            .append($$('<div>').attr('class', 'item-input')
-                                                .append($$('<input>').attr('placeholder', "Unit").attr('value', UNIT).attr('readonly', true).attr('style', 'border:none'))
-                                            )
+                                        .append($$('<div>').attr('class','item-title label').text("Unit"))
+                                        .append($$('<div>').attr('class', 'item-input')
+                                            .append($$('<input>').attr('value', UNIT).attr('readonly', true).attr('class', 'readonly'))
                                         )
                                     )
                                 )
@@ -2894,10 +2749,9 @@ function checkCreateOrder(page)
                             .append($$('<li>')
                                 .append($$('<div>').attr('class', 'item-content')
                                     .append($$('<div>').attr('class','item-inner')
-                                        .append($$('<div>').attr('class','item-title label').text("RATE")
-                                            .append($$('<div>').attr('class', 'item-input')
-                                                .append($$('<input>').attr('placeholder', "Rate").attr('value', REGULAR_RATE).attr('readonly', true).attr('style', 'border:none'))
-                                            )
+                                        .append($$('<div>').attr('class','item-title label').text("Rate"))
+                                        .append($$('<div>').attr('class', 'item-input')
+                                            .append($$('<input>').attr('value', REGULAR_RATE).attr('readonly', true).attr('class', 'readonly'))
                                         )
                                     )
                                 )
@@ -2906,10 +2760,9 @@ function checkCreateOrder(page)
                             .append($$('<li>')
                                 .append($$('<div>').attr('class', 'item-content')
                                     .append($$('<div>').attr('class','item-inner')
-                                        .append($$('<div>').attr('class','item-title label').text("AMOUNT")
-                                            .append($$('<div>').attr('class', 'item-input')
-                                                .append($$('<input>').attr('placeholder', "Amount").attr('readonly', true).attr('style','border:none').attr('class', class_amount).attr('class', 'my-amount'))
-                                            )
+                                        .append($$('<div>').attr('class','item-title label').text("Amount"))
+                                        .append($$('<div>').attr('class', 'item-input')
+                                            .append($$('<input>').attr('readonly', true).attr('class', class_amount).attr('class', 'readonly'))
                                         )
                                     )
                                 )
