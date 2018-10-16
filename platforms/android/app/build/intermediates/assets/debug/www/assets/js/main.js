@@ -19,12 +19,11 @@ var $$ = Dom7;
 
 //var base_url = 'http://192.168.84.2/iwash';
 
+// var  base_url = "http://192.168.1.44/iwash/";
+
 var  base_url = "http://192.168.1.224/iwash/";
 
-//jem ip
-//var  base_url = "http://192.168.84.2/iwash/";
-
-
+// var  base_url = "http://192.168.1.90/project/iwash/";
 
 // Add view
 var mainView = myApp.addView('.view-main', {
@@ -132,7 +131,6 @@ $$(document).on('pageInit', function (e) {
             }, 2000);
         });
 
-
         $$('#signature-pad').hide();
         $$('.infinite-scroll-preloader').hide();
 
@@ -158,9 +156,6 @@ $$(document).on('pageInit', function (e) {
 
         }
 
-
-
-
         //add infinite scroll
         $$(page.container).find('#id-reset').on('click', function(){
             //mainView.router.loadContent($$('#dashboard').html());
@@ -182,8 +177,8 @@ $$(document).on('pageInit', function (e) {
 
             // $$('#calendar-from').val("");
             // $$('#calendar-to').val("");
-
-            resetData(page, token);
+            getOrderDate(page, date, 4);
+            //resetData(page, token);
 
         });
 
@@ -265,9 +260,7 @@ $$(document).on('pageInit', function (e) {
 
         console.log("get first value province");
         console.log(default_province);
-        //myApp.smartSelectAddOption('#id-smart-select-province select', '<option value="jade">hey</option>');
 
-        //first cover smart-select picker, second cover full view
         $$('#form_entry_province').on('change', function() {
             //console.log('Form entry item was changed was changed!');
 
@@ -277,10 +270,7 @@ $$(document).on('pageInit', function (e) {
                 //additional actions here
                 //var cars = [];
                  $$('select[name="provinceID"] option:checked').each(function () {
-                     //get province and set select cities and barangay to zero
                      console.log("get province clear cities");
-                    // $$('select[name="city"] option:checked').remove();
-                     //$$('select[name="barangay"] option:checked').remove();
                      provinceID = this.value;
 
                      getCities(provinceID);
@@ -550,12 +540,7 @@ $$(document).on('pageInit', function (e) {
         }
 
         $$('#id-edit-customer').on('click', function(){
-            //alert("hello");
-
             var formData = myApp.formToData('#customer-edit-form');
-            //alert(JSON.stringify(formData));
-            //var data = JSON.stringify(formData);
-            //console.log(data);
             updateCustomer(formData, id);
         });
 
@@ -589,17 +574,24 @@ $$(document).on('pageInit', function (e) {
                     /// do stuff
 
                     //console.log(v.branch_name);
-                    listHTML = '<div class = "list-block cards-list">';
-                    listHTML += '<ul>';
-                    listHTML += '<li class = "card">';
-                    listHTML += '<div class = "card-header">'+ v.suffix+" "+ v.fname +" "+v.mname+" "+v.lname+'</div>';
-                    listHTML += '<div class = "card-content">';
-                    listHTML += '<div class = "card-content-inner">Branch :'+ v.branch_name +'</div>';
+                    listHTML = '<div class="list-block media-list mt-15 mb-0">';
+                    listHTML += '<ul class="profile bg-white">';
+                    listHTML += '<li>';
+                    listHTML += '<div class="item-content">';
+
+                    listHTML += '<div class="item-media py-15"><img src="http://192.168.1.224/iwash/assets/img/users/noimage.gif"></div>';
+                    listHTML += '<div class="item-inner">';
+
+                    listHTML += '<div class="item-title-row">';
+                    listHTML += '<div class="item-title">'+ v.suffix+" "+ v.fname +" "+v.mname+" "+v.lname+'</div>';
                     listHTML += '</div>';
-                    listHTML += '<div class = "card-footer">'+ v.date +'</div>';
+                    listHTML += '<div class="item-subtitle color-grey">'+ v.date +'</div>';
+
+                    listHTML += '</div>';
+
                     listHTML += '</div>';
                     listHTML += '</li>';
-                    listHTML += '</div>';
+
                     listHTML += '</ul>';
                     listHTML += '</div>';
 
@@ -619,9 +611,6 @@ $$(document).on('pageInit', function (e) {
 
 
                 if(STATUS == 1) {
-                    //console.log("order id");
-                    //console.log(ORDER_ID);
-                    //'<a href="javascript:delete_customer('+v.custID+');" class="link" id="id-delete"><i class="icon f7-icons">trash</i></a>'+
                     var settingHtml = '<center>' +
                         '<a href="order-edit.html?id='+ORDER_ID+'" class="link" ><i class="icon f7-icons">settings</i></a>' +
                         '<a href="javascript:delete_order('+ORDER_ID+');" class="link" id="id-delete"><i class="icon f7-icons">trash</i></a>'+
@@ -631,14 +620,7 @@ $$(document).on('pageInit', function (e) {
                     $$('#container-signpad').html("")
                 }
 
-                //console.log("order details");
-                //console.log(order_details);
-                // var settingHtml = '<a href="customer-edit.html?id='+34+'" class="link"><i class="icon f7-icons">settings</i></a>';
-                // $$(page.container).find('.page-content').find('#id-display-category').append(settingHtml);
-
                 $$.each(order_details, function(k, v) {
-                        //console.log("the data");
-                        //console.log(v.serviceType);
                     var UNIT = v.unit;
                     var REGULAR_RATE = v.regRate;
                     var QUANTITY = v.qty;
@@ -647,34 +629,25 @@ $$(document).on('pageInit', function (e) {
                     str = str.replace(/ +/g, "");
                     var the_id = v.serviceID+str;
 
-                    // .append($$('<div>').attr('class', "card-content")
-                    //         .append($$('<table>').attr('id', 'order-table'+the_id)
-                    //             .append($$('<tr>').attr('id', 'tr-head'+the_id))
-                    //             .append($$('<tbody>'))
-                    //         )
-                    //     )
-
-                        //'<a href="customer-edit.html?id='+v.custID+'" class="link"><i class="icon f7-icons">settings</i></a>'+
-
-                    var table = $$('<div>').attr('class', "data-table data-table-init card")
+                    var table = $$('<div>').attr('class', "services inset")
                         .append($$('<div>').attr('class', "card-header")
-                            .append($$('<span>').text("Type : "+v.serviceType.capitalize()+""))
+                            .append($$('<span>').text(""+v.serviceType.capitalize()+""))
                         )
-                        .append($$('<div>').attr('class', "card-content")
+                        .append($$('<div>').attr('class', "card-content px-15")
                             .append($$('<table>').attr('id', 'order-table'+the_id)
                                 .append($$('<tr>').attr('id', 'tr-head'+the_id))
                                 .append($$('<tbody>'))
                             )
                         )
                             //quantity
+                            .append($$('<h4 class="px-15">Details</h4>'))
                             .append($$('<ul>')
                                 .append($$('<li>')
                                     .append($$('<div>').attr('class', 'item-content')
                                         .append($$('<div>').attr('class','item-inner')
-                                            .append($$('<div>').attr('class','item-title label').text("Quantity")
-                                                .append($$('<div>').attr('class', 'item-input')
-                                                    .append($$('<input>').attr('placeholder', "Please input Quantity").attr('type', 'number').attr('value', QUANTITY).attr('readonly', true).attr('style', 'border:none')
-                                                    )
+                                            .append($$('<div>').attr('class','item-title label color-grey').text("Quantity"))
+                                            .append($$('<div>').attr('class', 'item-input')
+                                                .append($$('<input>').attr('placeholder', "Please input Quantity").attr('type', 'number').attr('value', QUANTITY).attr('readonly', true).attr('style', 'border:none')
                                                 )
                                             )
                                         )
@@ -684,10 +657,9 @@ $$(document).on('pageInit', function (e) {
                                 .append($$('<li>')
                                     .append($$('<div>').attr('class', 'item-content')
                                         .append($$('<div>').attr('class','item-inner')
-                                            .append($$('<div>').attr('class','item-title label').text("UNIT")
-                                                .append($$('<div>').attr('class', 'item-input')
-                                                    .append($$('<input>').attr('placeholder', "Unit").attr('value', UNIT).attr('readonly', true).attr('style', 'border:none'))
-                                                )
+                                            .append($$('<div>').attr('class','item-title label color-grey').text("Unit"))
+                                            .append($$('<div>').attr('class', 'item-input')
+                                                .append($$('<input>').attr('placeholder', "Unit").attr('value', UNIT).attr('readonly', true).attr('style', 'border:none'))
                                             )
                                         )
                                     )
@@ -696,22 +668,20 @@ $$(document).on('pageInit', function (e) {
                                 .append($$('<li>')
                                     .append($$('<div>').attr('class', 'item-content')
                                         .append($$('<div>').attr('class','item-inner')
-                                            .append($$('<div>').attr('class','item-title label').text("RATE")
-                                                .append($$('<div>').attr('class', 'item-input')
-                                                    .append($$('<input>').attr('placeholder', "Rate").attr('value', REGULAR_RATE).attr('readonly', true).attr('style', 'border:none'))
-                                                )
+                                            .append($$('<div>').attr('class','item-title label color-grey').text("Rate"))
+                                            .append($$('<div>').attr('class', 'item-input')
+                                                .append($$('<input>').attr('placeholder', "Rate").attr('value', REGULAR_RATE).attr('readonly', true).attr('style', 'border:none'))
                                             )
                                         )
                                     )
                                 )
                                 //amount
                                 .append($$('<li>')
-                                    .append($$('<div>').attr('class', 'item-content')
+                                    .append($$('<div>').attr('class', 'item-content last')
                                         .append($$('<div>').attr('class','item-inner')
-                                            .append($$('<div>').attr('class','item-title label').text("AMOUNT")
-                                                .append($$('<div>').attr('class', 'item-input')
-                                                    .append($$('<input>').attr('placeholder', "Amount").attr('readonly', true).attr('style','border:none').attr('class', 'my-amount').attr('value', AMOUNT))
-                                                )
+                                            .append($$('<div>').attr('class','item-title label color-grey').text("Amount"))
+                                            .append($$('<div>').attr('class', 'item-input')
+                                                .append($$('<input>').attr('placeholder', "Amount").attr('readonly', true).attr('style','border:none').attr('class', 'my-amount').attr('value', AMOUNT))
                                             )
                                         )
                                     )
@@ -736,11 +706,11 @@ $$(document).on('pageInit', function (e) {
                             //console.log("the id", the_id);
                             $$('#order-table'+the_id).find('#tr-head'+the_id).empty();
                             $$('#order-table'+the_id).find('#tr-head'+the_id)
-                                .append($$('<th>').attr('class', 'numeric-cell').text('CATEGORY'))
-                                .append($$('<th>').attr('class', 'numeric-cell').text('QUANTITY'));
+                                .append($$('<th>').attr('class', 'text-align-left pl-0').text('Category'))
+                                .append($$('<th>').attr('class', 'text-align-right pr-0').text('Quantity'));
                             var table = $$('#order-table'+the_id).find('tbody');
-                            table.append($$('<tr ">').attr('class', 'item')
-                                .append($$('<td>').attr('class', "label-cell").text(element.category.capitalize()))
+                            table.append($$('<tr>').attr('class', 'item')
+                                .append($$('<td>').attr('class', "label-cell color-grey").text(element.category.capitalize()))
                                 .append($$('<td>').attr('class', "numeric-cell")
                                     .append($$('<input>').attr('value', element.qty).attr('type',"number").attr('class', 'quantity').css('background-color','#EFEFEF').attr('style', 'border:none').attr('readonly', true)))
 
@@ -753,10 +723,10 @@ $$(document).on('pageInit', function (e) {
                 //display category list
 
                 // set delivery fee
-                var delivery_fee_html = '<div class="list-block">'+
+                var delivery_fee_html = '<div class="list-block inset total">'+
                                       '<ul>' +
-                                        '<li class="item-content"> <div class="item-inner"> <div class="item-title"> Delivery Fee: '+delivery_fee+'</div></div>' +
-                                        '<li class="item-content"> <div class="item-inner"> <div class="item-title"> Total : '+total_amount+'</div></div>' +
+                                        '<li class="item-content pr-15"><div class="pr-0 item-inner"><div class="item-title">Delivery Fee</div><div class="item-after">'+delivery_fee+'</div></div>' +
+                                        '<li class="item-content pr-15"><div class="pr-0 item-inner total-amount"> <div class="item-title">Total</div><div class="item-after">'+total_amount+'</div></div>' +
                                         '</li>'+
                                       '</ul>';
 
@@ -1441,36 +1411,18 @@ $$(document).on('pageInit', function (e) {
                         rate : rate,
                         quantity: quantity,
                     });
-                    // console.log("UNIT", unit);
-                    // console.log("QUANTITY", quantity);
-                    // console.log("RATE", rate);
-                    // console.log("AMOUNT", amount);
-                    // console.log("SERVINCE-ID", data_bind);
                 }
-
             }
-
             if(data.length == 0) {
                 myApp.alert("Please add services");
             }
             else {
-                //console.log("THE DATA");
-                //console.log(data[0].quantity);
                 for(var i = 0; i < data.length; i++){
                     if(data[i].quantity == "") {
                         myApp.alert("Please add Quantity");
                         return false;
                     }
                 }
-                // console.log("data");
-                // console.log(data);
-                // console.log("CATEGORIES");
-                // console.log(category_data);
-                //console.log("service ids");
-                //console.log(data_service_ids);
-                //console.log("service quantity");
-                //console.log(removeDuplicateUsingSet(quantities));
-                //console.log(data);
                 var customer_id = $$('#form_entry_customer').val();
                 var grand_total = $$('#grand-total').val();
                 var remarks = $$('#remarks').val();
@@ -1479,27 +1431,19 @@ $$(document).on('pageInit', function (e) {
                     return false;
                 }
                 console.log(category_data);
-                //console.log("customer id", customer_id);
                createOrder(data, grand_total, customer_id, remarks, category_data);
             }
-
-            //createOrder(formData, 1);
         });
 
     }
     if(page.name == 'order-edit-page') {
         console.log("edit order");
-        //get all data first
         var order_id = page.query.id;
         console.log("order id fds", order_id);
         myApp.showPreloader('Checking connection.');
-        //localStorage.clear();
         getServices("");
-        //get order function
         getOrderForEdit(order_id, page);
-        //create function
         checkCreateOrder(page);
-        //button edit submit
         $$("#id-button-form-edit-order").on("click" , function () {
             console.log("this is edit");
             //check for table services id
@@ -1509,28 +1453,19 @@ $$(document).on('pageInit', function (e) {
             var data = [];
             var category_data = [];
             for(var i =0; i<service_ids.length; i++) {
-                // console.log("the id");
-                //console.log(service_ids[i]);
-                //var data_bind_service_id = $$(this).closest('table').parent().parent().data('service-id');
-                //get the service ids
                 var the_id = $$('#remove-id-remove-more-'+service_ids[i]).attr('id');
                 if (typeof the_id != 'undefined') {
-                    //console.log("the id",the_id);
                     var ul = $$('#remove-id-remove-more-'+service_ids[i]+' > ul').attr('id');
                     var unit = $$('#'+ul+' li').next('li').find('input').val();
                     var quantity = $$('#'+ul+' li').find('input').val();
                     var rate = $$('#'+ul+' li').next('li').next('li').find('input').val();
                     var amount = $$('#'+ul+' li').next('li').next('li').next('li').find('input').val();
                     var data_bind = $$('#remove-id-remove-more-'+service_ids[i]).data('service-id');
-                    //GET THE CATEGORY
                     var table_id = "#order-table"+service_ids[i];
-                    // //console.log("the id", the_id);
                     $$(''+table_id+' > tbody > tr.item').each(function(index, element) {
                         var data_bind_table = $$(this).data('service-id');
-                        //console.log("SERVICE ID BIND: ", data_bind_table);
                         var category_quantity = $$(this).find("input.quantity").val();
                         var category_id = $$(this).find("input.category_id").val();
-                        //console.log("category_quantity", category_quantity);
                         if(typeof category_id != 'undefined')
                         {
                             category_data.push({
@@ -1539,7 +1474,6 @@ $$(document).on('pageInit', function (e) {
                                 category_id : category_id
                             });
                         }
-
                     });
                     data.push({
                         service_id : data_bind,
@@ -1548,36 +1482,18 @@ $$(document).on('pageInit', function (e) {
                         rate : rate,
                         quantity: quantity,
                     });
-                    // console.log("UNIT", unit);
-                    // console.log("QUANTITY", quantity);
-                    // console.log("RATE", rate);
-                    // console.log("AMOUNT", amount);
-                    // console.log("SERVINCE-ID", data_bind);
                 }
-
             }
-
             if(data.length == 0) {
                 myApp.alert("Please add services");
             }
             else {
-                //console.log("THE DATA");
-                //console.log(data[0].quantity);
                 for(var i = 0; i < data.length; i++){
                     if(data[i].quantity == "") {
                         myApp.alert("Please add Quantity");
                         return false;
                     }
                 }
-                // console.log("data");
-                // console.log(data);
-                // console.log("CATEGORIES");
-                //console.log(category_data);
-                //console.log("service ids");
-                //console.log(data_service_ids);
-                //console.log("service quantity");
-                //console.log(removeDuplicateUsingSet(quantities));
-                //console.log(data);
                 var customer_id = $$('#form_entry_customer').val();
                 var grand_total = $$('#grand-total').val();
                 var remarks = $$('#remarks').val();
@@ -1585,29 +1501,16 @@ $$(document).on('pageInit', function (e) {
                     myApp.alert("Please add Customer");
                     return false;
                 }
-                //console.log("order id", );
-
                 var order_id = $$('#id-order').val();
-                //console.log("order id is", order_id);
-                //console.log(category_data);
-                // //console.log("customer id", customer_id);
                 updateOrder(data, grand_total, customer_id, remarks, category_data, order_id);
-
             }
-
          });
-
     }
     if(page.name == 'order-list-page') {
-        //console.log("load order list page");
-        //$$('#created-calendar-from').val(today);
-        //$$('#created-calendar-to').val(today);
-
         setUpDate(page.name, '#created-calendar-from', '#created-calendar-to');
         var from_date = "";
         var to_date = "";
         var date = "";
-
         var calendarFrom = myApp.calendar({
             input: '#created-calendar-from',
             dateFormat: 'M dd yyyy',
@@ -1620,22 +1523,14 @@ $$(document).on('pageInit', function (e) {
                     var from_year = calendarFrom.value[0].getFullYear();
                     from_date = from_year+"-"+from_month+"-"+from_day;
                     date = from_date+":"+to_date;
-                    //console.log("from date");
-                    //console.log(date);
                     localStorage.setItem(page.name, date);
                     getOrderDate(page, date,1);
                 }
                 else {
                     console.log("not null");
                 }
-
-
-                //getOrderDate(data);
-
-
             }
         });
-
         var calendarTo = myApp.calendar({
             input: '#created-calendar-to',
             dateFormat: 'M dd yyyy',
@@ -1655,7 +1550,6 @@ $$(document).on('pageInit', function (e) {
                 else {
                     console.log("empty this");
                 }
-
             }
         });
 
@@ -1681,33 +1575,20 @@ $$(document).on('pageInit', function (e) {
             }
             else {
                 getOrderDate(page, date_local, 1);
-
             }
-            //getOrderDate(page, date, 1);
         }
-
         var ptrContent = $$(page.container).find('.pull-to-refresh-content');
-        //$$(page.container).find('.page-content').find('.list-block').append(listHTML);
-
-// Add 'refresh' listener on it
         ptrContent.on('ptr:refresh', function (e) {
-            // Emulate 2s loading
             setTimeout(function () {
                 var date_from = $$('#created-calendar-from').val();
                 var date_to = $$('#created-calendar-to').val();
-                //please format date
                 date = date_from+":"+date_to;
                 getOrderDate(page, date, 1);
-                //console.log("REFRESH DATA", date);
-                //refreshData(date, page, 4);
-                // When loading done, we need to reset it
                 myApp.pullToRefreshDone();
             }, 2000);
         });
 
-        //get order list
         $$(document).on('click', '#id-add-order', function(){
-            //console.log("add order");
             mainView.router.loadContent($$('#id-add-order-page').html());
         });
 
@@ -1715,7 +1596,7 @@ $$(document).on('pageInit', function (e) {
 
             var today = new Date();
             var dd = today.getDate();
-            var mm = today.getMonth()+1; //January is 0!
+            var mm = today.getMonth()+1;
             var yyyy = today.getFullYear();
             if(dd<10) {
                 dd = '0'+dd
@@ -1740,8 +1621,6 @@ $$(document).on('pageInit', function (e) {
 
 function calculateGrandTotal(service_ids)
 {
-    //console.log("the services");
-    //console.log(service_ids);
     var sum = 0;
     for(var i = 0; i < service_ids.length; i++) {
         var ul_id = "#ul-class-"+service_ids[i];
@@ -1766,8 +1645,6 @@ function update_order_details(id, signature)
 
     var url = base_url+"/api/order-details";
     var token= $$('meta[name="token"]').attr("content");
-    //console.log("this is signature");
-    //console.log(signature);
     var data = { order_id: id, signature: signature};
     $$.ajax({
         type: "POST",
@@ -1778,41 +1655,22 @@ function update_order_details(id, signature)
         },
         data: data,
         success: function (data) {
-            //console.log(data);
-            //console.log("token");
-            //console.log(data.data.token);
-            //myApp.alert('Success fully updated.');
             mainView.router.loadContent($$('#dashboard').html());
-
         },
         error: function (error) {
             console.log(error);
-
         }
     });
 }
-
-// Option 2. Using live 'pageInit' event handlers for each page
 $$(document).on('pageInit', '.page[data-page="about"]', function (e) {
-    // Following code will be executed for page with data-page attribute equal to "about"
-    //myApp.alert('Here comes About page');
 });
 
 $$('#login').on('click', function(){
 
     var username = $$('.login-screen input[name = "username"]').val();
     var password = $$('.login-screen input[name = "password"]').val();
-
     if(navigator.onLine){
-        //alert(uname+pwd);
-        //console.log("this data "+uname+pwd);
-
         var data = {"username": username, "password": password };
-
-        //myApp.closeModal('.login-screen',true);
-        //mainView.router.loadContent($$('#dashboard').html());
-        //var base_url = 'http://192.168.1.224/iwash';
-
         myApp.showPreloader('Checking connection');
         setTimeout(function () {
             $$.ajax({
@@ -1821,16 +1679,9 @@ $$('#login').on('click', function(){
                 url: base_url+"/api/login",
                 data: data,
                 success: function (data) {
-                    //console.log(data);
-                    //console.log("token");
-                    //console.log(data.data.token);
-                    //app.addView('.view-main');
-
                     $$('meta[name="token"]').attr("content", data.data.token);
                     $$('meta[name="user_group"]').attr("content", data.data.groupName);
                     $$('meta[name="branchName"]').attr("content", data.data.branchName);
-                    //var meta = $$('meta[name="token"]').attr("content");
-                    //console.log(meta);
                     localStorage.clear();
 
                     myApp.closeModal('.login-screen',true);
@@ -1904,13 +1755,14 @@ function refreshData(date, page, status)
 
                 listHTML += '<li>';
                 listHTML += '<a href="about.html?id='+ v.order_id +'" class="item-link item-content">';
+                listHTML += '<div class="item-media"><span class="moname">Sep<span class="moday">23</span></span></div>';
                 listHTML += '<div class = "item-inner">';
                 listHTML += '<div class = "item-title-row">';
                 listHTML += '<div class = "item-title">'+v.suffix+" "+ v.fname +" "+v.mname+" "+v.lname+'</div>';
-                listHTML += '<div class="item-after">'+v.date+'</div>';
+                // listHTML += '<div class="item-after">'+v.date+'</div>';
                 listHTML += '</div>';
-                listHTML += '<div class="item-subtitle"> Branch : '+ v.branch_name +'</div>';
-                listHTML += '<div class="item-text"> Service Type : '+ v.service_type+'</div>';
+                listHTML += '<div class="item-subtitle">'+ v.branch_name +'</div>';
+                listHTML += '<div class="item-text">'+ v.service_type+'</div>';
                 //listHTML += '<div class = "card-footer"><a href="about.html?id='+ v.order_id +'" class="link">View Details</a></div>';
                 listHTML += '</div>';
                 listHTML += '</a>';
@@ -1970,13 +1822,14 @@ function refreshDataHistory(date, page, status)
 
                 listHTML += '<li>';
                 listHTML += '<a href="about-history.html?id='+ v.order_id +'" class="item-link item-content">';
+                listHTML += '<div class="item-media"><span class="moname">Sep<span class="moday">23</span></span></div>';
                 listHTML += '<div class = "item-inner">';
                 listHTML += '<div class = "item-title-row">';
                 listHTML += '<div class = "item-title">'+v.suffix+" "+ v.fname +" "+v.mname+" "+v.lname+'</div>';
-                listHTML += '<div class="item-after">'+v.date+'</div>';
+                // listHTML += '<div class="item-after">'+v.date+'</div>';
                 listHTML += '</div>';
-                listHTML += '<div class="item-subtitle"> Branch : '+ v.branch_name +'</div>';
-                listHTML += '<div class="item-text"> Service Type : '+ v.service_type+'</div>';
+                listHTML += '<div class="item-subtitle">'+ v.branch_name +'</div>';
+                listHTML += '<div class="item-text">'+ v.service_type+'</div>';
                 //listHTML += '<div class = "card-footer"><a href="about.html?id='+ v.order_id +'" class="link">View Details</a></div>';
                 listHTML += '</div>';
                 listHTML += '</a>';
@@ -2014,35 +1867,23 @@ function checkConnection()
 }
 
 function onOffline() {
-    // Handle the offline event
     console.log('offline connection...........');
     alert("lost connection");
 }
-
-// device APIs are available
-//
 function onDeviceReady() {
-    // Register the event listener
     console.log("device ready");
     console.log(navigator.camera);
     document.addEventListener("backbutton", onBackKeyDown, false);
 
 }
-
-// Handle the back button
-//
 function onBackKeyDown() {
    var name = myApp.getCurrentView().activePage.name;
    if(name == 'about') {
        mainView.router.loadContent($$('#dashboard').html());
    }
    else if(name == 'home') {
-
-       //showConfirm();
        myFunction();
     }
-    //alert("back on back key"+name);
-    //navigator.app.back();
 }
 function exitFromApp()
 {
@@ -2070,6 +1911,20 @@ function getOrderDate(page, date, status)
     //var url = "http://localhost/iwash/api/order-date/2018-07-01:2018-08-08";
     var token= $$('meta[name="token"]').attr("content");
 
+    Date.prototype.monthNames = [
+        "January", "February", "March",
+        "April", "May", "June",
+        "July", "August", "September",
+        "October", "November", "December"
+    ];
+
+    Date.prototype.getMonthName = function() {
+        return this.monthNames[this.getMonth()];
+    };
+    Date.prototype.getShortMonthName = function () {
+        return this.getMonthName().substr(0, 3);
+    };
+
     $$.ajax({
         type: "GET",
         dataType: "json",
@@ -2088,7 +1943,13 @@ function getOrderDate(page, date, status)
                 //var listHTML = '<div class = "list-block media-list">';
                 var listHTML = '<ul>';
                 $$.each(data.data, function(k, v) {
-
+                    var javascript_date = new Date(v.date);
+                    console.log("THE DATE");
+                    console.log(javascript_date.getShortMonthName());
+                    var month = javascript_date.getShortMonthName();
+                    var day = javascript_date.getDay();
+                    console.log("GET DAY");
+                    console.log(javascript_date.getDay());
                     listHTML += '<li>';
                     //listHTML += '<a href="about.html?id=' + v.order_id + '" class="item-link item-content">';
                     // if(status == 4) {
@@ -2100,12 +1961,13 @@ function getOrderDate(page, date, status)
                     else {
                         listHTML += '<a href="about.html?id=' + v.order_id + '" class="item-link item-content">';
                     }
+                    listHTML += '<div class="item-media"><span class="moname">'+month+'<span class="moday">'+day+'</span></span></div>';
                     listHTML += '<div class = "item-inner">';
                     listHTML += '<div class = "item-title-row">';
                     listHTML += '<div class = "item-title">'+v.suffix+" "+ v.fname +" "+v.mname+" "+v.lname+'</div>';
-                    listHTML += '<div class="item-after">'+v.date+'</div>';
+                    // listHTML += '<div class="item-after">'+v.date+'</div>';
                     listHTML += '</div>';
-                    listHTML += '<div class="item-subtitle"> Branch : '+ v.branch_name +'</div>';
+                    listHTML += '<div class="item-subtitle">'+ v.branch_name +'</div>';
                     listHTML += '</div>';
                     listHTML += '</a>';
                     listHTML += '</li>';
@@ -2144,6 +2006,8 @@ function resetData(page, token)
             'Authorization': token,
         },
         success: function (data) {
+            console.log("reset me");
+            console.log(data);
             //console.log(data.data);
             var size = Object.keys(data.data).length;
             if(size == 0) {
@@ -2164,6 +2028,8 @@ function resetData(page, token)
                 var listHTML = '<ul>';
                 $$.each(data.data, function(k, v) {
 
+                    console.log(v);
+
                     listHTML += '<li>';
                     listHTML += '<a href="about.html?id='+ v.order_id +'" class="item-link item-content">';
                     listHTML += '<div class = "item-inner">';
@@ -2171,7 +2037,7 @@ function resetData(page, token)
                     listHTML += '<div class = "item-title">'+v.suffix+" "+ v.fname +" "+v.mname+" "+v.lname+'</div>';
                     listHTML += '<div class="item-after">'+v.date+'</div>';
                     listHTML += '</div>';
-                    listHTML += '<div class="item-subtitle"> Branch : '+ v.branch_name +'</div>';
+                    listHTML += '<div class="item-subtitle">'+ v.branch_name +'</div>';
                     listHTML += '<div class="item-text"> Service Type : '+ v.service_type+'</div>';
                     listHTML += '</div>';
                     listHTML += '</a>';
@@ -2228,13 +2094,14 @@ function getDefaultHistoryList(page, token, url)
 
                     listHTML += '<li>';
                     listHTML += '<a href="about-history.html?id='+ v.order_id +'" class="item-link item-content">';
+                    listHTML += '<div class="item-media"><span class="moname">Sep<span class="moday">23</span></span></div>';
                     listHTML += '<div class = "item-inner">';
                     listHTML += '<div class = "item-title-row">';
                     listHTML += '<div class = "item-title">'+v.suffix+" "+ v.fname +" "+v.mname+" "+v.lname+'</div>';
-                    listHTML += '<div class="item-after">'+v.date+'</div>';
+                    // listHTML += '<div class="item-after">'+v.date+'</div>';
                     listHTML += '</div>';
-                    listHTML += '<div class="item-subtitle"> Branch : '+ v.branch_name +'</div>';
-                    listHTML += '<div class="item-text"> Service Type : '+ v.service_type+'</div>';
+                    listHTML += '<div class="item-subtitle">'+ v.branch_name +'</div>';
+                    listHTML += '<div class="item-text">'+ v.service_type+'</div>';
                     listHTML += '</div>';
                     listHTML += '</a>';
                     listHTML += '</li>';
@@ -2300,17 +2167,18 @@ function getCustomer(ptrContent)
                 var song = v.fname+" "+v.mname+" "+v.lname;
                 // Random author
                 var author = v.title;
-                var itemHTML = '<a href="customer-detail.html?id='+v.custID+'" class="item-link">'+
-                    '<li class="item-content">' +
+                var itemHTML = '<li>' +
+                    '<a href="customer-detail.html?id='+ v.custID +'"class="item-link item-content">'+
                     '<div class="item-media"><img src="' + picURL + '" width="44"/></div>' +
                     '<div class="item-inner">' +
                     '<div class="item-title-row">' +
                     '<div class="item-title">' + song + '</div>' +
                     '</div>' +
-                    '<div class="item-subtitle">' + author + '</div>' +
+                    '<div class="item-subtitle"> +63 923 5410 912</div>' +
+                    // '<div class="item-subtitle">' + author + '</div>' +
                     '</div>' +
-                    '</li>'+
-                    '</a>';
+                    '</a>' +
+                    '</li>';
                 // Prepend new list element
                 ptrContent.find('ul').prepend(itemHTML);
             });
@@ -2337,47 +2205,29 @@ function getProvince(provinceID)
     $$.ajax({
         type: "GET",
         dataType: "json",
-        //url: 'http://192.168.1.224/iwash/api/customer',
         url: url,
         headers: {
             'Authorization': token,
         },
         success: function (data) {
-            //console.log("province this is data");
-           // console.log(data.data);
-            //data = $$.parseJSON(data);
-            //console.log(data.data[0].provinceID);
             default_province_id = data.data[0].provinceID;
             console.log(default_province_id);
-            //console.log(default_province_id);
             $$.each(data.data, function(k, v) {
-                 //console.log("each");
-                 //console.log(k);
-                 //console.log(v.province);
                 if(provinceID == v.provinceID) {
                     myApp.smartSelectAddOption('#id-smart-select-province select', '<option value="' + v.provinceID + '" selected>' + v.province + '</option>');
                 }
                 else {
                     myApp.smartSelectAddOption('#id-smart-select-province select', '<option value="' + v.provinceID + '">' + v.province + '</option>');
                 }
-                //myApp.smartSelectAddOption('#id-smart-select-province select', '<option value="apple" selected>Apple</option>');
-                // Dummy Content
             });
-
             return default_province_id;
         }
     });
-
-
-
-    //return default_province_id;
 }
 
 function getCities(provinceID, cityID)
 {
-
     var token= $$('meta[name="token"]').attr("content");
-
     var url = base_url+"/api/cities/"+provinceID;
     $$.ajax({
         type: "GET",
@@ -2387,7 +2237,6 @@ function getCities(provinceID, cityID)
             'Authorization': token,
         },
         success: function (data) {
-
             $$.each(data.data, function(k, v) {
                 if(cityID == v.cityID) {
                     myApp.smartSelectAddOption('#id-smart-select-city select', '<option value="' + v.cityID + '" selected>' + v.city + '</option>');
@@ -2399,15 +2248,11 @@ function getCities(provinceID, cityID)
         }
     });
 }
-
 function getBarangay(provinceID, cityID, barangayID)
 {
     console.log("provinceID",provinceID);
     console.log("city id",cityID);
-    //http://localhost/iwash/api/barangays/54:602
-
     var token= $$('meta[name="token"]').attr("content");
-
     var url = base_url+"/api/barangays/"+provinceID+":"+cityID;
     $$.ajax({
         type: "GET",
@@ -2418,7 +2263,6 @@ function getBarangay(provinceID, cityID, barangayID)
         },
         success: function (data) {
             $$.each(data.data, function(k, v) {
-                //myApp.smartSelectAddOption('#id-smart-select-city select', '<option value="'+v.cityID+'">'+v.city+'</option>');
                 if(barangayID == v.barangayID) {
                     myApp.smartSelectAddOption('#id-smart-select-barangay select', '<option value="' + v.barangayID + '" selected>' + v.barangay + '</option>');
                 }
@@ -2428,18 +2272,11 @@ function getBarangay(provinceID, cityID, barangayID)
             });
         }
     });
-
-    //myApp.smartSelectAddOption('#id-smart-select-barangay select', '<option value="23">fdsafda</option>');
 }
-
-//function addCustomer(suffix, title, first_name, middle_name, last_name, province_id, city_id, barangay_id, address, contact, bday, resgular)
 function addCustomer(data)
 {
-    //var data = { title: title, fname: first_name, mname: middle_name, lname: last_name, suffix, suffix, provinceID: province_id, cityID: city_id, barangayID: barangay_id, address: address, contact: contact, bday: bday, isRegular: resgular };
     var token= $$('meta[name="token"]').attr("content");
-
     var url = base_url+"/api/customer";
-
     myApp.showPreloader('Saving to server.');
     setTimeout(function () {
         $$.ajax({
@@ -2462,15 +2299,11 @@ function addCustomer(data)
                 myApp.alert(error.message, 'Error creating customer!');
             }
         });
-
-
     }, 2000);
 }
-
 function customer_details(id, page)
 {
     var token= $$('meta[name="token"]').attr("content");
-
     var url = base_url+"/api/customer-details/"+id;
     $$.ajax({
         type: "GET",
@@ -2499,29 +2332,104 @@ function customer_details(id, page)
 
                 // Random author
                 var author = v.title;
-                var itemHTML = '<div class="content-block-title"><img src="'+picURL+'" style="width:100px;height:100px;"></div>'+
-                                '<div class="card demo-card-header-pic">'+
-                                '<div style="background-image:url(http://192.168.1.224/iwash/assets/img/mobile/person.jpg)" valign="bottom" class="card-header color-white no-border">'+customer_name+'</div>'+
-                                '<div class="card-content">'+
-                                '<div class="card-content-inner">'+
-                                '<p class="color-gray">Birth date: '+v.bday+'</p>'+
-                                '<p>Title : '+title+'</p>'+
-                                '<p>Province : '+province_name+'</p>'+
-                                '<p>Barangay : '+barangay_name+'</p>'+
-                                '<p>City : '+city_name+'</p>'+
-                                '<p>Address : '+address+'</p>'+
-                                '<p>Telephone : '+telephone+'</p>'+
-                                '<p>Contact : '+contact+'</p>'+
-                                '<p>Regular : '+regular+'</p>'+
+                var itemHTML = '<div class="item-media mt-5"><img src="'+picURL+'"></div>'+
+                                '<div class="list-block media-list list-view mt-10 mb-30">'+
+                                '<ul>'+
+                                '<li>'+
+                                    '<div class="item-content">'+
+                                        '<div class="item-inner">'+
+                                            '<div class="item-subtitle">Name</div>'+
+                                            '<div class="item-title-row">'+
+                                                '<div class="item-title">'+customer_name+'</div>'+
+                                            '</div>'+
+                                        '</div>'+
+                                    '</div>'+
+                                '</li>'+
+                                '<li>'+
+                                    '<div class="item-content">'+
+                                        '<div class="item-inner">'+
+                                            '<div class="item-subtitle">Birth date</div>'+
+                                            '<div class="item-title-row">'+
+                                                '<div class="item-title">'+v.bday+'</div>'+
+                                            '</div>'+
+                                        '</div>'+
+                                    '</div>'+
+                                '</li>'+
+                                '<li>'+
+                                    '<div class="item-content">'+
+                                        '<div class="item-inner">'+
+                                            '<div class="item-subtitle">Province</div>'+
+                                            '<div class="item-title-row">'+
+                                                '<div class="item-title">'+province_name+'</div>'+
+                                            '</div>'+
+                                        '</div>'+
+                                    '</div>'+
+                                '</li>'+
+                                '<li>'+
+                                    '<div class="item-content">'+
+                                        '<div class="item-inner">'+
+                                            '<div class="item-subtitle">Barangay</div>'+
+                                            '<div class="item-title-row">'+
+                                                '<div class="item-title">'+barangay_name+'</div>'+
+                                            '</div>'+
+                                        '</div>'+
+                                    '</div>'+
+                                '</li>'+
+                                '<li>'+
+                                    '<div class="item-content">'+
+                                        '<div class="item-inner">'+
+                                            '<div class="item-subtitle">City</div>'+
+                                            '<div class="item-title-row">'+
+                                                '<div class="item-title">'+city_name+'</div>'+
+                                            '</div>'+
+                                        '</div>'+
+                                    '</div>'+
+                                '</li>'+
+                                '<li>'+
+                                    '<div class="item-content">'+
+                                        '<div class="item-inner">'+
+                                            '<div class="item-subtitle">Address</div>'+
+                                            '<div class="item-title-row">'+
+                                                '<div class="item-title">'+address+'</div>'+
+                                            '</div>'+
+                                        '</div>'+
+                                    '</div>'+
+                                '</li>'+
+                                '<li>'+
+                                    '<div class="item-content">'+
+                                        '<div class="item-inner">'+
+                                            '<div class="item-subtitle">Telephone</div>'+
+                                            '<div class="item-title-row">'+
+                                                '<div class="item-title">'+telephone+'</div>'+
+                                            '</div>'+
+                                        '</div>'+
+                                    '</div>'+
+                                '</li>'+
+                                '<li>'+
+                                    '<div class="item-content">'+
+                                        '<div class="item-inner">'+
+                                            '<div class="item-subtitle">Contact</div>'+
+                                            '<div class="item-title-row">'+
+                                                '<div class="item-title">'+contact+'</div>'+
+                                            '</div>'+
+                                        '</div>'+
+                                    '</div>'+
+                                '</li>'+
+                                '<li>'+
+                                    '<div class="item-content">'+
+                                        '<div class="item-inner">'+
+                                            '<div class="item-subtitle">Regular</div>'+
+                                            '<div class="item-title-row">'+
+                                                '<div class="item-title">'+regular+'</div>'+
+                                            '</div>'+
+                                        '</div>'+
+                                    '</div>'+
+                                '</li>'+
+                                '</ul>'+
                                 '</div>'+
                                 '</div>'+
-                                '<div class="card-footer">'+
-                                '<a href="customer-edit.html?id='+v.custID+'" class="link"><i class="icon f7-icons">settings</i></a>'+
-                                '<a href="javascript:delete_customer('+v.custID+');" class="link" id="id-delete"><i class="icon f7-icons">trash</i></a>'+
-                                '</div>'+
-                                '</div>';
-                $$(page.container).find('.page-content').find('.list-block').append(itemHTML);
-
+                                '<div class="content-block px-20 mb-0"><a href="customer-edit.html?id='+v.custID+'" class="link"><i class="material-icons">create</i></a><a href="javascript:delete_customer('+v.custID+');" class="button button-fill button-raised button-round color-red" id="id-delete">Delete</a></div>';
+                $$(page.container).find('.page-content').find('.profile').append(itemHTML);
             });
 
         }
@@ -2552,11 +2460,7 @@ function delete_customer(id){
             }
         });
     });
-
-
 }
-
-
 function delete_order(id){
     myApp.confirm('Are you sure?', function () {
         myApp.showPreloader('Deleting data.');
@@ -2586,16 +2490,10 @@ function delete_order(id){
 
         }, 2000);
     });
-
 }
-
-
 function updateCustomer(data, id) {
-
     myApp.confirm('Do you want to update this customer?', function () {
-
         var token= $$('meta[name="token"]').attr("content");
-
         var url = base_url+"/api/customer-update/"+id;
         $$.ajax({
             type: "PUT",
@@ -2605,10 +2503,7 @@ function updateCustomer(data, id) {
             },
             data: data,
             success: function (data) {
-                //console.log(data);
-
                 mainView.router.loadContent($$('#id-customer-page').html());
-
             },
             error: function(xhr) {
                 console.log("error delete");
@@ -2622,9 +2517,7 @@ function updateCustomer(data, id) {
 
 function getCustomerSmartSelect(custID)
 {
-
     var token= $$('meta[name="token"]').attr("content");
-
     var url = base_url+"/api/customer";
     $$.ajax({
         type: "GET",
@@ -2794,15 +2687,9 @@ function getOrderForEdit(order_id, page) {
                 'Authorization': token,
             },
             success: function (data) {
-                //console.log(data.data);
-                //var listHTML = '';
                 var order_details = [];
                 var delivery_fee = 0, rate = 0, total_amount = 0;
-                //console.log("the data");
-
-                //localStorage.clear();
                 var dynamic_services = "";
-                //console.log("get customer");
                 var branchName = $$('meta[name="branchName"]').attr("content");
                 $$('#id-branch').val(branchName);
                 var today = new Date();
@@ -2817,23 +2704,11 @@ function getOrderForEdit(order_id, page) {
                 }
                 today = yyyy+"-"+mm+"-"+dd;
                 $$('#id-date').val(today);
-
-                //set up table and details
                 $$.each(data.data, function (k, v) {
-                    //console.log("order details");
-                    //console.log(v);
-                    //get the service from order details
-                    // var service_ids = [];
-
-                    //add services ids to local
                     getCustomerSmartSelect(v.custID);
 
                     var ids = [];
                     v.order_details.forEach(element =>{
-                        //get service id
-                        //add service id to localStorage
-                        //console.log("push id", element.serviceID);
-                        //service_ids.push(element.serviceID);
                         ids.push(element.serviceID);
                     });
                     localStorage.setItem("service_ids", JSON.stringify(ids));
@@ -2841,26 +2716,16 @@ function getOrderForEdit(order_id, page) {
 
                     var categories = [];
                     v.order_details.forEach(element =>{
-                        //get service id
-                        //console.log("SERVICES");
-                        //console.log(element.serviceID);
-
                         var service_ids = $$('meta[name="service_ids"]').attr("content");
-                        //console.log(service_ids);
-                        //console.log("the services");
                         var service_ids = JSON.parse(service_ids);
 
                         createTableForServices(element.serviceID, element.serviceType, page, element.unit, element.rate, element.regRate, element.qty, element.amount, element.categories, service_ids);
                     });
                     var service_ids = $$('meta[name="service_ids"]').attr("content");
-                    //console.log(service_ids);
-                    //console.log("the services");
                     var service_ids = JSON.parse(service_ids);
-                    //console.log(service_ids);
                     for(var i =0; i<service_ids.length; i++)
                     {
                         var id = "#id-remove-more-"+service_ids[i];
-                        //var remove_id = "remove-id-remove-more-"+service_ids[i];
                         $$(document).on("click", id, function(){
                             console.log("remove");
                             var parent = $$(this).parent().parent().parent().attr("id");
@@ -2889,8 +2754,6 @@ function getOrderForEdit(order_id, page) {
 
                     $$('#id-my-preloader').hide();
                 });
-
-
             },
             error: function(xhr) {
                 $$('#id-my-preloader').hide();
@@ -2899,13 +2762,9 @@ function getOrderForEdit(order_id, page) {
             }
         });
 
-
     }, 2000);
 
-
 }
-
-
 function createTableForServices(value, text, page, unit, rate, regRate, qty, amount, categories, service_ids)
 {
     var str = text;
@@ -3251,8 +3110,3 @@ function updateOrder(data, grand_total, customer_id, remarks, category_data, ord
     }, 2000);
 
 }
-
-
-
-
-

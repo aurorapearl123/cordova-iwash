@@ -177,8 +177,8 @@ $$(document).on('pageInit', function (e) {
 
             // $$('#calendar-from').val("");
             // $$('#calendar-to').val("");
-
-            resetData(page, token);
+            getOrderDate(page, date, 4);
+            //resetData(page, token);
 
         });
 
@@ -1911,6 +1911,20 @@ function getOrderDate(page, date, status)
     //var url = "http://localhost/iwash/api/order-date/2018-07-01:2018-08-08";
     var token= $$('meta[name="token"]').attr("content");
 
+    Date.prototype.monthNames = [
+        "January", "February", "March",
+        "April", "May", "June",
+        "July", "August", "September",
+        "October", "November", "December"
+    ];
+
+    Date.prototype.getMonthName = function() {
+        return this.monthNames[this.getMonth()];
+    };
+    Date.prototype.getShortMonthName = function () {
+        return this.getMonthName().substr(0, 3);
+    };
+
     $$.ajax({
         type: "GET",
         dataType: "json",
@@ -1929,7 +1943,13 @@ function getOrderDate(page, date, status)
                 //var listHTML = '<div class = "list-block media-list">';
                 var listHTML = '<ul>';
                 $$.each(data.data, function(k, v) {
-
+                    var javascript_date = new Date(v.date);
+                    console.log("THE DATE");
+                    console.log(javascript_date.getShortMonthName());
+                    var month = javascript_date.getShortMonthName();
+                    var day = javascript_date.getDay();
+                    console.log("GET DAY");
+                    console.log(javascript_date.getDay());
                     listHTML += '<li>';
                     //listHTML += '<a href="about.html?id=' + v.order_id + '" class="item-link item-content">';
                     // if(status == 4) {
@@ -1941,14 +1961,13 @@ function getOrderDate(page, date, status)
                     else {
                         listHTML += '<a href="about.html?id=' + v.order_id + '" class="item-link item-content">';
                     }
-                    listHTML += '<div class="item-media"><span class="moname">Sep<span class="moday">23</span></span></div>';
+                    listHTML += '<div class="item-media"><span class="moname">'+month+'<span class="moday">'+day+'</span></span></div>';
                     listHTML += '<div class = "item-inner">';
                     listHTML += '<div class = "item-title-row">';
                     listHTML += '<div class = "item-title">'+v.suffix+" "+ v.fname +" "+v.mname+" "+v.lname+'</div>';
                     // listHTML += '<div class="item-after">'+v.date+'</div>';
                     listHTML += '</div>';
                     listHTML += '<div class="item-subtitle">'+ v.branch_name +'</div>';
-                    listHTML += '<div class="item-text color-blue">'+ v.service_type +'</div>';
                     listHTML += '</div>';
                     listHTML += '</a>';
                     listHTML += '</li>';
@@ -1987,6 +2006,8 @@ function resetData(page, token)
             'Authorization': token,
         },
         success: function (data) {
+            console.log("reset me");
+            console.log(data);
             //console.log(data.data);
             var size = Object.keys(data.data).length;
             if(size == 0) {
@@ -2006,6 +2027,8 @@ function resetData(page, token)
                 //var listHTML = '<div class = "list-block media-list">';
                 var listHTML = '<ul>';
                 $$.each(data.data, function(k, v) {
+
+                    console.log(v);
 
                     listHTML += '<li>';
                     listHTML += '<a href="about.html?id='+ v.order_id +'" class="item-link item-content">';
