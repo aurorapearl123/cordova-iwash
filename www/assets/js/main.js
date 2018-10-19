@@ -19,9 +19,9 @@ var $$ = Dom7;
 
 //var base_url = 'http://192.168.84.2/iwash';
 
-// var  base_url = "http://192.168.1.44/iwash/";
+var  base_url = "http://192.168.1.44/iwash/";
 
-var  base_url = "http://192.168.1.224/iwash/";
+// var  base_url = "http://192.168.1.224/iwash/";
 
 // var  base_url = "http://192.168.1.90/project/iwash/";
 
@@ -210,7 +210,7 @@ $$(document).on('pageInit', function (e) {
             if(e.handled !== true) // This will prevent event triggering more then once
             {
                 console.log("logout");
-                myApp.confirm('Do you want to logout?', function () {
+                myApp.confirm('Are you sure you want to logout?','<span class="icon bg-blue"><i class="material-icons">lock</i></span>Confirm Logout', function () {
                     navigator.app.exitApp();
                 });
                 e.handled = true;
@@ -302,7 +302,7 @@ $$(document).on('pageInit', function (e) {
         $$('#profile-image').on('click', function(){
             console.log("image picture");
             myApp.modal({
-                title:  'Profile image',
+                title:  '<span class="icon bg-blue"><i class="material-icons">camera_alt</i></span>Profile image',
                 text: 'Select camera or album',
                 buttons: [
                     {
@@ -450,7 +450,7 @@ $$(document).on('pageInit', function (e) {
 
         $$('#profile-image').on('click', function(){
             myApp.modal({
-                title:  'Profile image',
+                title:  '<span class="icon bg-blue"><i class="material-icons">camera_alt</i></span>Profile image',
                 text: 'Select camera or album',
                 buttons: [
                     {
@@ -707,13 +707,13 @@ $$(document).on('pageInit', function (e) {
 
         document.getElementById('save-jpeg').addEventListener('click', function () {
             if (signaturePad.isEmpty()) {
-                myApp.alert('Please provide a signature first.');
+                myApp.alert('Please provide a signature first.','<span class="icon bg-blue"><i class="material-icons">edit</i></span>Signature');
                 return null;
             }
 
             var data = signaturePad.toDataURL('image/jpeg');
 
-            myApp.confirm('Are you sure?', function () {
+            myApp.confirm('Please confirm order only after you have received all the items.','<span class="icon bg-blue"><i class="material-icons">check</i></span>Confirm Delivery', function () {
                 update_order_details(id, data);
             });
         });
@@ -880,18 +880,27 @@ $$(document).on('pageInit', function (e) {
                 var remarks = "";
                 $$.each(data.data, function(k, v) {
                     custsign = v.custsign;
-                    var listHTML = '<div class = "list-block cards-list">';
-                    listHTML += '<ul>';
-                    listHTML += '<li class = "card">';
-                    listHTML += '<div class = "card-header">'+ v.suffix+" "+ v.fname +" "+v.mname+" "+v.lname+'</div>';
-                    listHTML += '<div class = "card-content">';
-                    listHTML += '<div class = "card-content-inner">'+"Service type: "+ v.service_type +'</div>';
+                    var listHTML = '<div class="list-block media-list mt-15 mb-0">';
+                    listHTML += '<ul class="profile bg-white">';
+
+                    listHTML += '<li>';
+                    listHTML += '<div class="item-content">';
+
+                    listHTML += '<div class="item-media py-15"><img src="http://192.168.1.224/iwash/assets/img/users/noimage.gif"></div>';
+                    listHTML += '<div class="item-inner">';
+
+                    listHTML += '<div class="item-title-row">';
+                    listHTML += '<div class="item-title">'+ v.suffix+" "+ v.fname +" "+v.mname+" "+v.lname+'</div>';
                     listHTML += '</div>';
-                    listHTML += '<div class = "card-footer">'+ v.date +'</div>';
+                    listHTML += '<div class="item-subtitle color-grey">'+ v.date +'</div>';
+
+                    listHTML += '</div>';
+
                     listHTML += '</div>';
                     listHTML += '</li>';
-                    listHTML += '</div>';
+
                     listHTML += '</ul>';
+
                     listHTML += '</div>';
 
                     $$(page.container).find('.page-content').find('#signature-display').append(listHTML);
@@ -912,25 +921,25 @@ $$(document).on('pageInit', function (e) {
                         str = str.replace(/ +/g, "");
                         var the_id = v.serviceID+str;
 
-                        var table = $$('<div>').attr('class', "data-table data-table-init card")
+                        var table = $$('<div>').attr('class', "services inset")
                             .append($$('<div>').attr('class', "card-header")
-                                .append($$('<span>').text("Type : "+v.serviceType.capitalize()+""))
+                                .append($$('<span>').text(v.serviceType.capitalize()+""))
                             )
-                            .append($$('<div>').attr('class', "card-content")
+                            .append($$('<div>').attr('class', "card-content px-15")
                                 .append($$('<table>').attr('id', 'order-table'+the_id)
                                     .append($$('<tr>').attr('id', 'tr-head'+the_id))
                                     .append($$('<tbody>'))
                                 )
                             )
                             //quantity
+                            .append($$('<h4 class="px-15">Details</h4>'))
                             .append($$('<ul>')
                                 .append($$('<li>')
                                     .append($$('<div>').attr('class', 'item-content')
                                         .append($$('<div>').attr('class','item-inner')
-                                            .append($$('<div>').attr('class','item-title label').text("Quantity")
-                                                .append($$('<div>').attr('class', 'item-input')
-                                                    .append($$('<input>').attr('placeholder', "Please input Quantity").attr('type', 'number').attr('value', QUANTITY).attr('readonly', true)
-                                                    )
+                                            .append($$('<div>').attr('class','item-title label color-grey').text("Quantity"))
+                                            .append($$('<div>').attr('class', 'item-input')
+                                                .append($$('<input>').attr('type', 'number').attr('value', QUANTITY).attr('readonly', true).attr('style', 'border:none')
                                                 )
                                             )
                                         )
@@ -940,10 +949,9 @@ $$(document).on('pageInit', function (e) {
                                 .append($$('<li>')
                                     .append($$('<div>').attr('class', 'item-content')
                                         .append($$('<div>').attr('class','item-inner')
-                                            .append($$('<div>').attr('class','item-title label').text("UNIT")
-                                                .append($$('<div>').attr('class', 'item-input')
-                                                    .append($$('<input>').attr('placeholder', "Unit").attr('value', UNIT).attr('readonly', true))
-                                                )
+                                            .append($$('<div>').attr('class','item-title label color-grey').text("Unit"))
+                                            .append($$('<div>').attr('class', 'item-input')
+                                                .append($$('<input>').attr('value', UNIT).attr('readonly', true).attr('style', 'border:none'))
                                             )
                                         )
                                     )
@@ -952,22 +960,20 @@ $$(document).on('pageInit', function (e) {
                                 .append($$('<li>')
                                     .append($$('<div>').attr('class', 'item-content')
                                         .append($$('<div>').attr('class','item-inner')
-                                            .append($$('<div>').attr('class','item-title label').text("RATE")
-                                                .append($$('<div>').attr('class', 'item-input')
-                                                    .append($$('<input>').attr('placeholder', "Rate").attr('value', REGULAR_RATE).attr('readonly', true))
-                                                )
+                                            .append($$('<div>').attr('class','item-title label color-grey').text("Rate"))
+                                            .append($$('<div>').attr('class', 'item-input')
+                                                .append($$('<input>').attr('value', REGULAR_RATE).attr('readonly', true).attr('style', 'border:none'))
                                             )
                                         )
                                     )
                                 )
                                 //amount
                                 .append($$('<li>')
-                                    .append($$('<div>').attr('class', 'item-content')
+                                    .append($$('<div>').attr('class', 'item-content last')
                                         .append($$('<div>').attr('class','item-inner')
-                                            .append($$('<div>').attr('class','item-title label').text("AMOUNT")
-                                                .append($$('<div>').attr('class', 'item-input')
-                                                    .append($$('<input>').attr('placeholder', "Amount").attr('readonly', true).attr('style','border:none').attr('class', 'my-amount').attr('value', AMOUNT))
-                                                )
+                                            .append($$('<div>').attr('class','item-title label color-grey').text("Amount"))
+                                            .append($$('<div>').attr('class', 'item-input')
+                                                .append($$('<input>').attr('readonly', true).attr('style','border:none').attr('class', 'my-amount').attr('value', AMOUNT))
                                             )
                                         )
                                     )
@@ -979,13 +985,13 @@ $$(document).on('pageInit', function (e) {
                         v.categories.forEach(element => {
                             $$('#order-table'+the_id).find('#tr-head'+the_id).empty();
                             $$('#order-table'+the_id).find('#tr-head'+the_id)
-                                .append($$('<th>').attr('class', 'numeric-cell').text('CATEGORY'))
-                                .append($$('<th>').attr('class', 'numeric-cell').text('QUANTITY'));
+                                .append($$('<th>').attr('class', 'text-align-left pl-0').text('Category'))
+                                .append($$('<th>').attr('class', 'text-align-right pr-0').text('Quantity'));
                             var table = $$('#order-table'+the_id).find('tbody');
-                            table.append($$('<tr ">').attr('class', 'item')
-                                .append($$('<td>').attr('class', "label-cell").text(element.category.capitalize()))
+                            table.append($$('<tr>').attr('class', 'item')
+                                .append($$('<td>').attr('class', "label-cell color-grey").text(element.category.capitalize()))
                                 .append($$('<td>').attr('class', "numeric-cell")
-                                    .append($$('<input>').attr('value', element.qty).attr('type',"number").attr('class', 'quantity').attr('readonly', true)))
+                                    .append($$('<input>').attr('value', element.qty).attr('type',"number").attr('class', 'quantity').attr('readonly', true).css('background-color','#EFEFEF').attr('style', 'border:none')))
 
                             );
                         });
@@ -993,19 +999,23 @@ $$(document).on('pageInit', function (e) {
                     }
                 );
 
-                var delivery_fee_html = '<div class="list-block">'+
+                var delivery_fee_html = '<div class="list-block inset total">'+
                     '<ul>' +
-                    '<li class="item-content"> <div class="item-inner"> <div class="item-title"> Delivery Fee: '+delivery_fee+'</div></div>' +
-                    '<li class="item-content"> <div class="item-inner"> <div class="item-title"> Total : '+total_amount+'</div></div>' +
-                    '</li>'+
+                        '<li class="item-content pr-15"><div class="pr-0 item-inner"><div class="item-title">Delivery Fee</div><div class="item-after">'+delivery_fee+'</div></div>' +
+                        '<li class="item-content pr-15"><div class="pr-0 item-inner total-amount"> <div class="item-title">Total</div><div class="item-after">'+total_amount+'</div></div>' +
+                        '</li>'+
                     '</ul>'+
-                    '<br>'+
-                    '<span>Remarks: '+remarks+'</span>'+
-                    '<div class="content-block-title">Signature</div>'+
-                    '<img src="'+custsign+'" width="300" height="300"/>';
+                    '</div>';
 
+                var delivery_remark = '<div>Remarks<br>'+remarks+'</div>';
+
+                var signatureimg = '<div class="wrapper pb-15"><img src="'+custsign+'" width="100%" height="250"/></div>';
+
+                $$(page.container).find('.page-content').find('#container-signpad').append(signatureimg);
                 $$(page.container).find('.page-content').find('#delivery-list').append(delivery_fee_html);
+                $$(page.container).find('.page-content').find('#remark-content').append(delivery_remark);
                 $$(page.container).find('.page-content').find('#signature-display').append(listHTML);
+                
             },
             error: function (error) {
                 console.log("error");
@@ -1014,7 +1024,7 @@ $$(document).on('pageInit', function (e) {
         });
     }
     if(page.name == 'order-add-page') {
-        myApp.showPreloader('Checking connection.');
+        myApp.showPreloader();
         localStorage.clear();
 
         var dynamic_services = "";
@@ -1754,9 +1764,14 @@ function getOrderDate(page, date, status)
                 $$(page.container).find('.page-content').find('.list-block').append(listHTML);
             }
             else {
-
-                $$(page.container).find('.page-content').find('#id-not-found').html("");
-                var listHTML = '<p id="id-not-found">Nothing to found.</p>';
+                $$(page.container).find('.page-content').find('#id-not-found').html('');
+                var listHTML = '<div id="id-not-found"><div class="empty-list text-align-center my-30 py-30 px-30">'
+                                    +'<div class="mx-auto">' 
+                                        +'<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Capa_1" x="0px" y="0px" viewBox="0 0 480 480" style="enable-background:new 0 0 480 480;" xml:space="preserve" width="60px" height="60px" class=""><g><path style="fill:#FFDAAA;" d="M472,88H8v384h464V88z M192,136h96c8.837,0,16,7.163,16,16s-7.163,16-16,16h-96  c-8.837,0-16-7.163-16-16S183.163,136,192,136z M184,368V240l-33.944,33.944L184,240l33.944,33.944L184,240V368h112V240  l-33.944,33.944L296,240l33.944,33.944L296,240v128H184z" data-original="#FFDAAA" class=""/><g><path style="fill:#FFB655;" d="M472,88L424,8h-8v80H472z" data-original="#FFB655" class=""/><path style="fill:#FFB655;" d="M64,8h352v80H64V8z" data-original="#FFB655" class=""/><path style="fill:#FFB655;" d="M64,8h-8L8,88h56V8z" data-original="#FFB655" class=""/></g><path style="fill:#FFDAAA;" d="M192,168h96c8.837,0,16-7.163,16-16s-7.163-16-16-16h-96c-8.837,0-16,7.163-16,16  S183.163,168,192,168z" data-original="#FFDAAA" class=""/><g><path style="fill:#212121" d="M479.44,85.224c-0.088-0.232-0.184-0.44-0.288-0.664c-0.084-0.233-0.183-0.46-0.296-0.68l-48-80   C429.41,1.473,426.808,0.001,424,0H56c-2.808,0.001-5.41,1.473-6.856,3.88l-48,80c-0.113,0.22-0.212,0.447-0.296,0.68   c-0.104,0.216-0.2,0.432-0.288,0.664C0.212,86.109,0.022,87.049,0,88v384c0,4.418,3.582,8,8,8h464c4.418,0,8-3.582,8-8V88   C479.978,87.049,479.788,86.109,479.44,85.224L479.44,85.224z M457.872,80H424V23.552L457.872,80z M72,80V16h336v64H72z M56,23.552   V80H22.128L56,23.552z M464,464H16V96h448V464z" data-original="#231F20" class="active-path" data-old_color="#231F20"/><path style="fill:#212121" d="M352,360h-48V259.312l20.288,20.28c3.178,3.07,8.242,2.982,11.312-0.196   c2.995-3.1,2.995-8.016,0-11.116l-33.936-33.928c-3.12-3.128-8.186-3.135-11.314-0.014c-0.005,0.005-0.01,0.01-0.014,0.014   L256.4,268.28c-3.07,3.178-2.982,8.242,0.196,11.312c3.1,2.995,8.016,2.995,11.116,0L288,259.312V360h-96V259.312l20.288,20.28   c3.07,3.178,8.134,3.266,11.312,0.196c3.178-3.07,3.266-8.134,0.196-11.312c-0.064-0.067-0.13-0.132-0.196-0.196l-33.936-33.928   c-3.12-3.128-8.186-3.135-11.314-0.014c-0.005,0.005-0.01,0.01-0.014,0.014L144.4,268.28c-3.178,3.069-3.266,8.134-0.196,11.312   c3.069,3.178,8.134,3.266,11.312,0.196c0.067-0.064,0.132-0.13,0.196-0.196L176,259.312V360h-48c-4.418,0-8,3.582-8,8s3.582,8,8,8   h224c4.418,0,8-3.582,8-8S356.418,360,352,360L352,360z" data-original="#231F20" class="active-path" data-old_color="#231F20"/><path style="fill:#212121" d="M192,176h96c13.255,0,24-10.745,24-24s-10.745-24-24-24h-96c-13.255,0-24,10.745-24,24   S178.745,176,192,176z M192,144h96c4.418,0,8,3.582,8,8s-3.582,8-8,8h-96c-4.418,0-8-3.582-8-8S187.582,144,192,144z" data-original="#231F20" class="active-path" data-old_color="#231F20"/><path style="fill:#212121" d="M56,440h16v16H56V440z" data-original="#231F20" class="active-path" data-old_color="#231F20"/><path style="fill:#212121" d="M24,440h16v16H24V440z" data-original="#231F20" class="active-path" data-old_color="#231F20"/><path style="fill:#212121" d="M88,440h16v16H88V440z" data-original="#231F20" class="active-path" data-old_color="#231F20"/><path style="fill:#212121" d="M120,440h16v16h-16V440z" data-original="#231F20" class="active-path" data-old_color="#231F20"/><path id="SVGCleanerId_0" style="fill:#212121" d="M152,440h16v16h-16V440z" data-original="#231F20" class="active-path" data-old_color="#231F20"/><g><path id="SVGCleanerId_0_1_" style="fill:#212121" d="M152,440h16v16h-16V440z" data-original="#231F20" class="active-path" data-old_color="#231F20"/></g><path style="fill:#212121" d="M184,440h16v16h-16V440z" data-original="#231F20" class="active-path" data-old_color="#231F20"/><path style="fill:#212121" d="M216,440h16v16h-16V440z" data-original="#231F20" class="active-path" data-old_color="#231F20"/><path style="fill:#212121" d="M248,440h16v16h-16V440z" data-original="#231F20" class="active-path" data-old_color="#231F20"/><path style="fill:#212121" d="M280,440h16v16h-16V440z" data-original="#231F20" class="active-path" data-old_color="#231F20"/><path style="fill:#212121" d="M312,440h16v16h-16V440z" data-original="#231F20" class="active-path" data-old_color="#231F20"/><path style="fill:#212121" d="M344,440h16v16h-16V440z" data-original="#231F20" class="active-path" data-old_color="#231F20"/><path style="fill:#212121" d="M376,440h16v16h-16V440z" data-original="#231F20" class="active-path" data-old_color="#231F20"/><path style="fill:#212121" d="M408,440h16v16h-16V440z" data-original="#231F20" class="active-path" data-old_color="#231F20"/><path style="fill:#212121" d="M440,440h16v16h-16V440z" data-original="#231F20" class="active-path" data-old_color="#231F20"/></g></g></svg>'
+                                        +'<h3>No list found</h3>'
+                                        +'<p class="mx-auto" style="max-width:240px">There is no list at this moment, please try to fill up the dates to see past activity.</p>'
+                                    +'</div>'
+                                +'</div></div>';
                 console.log("nothing to found");
                 $$(page.container).find('.page-content').append(listHTML);
             }
@@ -2214,7 +2229,7 @@ function customer_details(id, page)
 }
 
 function delete_customer(id){
-    myApp.confirm('Are you sure?', function () {
+    myApp.confirm('Are you sure you want to delete this customer?','<span class="icon bg-red"><i class="material-icons">delete</i></span>Delete Customer',function () {
         console.log("delete customer", id);
         var token= $$('meta[name="token"]').attr("content");
 
@@ -2239,7 +2254,7 @@ function delete_customer(id){
     });
 }
 function delete_order(id){
-    myApp.confirm('Are you sure?', function () {
+    myApp.confirm('Are you sure you want to delete this order?','<span class="icon bg-red"><i class="material-icons">delete</i></span>Delete Order', function () {
         myApp.showPreloader('Deleting data.');
         setTimeout(function () {
             console.log("delete customer", id);
@@ -2269,7 +2284,7 @@ function delete_order(id){
     });
 }
 function updateCustomer(data, id) {
-    myApp.confirm('Do you want to update this customer?', function () {
+    myApp.confirm('Are you sure you want to update this customer?','<span class="icon bg-red"><i class="material-icons">restore_page</i></span>Update Customer', function () {
         var token= $$('meta[name="token"]').attr("content");
         var url = base_url+"/api/customer-update/"+id;
         $$.ajax({
@@ -2627,10 +2642,10 @@ function createTableForServices(value, text, page, unit, rate, regRate, qty, amo
             .append($$('<th>').attr('class', 'numeric-cell').text('CATEGORY'))
             .append($$('<th>').attr('class', 'numeric-cell').text('QUANTITY'));
         var table = $$('#order-table'+the_id, document).find('tbody');
-        table.append($$('<tr ">').attr('class', 'item')
+        table.append($$('<tr>').attr('class', 'item')
             .append($$('<td>').attr('class', "label-cell").text(element.category.capitalize()))
             .append($$('<td>').attr('class', "numeric-cell")
-                .append($$('<input>').attr('value', element.qty).attr('type',"number").attr('class', 'quantity').css('background-color','#EFEFEF')))
+                .append($$('<input>').attr('value', element.qty).attr('type',"number").attr('class', 'quantity')))
             .append($$('<td>').attr('class', "numeric-cell")
                 .append($$('<input>').attr('type',"hidden").attr('class', 'category_id').attr('value', element.clothesCatID)))
 
@@ -2712,7 +2727,7 @@ function checkCreateOrder(page)
                         .append($$('<div>').attr('class', "card-header")
                             .append($$('<span>').text(this.text.capitalize()).attr('name',this.value),'<div class="chip bg-green mr-auto ml-10"><div class="chip-label color-white">New</div></div>')
                             .append($$('<div>').attr('class', "data-table-links")
-                                .append($$('<a>').attr('class', "link icon-only").attr('class', "la la-trash-o").attr('id', remove_more_id))
+                                .append($$('<a>').attr('class', "link icon-only").attr('class', "material-icons").attr('id', remove_more_id).text('clear'))
                             )
                         )
                         .append($$('<div>').attr('class', "card-content")
@@ -2873,8 +2888,5 @@ function updateOrder(data, grand_total, customer_id, remarks, category_data, ord
                 myApp.alert(error.message, 'Error creating customer!');
             }
         });
-
-
     }, 2000);
-
 }
