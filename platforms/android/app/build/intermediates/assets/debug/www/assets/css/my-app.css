@@ -183,7 +183,14 @@
   bottom: 65px
 }
 .floating-button i{
-  font-size: 18px !important
+  font-size: 20px !important
+}
+.speed-dial .speed-dial-buttons i{
+  font-size: 17px !important
+}
+.speed-dial {
+  position: fixed;
+  bottom: 65px;
 }
 .content-block>.searchbar{
   z-index: 200
@@ -241,7 +248,11 @@ ul.profile:before,
 ul.profile:after,
 .list-view ul:before,
 form.list-block ul:before,
-form.list-block .item-input:after{
+form.list-block .item-input:after,
+.content-block-inner:before,
+.content-block-inner:after,
+.smart-select-picker .list-block .item-inner:after,
+form .card-group > div .card-header:after{
   display:none
 }
 .list-custom-1 li.media-item .item-link .item-title-row,
@@ -317,8 +328,11 @@ ul.profile .item-media img{
 }
 .list-view .item-subtitle{
   color: #9E9E9E;
-  font-size:11px;
-  text-transform:uppercase;
+  font-size:12px;
+  margin-bottom: 4px
+}
+.list-view .item-inner{
+  min-height: 60px
 }
 form.list-block{
   margin:0
@@ -331,14 +345,17 @@ form.list-block .item-inner{
 }
 form.list-block .item-input input,
 form.list-block .item-input select,
-form.list-block .smart-select{
+form.list-block .smart-select,
+form.list-block .item-input textarea{
   background:#fbfbfb;
   border:1px solid #dedede;
   border-radius:4px;
   padding:5px 10px;
 }
 form.list-block .item-input.focus-state input,
-form.list-block .item-input.focus-state select{
+form.list-block .item-input.focus-state select,
+form.list-block .item-input.focus-state textarea,
+form .card-group .card-content table td input.focus-state{
   border-color:#099be6
 }
 form.list-block .item-input .caret{
@@ -368,6 +385,19 @@ form.list-block .smart-select .item-after{
   line-height:24px;
   padding-left:0
 }
+form .card-group > div{
+  margin:15px 0 15px 0;
+  padding:10px 15px;
+  box-shadow:0 0 0 0;
+  border:1px solid #dedede;
+  border-radius:7px;
+  box-shadow: 0 3px 15px rgba(103, 103, 103, 0.15);
+}
+form .card-group > div .card-header{
+  padding:0 0 5px 0 !important;
+  height:auto !important;
+  min-height:auto !important
+}
 .moname{
   display:block;
   padding:7px;
@@ -384,6 +414,10 @@ form.list-block .smart-select .item-after{
   font-size:14px;
   font-weight:600
 }
+.my-amount{
+  color: #099be6;
+  font-weight: 600;
+}
 ul.profile{
   margin:0 10px 10px 10px;
   border-radius:7px;
@@ -393,7 +427,7 @@ ul.profile .item-media{
   margin-top:14px
 }
 ul.profile .item-inner{
-  padding: 15px 0 !important
+  padding: 15px 15px 15px 0 !important
 }
 ul.profile .item-title{
   position: relative;
@@ -418,13 +452,17 @@ ul.profile .item-title{
   min-height:auto;
   background: #fff;
 }
-.services .card-header span{
+.services .card-header span,
+.card-group .card-header span{
   font-size:13px;
   font-weight: 600;
   text-transform: uppercase;
 }
 .services .card-header:after{
   display:none
+}
+.card-group .card-header .data-table-links a{
+  font-size:18px
 }
 .services h4{
   font-weight:500;
@@ -453,7 +491,8 @@ ul.profile .item-title{
 .services > .card-content{
   padding-top: 5px;
 }
-.services > .card-content table{
+.services > .card-content table
+form .card-group .card-content table{
   border-collapse: separate;
   border-spacing: 0;
   width:100%
@@ -496,6 +535,64 @@ ul.profile .item-title{
   color:#099be6;
   font-weight:600
 }
+form .card-group .card-content table td{
+  border-bottom:1px solid #f8f8f8;
+  padding:0;
+  width:50%
+}
+form .card-group .card-content table td:before{
+  display:none
+}
+form .card-group .card-content table th{
+  padding:10px 0 10px 0;
+  font-weight:500;
+  font-size:13px;
+  text-align:left;
+  border-bottom:1px solid #f8f8f8;
+}
+form .card-group .card-content table th:last-child{
+  text-align:right;
+}
+form .card-group .card-content table td input{
+  background:#fbfbfb !important;
+  border:1px solid #dedede;
+  border-radius:4px;
+  padding:5px 10px;
+  text-align:right;
+  margin-left:auto;
+  width:100px
+}
+form .card-group > div ul .item-inner{
+  display:flex !important;
+}
+form .card-group > div ul .item-inner > div{
+  width:50% !important
+}
+form .card-group > div ul .item-inner > div > input{
+  width:100px;
+  display:block;
+  margin-left:auto;
+  text-align:right
+}
+form .card-group > div ul .item-inner > div > input.readonly{
+  width:78px;
+  display:block;
+  margin-left:auto;
+  height:24px;
+  text-align:right
+}
+form.list-block .card-group .item-content{
+  border-bottom:1px solid #f8f8f8
+}
+form.list-block .card-group li:last-child .item-content{
+  border-bottom:0
+}
+div.profile{
+  width:90px;
+  height:90px;
+  margin:0 auto 10px auto;
+  position:relative;
+}
 div.profile > .item-media{
   width:90px;
   height:90px;
@@ -505,4 +602,28 @@ div.profile > .item-media a,
 div.profile > .item-media input{
   width:100%;
   height:90px
+}
+div.profile > .item-media a .chip-media{
+  position:absolute;
+  bottom:0;
+  right:0;
+  width:25px;
+  height:25px;
+}
+.smart-select-picker .toolbar .right span{
+  font-size:14px;
+  color:#fff
+}
+.smart-select-picker .searchbar{
+  box-shadow: 0 0 0 0;
+  border-radius:0;
+  border-bottom:1px solid #f5f5f5;
+}
+.smart-select-picker .list-block .label-radio{
+  background:#fff;
+  margin:0 5px 5px 5px;
+  border-radius:7px;
+}
+.smart-select-picker .list-block .item-media+.item-inner{
+  margin-left: 0
 }
