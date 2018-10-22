@@ -627,3 +627,61 @@ div.profile > .item-media a .chip-media{
 .smart-select-picker .list-block .item-media+.item-inner{
   margin-left: 0
 }
+div.empty-list{
+  display:flex;
+  margin:30px 0;
+  height: calc(100% - 200px);
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.modal-title{
+  font-size:14px !important;
+  margin-bottom:0 !important;
+}
+.modal-title .icon{
+  width:30px;
+  height:30px;
+  padding:7px 5px 3px 5px;
+  display:block;
+  font-size:20px;
+  text-align:center;
+  border-radius:50%;
+  margin-bottom:20px;
+}
+.modal-title .bg-blue{
+  color:#099be6;
+  background:rgba(9, 155, 230, 0.17);
+}
+.modal-title .bg-red{
+  color:#f44336;
+  background:rgb(244, 67, 54, 0.17);
+}
+
+.modal .modal-text{
+  margin-top:10px !important
+}
+.modal .modal-buttons{
+  padding-bottom: 10px !important;
+  margin-bottom: 10px;
+  overflow: visible;
+  height: auto;
+  padding:0 15px
+}
+.modal .modal-buttons > .modal-button{
+  border:1px solid #dedede;
+  border-radius:30px;
+  padding-left:25px;
+  padding-right:25px;
+  font-size:12px !important;
+  color:#212121;
+  font-weight:500 !important;
+  -webkit-box-shadow: 0 5px 10px 2px rgba(117,117,117,.15)!important;
+  -moz-box-shadow: 0 5px 10px 2px rgba(117,117,117,.15)!important;
+  box-shadow: 0 5px 10px 2px rgba(117,117,117,.15)!important;
+}
+.modal .modal-buttons > .modal-button.modal-button-bold{
+  border:1px solid #139fe7;
+  background:#139fe7;
+  color:#fff;
+}
