@@ -28,21 +28,21 @@
     <!-- Navigation Bottom <img src="assets/img/outline-local_shipping-24px.svg"> -->
     <div class="toolbar toolbar-bottom">
       <div class="toolbar-inner">
-            <span>
-              <a href="#" class="link active" id="id-home"><i class="la la-location-arrow"></i></a>
-            </span>
+        <span>
+          <a href="#" class="link active" id="id-home"><i class="la la-location-arrow"></i></a>
+        </span>
         <span id="span-persons">
-              <a href="#" class="link" id="id-add-customer"><i class="la la-user"></i></a>
-            </span>
+          <a href="#" class="link" id="id-add-customer"><i class="la la-user"></i></a>
+        </span>
         <span id="span-order">
-              <a href="#" class="link" id="id-order-list"><i class="la la-cart-plus"></i></a>
-            </span>
+          <a href="#" class="link" id="id-order-list"><i class="la la-cart-plus"></i></a>
+        </span>
         <span>
-              <a href="#" class="link" id="id-history"><i class="la la-history"></i></a>
-            </span>
+          <a href="#" class="link" id="id-history"><i class="la la-history"></i></a>
+        </span>
         <span>
-              <a href="#" class="link" id="id-logout"><i class="la la-sign-out"></i></a>
-            </span>
+          <a href="#" class="link" id="id-logout"><i class="la la-sign-out"></i></a>
+        </span>
       </div>
     </div>
     <!-- Page -->
@@ -56,38 +56,30 @@
       <div class="view">
         <div class="page">
           <div class="page-content login-screen-content">
-            <div class="login-screen-title"><img width="300" height="300" data-src="http://192.168.1.224/iwash/assets/img/main/logo-shadow.png" class="lazy"></div>
-            <form>
-              <div class="list-block">
-                <ul>
-                  <li class="item-content">
-                    <div class="item-inner">
-                      <div class="item-title label">Username</div>
-                      <div class="item-input">
-                        <input type = "text" name = "username" placeholder = "Enter the username" value="cashier">
+            <div class="display-flex align-items-center justify-content-center h-100">
+              <div class="my-30 py-30 login-screen-inner w-100">
+                <div class="login-screen-title"><img width="225" style="max-width: 100%" data-src="http://192.168.1.224/iwash/assets/img/main/logo-shadow.png" class="lazy"></div>
+                <form class="list-block">
+                  <ul>
+                    <li class="item-content">
+                      <div class="item-inner">
+                        <div class="item-input">
+                          <input type="text" name="username" placeholder="Username" value="">
+                        </div>
                       </div>
-                    </div>
-                  </li>
-                  <li class="item-content">
-                    <div class="item-inner">
-                      <div class="item-title label">Password</div>
-                      <div class="item-input">
-                        <input type = "password" name = "password" placeholder = "Enter the password" value="cashier123">
+                    </li>
+                    <li class="item-content">
+                      <div class="item-inner">
+                        <div class="item-input">
+                          <input type="password" name="password" placeholder="Password" value="">
+                        </div>
                       </div>
-                    </div>
-                  </li>
-                </ul>
+                    </li>
+                  </ul>
+                  <a href="#" class="button button-fill button-raised button-round button-big" id="login">Login</a>
+                </form>
               </div>
-              <div class="list-block">
-                <ul>
-                  <li>
-                    <div class="content-block">
-                      <a href="#" class="button button-fill button-raised" id="login">LOGIN</a>
-                    </div>
-                  </li>
-                </ul>
-              </div>
-            </form>
+            </div>
           </div>
         </div>
       </div>
@@ -110,21 +102,6 @@
             <button type="button" class="button save" data-action="save-svg">Save as SVG</button>
           </div>
         </div>
-      </div>
-    </div>
-    <div class="panel-overlay"></div>
-    <div class="panel panel-left panel-reveal">
-      <div class="content-block">
-        <p>Left Panel content here</p>
-        <p><a href="#" class="panel-close">Close me</a></p>
-        <p><a href="#" class="open-right-panel">Open Right Panel</a></p>
-      </div>
-    </div>
-    <div class="panel panel-right panel-cover">
-      <div class="content-block">
-        <p>Right Panel content here</p>
-        <p><a href="#" class="panel-close">Close me</a></p>
-        <p><a href="#" class="open-left-panel">Open Left Panel</a></p>
       </div>
     </div>
     <!-- end of view view main-->
@@ -558,9 +535,29 @@
                     <li>
                       <div class="item-content">
                         <div class="item-inner">
-                          <div class="item-title label">Grand Total</div>
+                          <div class="item-title label">Sub Total</div>
                           <div class="item-input">
                             <input type="number" placeholder="" readonly id="grand-total">
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+                    <li>
+                      <div class="item-content">
+                        <div class="item-inner">
+                          <div class="item-title label">Delivery Fee</div>
+                          <div class="item-input">
+                            <input type="number" placeholder=""  id="delivery-fee">
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+                    <li>
+                      <div class="item-content">
+                        <div class="item-inner">
+                          <div class="item-title label">Total</div>
+                          <div class="item-input">
+                            <input type="number" placeholder="" readonly id="total">
                           </div>
                         </div>
                       </div>

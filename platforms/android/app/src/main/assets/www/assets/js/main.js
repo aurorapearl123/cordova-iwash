@@ -3,6 +3,7 @@
 var myApp = new Framework7({
     modalTitle: "Iwash",
     material: true,
+   // modalCloseByOutside: true,
     dynamicNavbar: true,
     onAjaxStart: function(xhr){
         myApp.showIndicator();
@@ -47,7 +48,7 @@ $$(document).on('pageInit', function (e) {
     var page = e.detail.page;
 
     if (page.name === 'home') {
-
+        console.log("this is home");
         checkConnection();
 
         // Following code will be executed for page with data-page attribute equal to "about"
@@ -240,13 +241,14 @@ $$(document).on('pageInit', function (e) {
         // got to add customer page
         $$(document).on('click', '#id-floating-add-customer', function(){
             //console.log("add customer");
-            mainView.router.loadContent($$('#id-add-customer-page').html())
+            mainView.router.loadContent($$('#id-add-customer-page').html());
 
         })
 
 
     }
     if(page.name == 'customer-page-add') {
+        console.log("customer-page-add");
         // Append option
         //myApp.smartSelectAddOption('.smart-select select', '<option value="jade">jade</option>');
         // Add new option as first selected option
@@ -306,15 +308,22 @@ $$(document).on('pageInit', function (e) {
                 text: 'Select camera or album',
                 buttons: [
                     {
-                        text: 'CAMERA',
+                        text: 'camera',
                         onClick: function() {
                             getImageFromCamera();
                         }
                     },
                     {
-                        text: 'ALBUM',
+                        text: 'album',
                         onClick: function() {
                            getImageFromAlbum();
+                        }
+                    },
+                    {
+                        text: 'X',
+                        onClick: function() {
+                            //getImageFromAlbum();
+                            myApp.closeModal();
                         }
                     },
                 ]
@@ -363,8 +372,20 @@ $$(document).on('pageInit', function (e) {
     }
 
     if(page.name == "customer-detail") {
+        console.log("customer-detail page");
         var id = page.query.id;
         customer_details(id, page);
+
+        $$('#id-customer-detail-back').on("click", function(){
+            console.log("hello back customer details");
+            //var this_page = $$(this).data("page");
+            // var previouspage = window.sessionStorage.getItem("page");
+            // console.log("this is a page", previouspage);
+
+            //myApp.views.main.router.back();
+            mainView.router.loadContent($$('#id-customer-page').html());
+        });
+
     }
     if(page.name == 'customer-edit-page') {
         console.log("customer edit page");
@@ -465,6 +486,12 @@ $$(document).on('pageInit', function (e) {
                             getImageFromAlbum();
                         }
                     },
+                    {
+                        text: 'X',
+                        onClick: function() {
+                            myApp.closeModal();
+                        }
+                    },
                 ]
             });
         });
@@ -532,7 +559,7 @@ $$(document).on('pageInit', function (e) {
             },
             success: function (data) {
                 var order_details = [];
-                var delivery_fee = 0, rate = 0, total_amount = 0;
+                var delivery_fee = 0, rate = 0, total_amount = 0, total = 0, remarks = "";
                 $$.each(data.data, function(k, v) {
 
                     listHTML = '<div class="list-block media-list mt-15 mb-0">';
@@ -561,6 +588,8 @@ $$(document).on('pageInit', function (e) {
                     delivery_fee = v.deliveryFee;
                     rate = v.rate;
                     total_amount = v.ttlAmount;
+                    total = v.total;
+                    remarks = v.remarks;
 
                     STATUS = v.status;
                     ORDER_ID = v.order_id;
@@ -662,8 +691,10 @@ $$(document).on('pageInit', function (e) {
                     );
                 var delivery_fee_html = '<div class="list-block inset total">'+
                                       '<ul>' +
+                                        '<li class="item-content pr-15"><div class="pr-0 item-inner total-amount"> <div class="item-title">Sub Total</div><div class="item-after">'+total_amount+'</div></div>' +
                                         '<li class="item-content pr-15"><div class="pr-0 item-inner"><div class="item-title">Delivery Fee</div><div class="item-after">'+delivery_fee+'</div></div>' +
-                                        '<li class="item-content pr-15"><div class="pr-0 item-inner total-amount"> <div class="item-title">Total</div><div class="item-after">'+total_amount+'</div></div>' +
+                                        '<li class="item-content pr-15"><div class="pr-0 item-inner total-amount"> <div class="item-title">Total</div><div class="item-after">'+total+'</div></div>' +
+                                        '<li class="item-content pr-15"><div class="pr-0 item-inner total-amount"> <div class="item-title">Remarks</div><div class="item-after">'+remarks+'</div></div>' +
                                         '</li>'+
                                       '</ul>';
 
@@ -723,9 +754,248 @@ $$(document).on('pageInit', function (e) {
             signaturePad.clear();
         });
 
-        document.getElementById('back').addEventListener('click', function(){
+        // document.getElementById('back').addEventListener('click', function(){
+        //     mainView.router.loadContent($$('#dashboard').html());
+        //     //myApp.closeModal($$(".popup"),true);
+        // });
+
+        $$('#id-about-back').on("click", function(){
+           console.log("hello back");
+           //var this_page = $$(this).data("page");
+           // var previouspage = window.sessionStorage.getItem("page");
+          // console.log("this is a page", previouspage);
+
+            mainView.router.loadContent($$('#id-page-order-list').html());
+        });
+    }
+    if(page.name == 'home-about') {
+        console.log("the home about page");
+        var id = page.query.id;
+        var url = base_url+"/api/order-details/"+id;
+        var token= $$('meta[name="token"]').attr("content");
+        var listHTML = '';
+        var STATUS = "";
+        var ORDER_ID = "";
+        $$.ajax({
+            type: "GET",
+            dataType: "json",
+            url: url,
+            headers: {
+                'Authorization': token,
+            },
+            success: function (data) {
+                var order_details = [];
+                var delivery_fee = 0, rate = 0, total_amount = 0, total = 0, remarks = "";
+                $$.each(data.data, function(k, v) {
+
+                    listHTML = '<div class="list-block media-list mt-15 mb-0">';
+                    listHTML += '<ul class="profile bg-white">';
+                    listHTML += '<li>';
+                    listHTML += '<div class="item-content">';
+
+                    listHTML += '<div class="item-media py-15"><img src="http://192.168.1.224/iwash/assets/img/users/noimage.gif"></div>';
+                    listHTML += '<div class="item-inner">';
+
+                    listHTML += '<div class="item-title-row">';
+                    listHTML += '<div class="item-title">'+ v.suffix+" "+ v.fname +" "+v.mname+" "+v.lname+'</div>';
+                    listHTML += '</div>';
+                    listHTML += '<div class="item-subtitle color-grey">'+ v.date +'</div>';
+
+                    listHTML += '</div>';
+
+                    listHTML += '</div>';
+                    listHTML += '</li>';
+
+                    listHTML += '</ul>';
+                    listHTML += '</div>';
+
+                    order_details = v.order_details;
+
+                    delivery_fee = v.deliveryFee;
+                    rate = v.rate;
+                    total_amount = v.ttlAmount;
+                    total = v.total;
+                    remarks = v.remarks;
+
+                    STATUS = v.status;
+                    ORDER_ID = v.order_id;
+                });
+
+                if(STATUS == 1) {
+                    var settingHtml = '<div class="speed-dial">' +
+                        '<a href="#" class="floating-button color-red"><i class="material-icons">edit</i><i class="icon icon-close"></i></a>' +
+                        '<div class="speed-dial-buttons">' +
+                        '<a href="order-edit.html?id='+ORDER_ID+'" class="link color-black" ><i class="la la-edit"></i></a>' +
+                        '<a href="javascript:delete_order('+ORDER_ID+');" class="link color-black" id="id-delete"><i class="la la-trash-o"></i></a>' +
+                        '</div>' +
+                        '</div>';
+                    $$('#container-signpad').html("");
+                    $$(page.container).find('.page-content').append(settingHtml);
+                }
+
+                $$.each(order_details, function(k, v) {
+                        var UNIT = v.unit;
+                        var REGULAR_RATE = v.regRate;
+                        var QUANTITY = v.qty;
+                        var AMOUNT = v.amount;
+                        var str = v.serviceType;
+                        str = str.replace(/ +/g, "");
+                        var the_id = v.serviceID+str;
+
+                        var table = $$('<div>').attr('class', "services inset")
+                            .append($$('<div>').attr('class', "card-header")
+                                .append($$('<span>').text(""+v.serviceType.capitalize()+""))
+                            )
+                            .append($$('<div>').attr('class', "card-content px-15")
+                                .append($$('<table>').attr('id', 'order-table'+the_id)
+                                    .append($$('<tr>').attr('id', 'tr-head'+the_id))
+                                    .append($$('<tbody>'))
+                                )
+                            )
+                            .append($$('<h4 class="px-15">Details</h4>'))
+                            .append($$('<ul>')
+                                .append($$('<li>')
+                                    .append($$('<div>').attr('class', 'item-content')
+                                        .append($$('<div>').attr('class','item-inner')
+                                            .append($$('<div>').attr('class','item-title label color-grey').text("Quantity"))
+                                            .append($$('<div>').attr('class', 'item-input')
+                                                .append($$('<input>').attr('placeholder', "Please input Quantity").attr('type', 'number').attr('value', QUANTITY).attr('readonly', true).attr('style', 'border:none')
+                                                )
+                                            )
+                                        )
+                                    )
+                                )
+                                //unit
+                                .append($$('<li>')
+                                    .append($$('<div>').attr('class', 'item-content')
+                                        .append($$('<div>').attr('class','item-inner')
+                                            .append($$('<div>').attr('class','item-title label color-grey').text("Unit"))
+                                            .append($$('<div>').attr('class', 'item-input')
+                                                .append($$('<input>').attr('placeholder', "Unit").attr('value', UNIT).attr('readonly', true).attr('style', 'border:none'))
+                                            )
+                                        )
+                                    )
+                                )
+                                //rate
+                                .append($$('<li>')
+                                    .append($$('<div>').attr('class', 'item-content')
+                                        .append($$('<div>').attr('class','item-inner')
+                                            .append($$('<div>').attr('class','item-title label color-grey').text("Rate"))
+                                            .append($$('<div>').attr('class', 'item-input')
+                                                .append($$('<input>').attr('placeholder', "Rate").attr('value', REGULAR_RATE).attr('readonly', true).attr('style', 'border:none'))
+                                            )
+                                        )
+                                    )
+                                )
+                                //amount
+                                .append($$('<li>')
+                                    .append($$('<div>').attr('class', 'item-content last')
+                                        .append($$('<div>').attr('class','item-inner')
+                                            .append($$('<div>').attr('class','item-title label color-grey').text("Amount"))
+                                            .append($$('<div>').attr('class', 'item-input')
+                                                .append($$('<input>').attr('placeholder', "Amount").attr('readonly', true).attr('style','border:none').attr('class', 'my-amount').attr('value', AMOUNT))
+                                            )
+                                        )
+                                    )
+                                )
+                            );
+
+                        $$(page.container).find('.page-content').find('#id-display-category').append(table);
+                        v.categories.forEach(element => {
+                            $$('#order-table'+the_id).find('#tr-head'+the_id).empty();
+                            $$('#order-table'+the_id).find('#tr-head'+the_id)
+                                .append($$('<th>').attr('class', 'text-align-left pl-0').text('Category'))
+                                .append($$('<th>').attr('class', 'text-align-right pr-0').text('Quantity'));
+                            var table = $$('#order-table'+the_id).find('tbody');
+                            table.append($$('<tr>').attr('class', 'item')
+                                .append($$('<td>').attr('class', "label-cell color-grey").text(element.category.capitalize()))
+                                .append($$('<td>').attr('class', "numeric-cell")
+                                    .append($$('<input>').attr('value', element.qty).attr('type',"number").attr('class', 'quantity').css('background-color','#EFEFEF').attr('style', 'border:none').attr('readonly', true)))
+                            );
+                        });
+                    }
+                );
+                var delivery_fee_html = '<div class="list-block inset total">'+
+                    '<ul>' +
+                    '<li class="item-content pr-15"><div class="pr-0 item-inner total-amount"> <div class="item-title">Sub Total</div><div class="item-after">'+total_amount+'</div></div>' +
+                    '<li class="item-content pr-15"><div class="pr-0 item-inner"><div class="item-title">Delivery Fee</div><div class="item-after">'+delivery_fee+'</div></div>' +
+                    '<li class="item-content pr-15"><div class="pr-0 item-inner total-amount"> <div class="item-title">Total</div><div class="item-after">'+total+'</div></div>' +
+                    '<li class="item-content pr-15"><div class="pr-0 item-inner total-amount"> <div class="item-title">Remarks</div><div class="item-after">'+remarks+'</div></div>' +
+                    '</li>'+
+                    '</ul>';
+
+
+                $$(page.container).find('.page-content').find('#delivery-list').append(delivery_fee_html);
+
+                $$(page.container).find('.page-content').find('#signature-display').append(listHTML);
+
+
+            },
+            error: function (error) {
+                console.log("error");
+                console.log(error);
+            }
+        });
+
+
+        var canvas = document.getElementById('signature-pad');
+
+        // Adjust canvas coordinate space taking into account pixel ratio,
+        // to make it look crisp on mobile devices.
+        // This also causes canvas to be cleared.
+        function resizeCanvas() {
+            // When zoomed out to less than 100%, for some very strange reason,
+            // some browsers report devicePixelRatio as less than 1
+            // and only part of the canvas is cleared then.
+            var ratio =  Math.max(window.devicePixelRatio || 1, 1);
+            canvas.width = canvas.offsetWidth * ratio;
+            canvas.height = canvas.offsetHeight * ratio;
+            canvas.getContext("2d").scale(ratio, ratio);
+        }
+
+        window.onresize = resizeCanvas;
+        resizeCanvas();
+
+        var signaturePad = new SignaturePad(canvas, {
+            backgroundColor: 'rgb(255, 255, 255)' // necessary for saving image as JPEG; can be removed is only saving as PNG or SVG
+        });
+
+
+
+        document.getElementById('save-jpeg').addEventListener('click', function () {
+            if (signaturePad.isEmpty()) {
+                myApp.alert('Please provide a signature first.','<span class="icon bg-blue"><i class="material-icons">edit</i></span>Signature');
+                return null;
+            }
+
+            var data = signaturePad.toDataURL('image/jpeg');
+
+            myApp.confirm('Please confirm order only after you have received all the items.','<span class="icon bg-blue"><i class="material-icons">check</i></span>Confirm Delivery', function () {
+                update_order_details(id, data);
+            });
+        });
+
+
+        document.getElementById('clear').addEventListener('click', function () {
+            signaturePad.clear();
+        });
+
+        // document.getElementById('back').addEventListener('click', function(){
+        //     mainView.router.loadContent($$('#dashboard').html());
+        //     //myApp.closeModal($$(".popup"),true);
+        // });
+
+        $$('#id-about-back').on("click", function(){
+            console.log("hello back");
+            //var this_page = $$(this).data("page");
+            // var previouspage = window.sessionStorage.getItem("page");
+            // console.log("this is a page", previouspage);
+
+            mainView.router.loadContent($$('#id-page-order-list').html());
+        });
+        // add back button
+        $$('#id-home-about-back').on('click', function(){
             mainView.router.loadContent($$('#dashboard').html());
-            //myApp.closeModal($$(".popup"),true);
         });
     }
     if(page.name == 'history-list'){
@@ -860,7 +1130,7 @@ $$(document).on('pageInit', function (e) {
         mainView.router.loadContent($$('#id-history-list').html());
     });
     if(page.name == "about-history"){
-        console.log("about history");
+        console.log("about-history");
         var id = page.query.id;
         console.log("this id of order : ", id);
         var url = base_url+"/api/order-details/"+id;
@@ -1022,8 +1292,13 @@ $$(document).on('pageInit', function (e) {
                 console.log(error);
             }
         });
+
+        $$('#id-about-history-back').on('click', function(){
+            mainView.router.loadContent($$('#id-history-list').html());
+        });
     }
     if(page.name == 'order-add-page') {
+        console.log("order-add-page");
         myApp.showPreloader();
         localStorage.clear();
 
@@ -1193,6 +1468,19 @@ $$(document).on('pageInit', function (e) {
             });
         });
 
+        //calculate the delivery free to subtotal
+        $$('#delivery-fee').on('keyup', function(){
+            var grand_total = $$('#grand-total').val();
+            if(grand_total) {
+                console.log("grand total", grand_total);
+                var delivery_fee = $$(this).val();
+                console.log("delivery-fee", delivery_fee);
+                var total = +delivery_fee + +grand_total;
+                $$('#total').val(total);
+            }
+
+        });
+
         $$('#id-button-form-add-order').on('click', function(){
 
             //check for table services id
@@ -1251,18 +1539,20 @@ $$(document).on('pageInit', function (e) {
                 var customer_id = $$('#form_entry_customer').val();
                 var grand_total = $$('#grand-total').val();
                 var remarks = $$('#remarks').val();
+                var delivery_fee = $$('#delivery-fee').val();
+                var total = $$('#total').val();
                 if(customer_id == "") {
                     myApp.alert("Please add Customer");
                     return false;
                 }
                 console.log(category_data);
-               createOrder(data, grand_total, customer_id, remarks, category_data);
+                createOrder(data, grand_total, customer_id, remarks, category_data, delivery_fee, total);
             }
         });
 
     }
     if(page.name == 'order-edit-page') {
-        console.log("edit order");
+        console.log("order-edit-page");
         var order_id = page.query.id;
         console.log("order id fds", order_id);
         myApp.showPreloader('Checking connection.');
@@ -1322,16 +1612,31 @@ $$(document).on('pageInit', function (e) {
                 var customer_id = $$('#form_entry_customer').val();
                 var grand_total = $$('#grand-total').val();
                 var remarks = $$('#remarks').val();
+                var total = $$('#total').val();
+                var deliveryFee = $$('#delivery-fee').val();
                 if(customer_id == "") {
                     myApp.alert("Please add Customer");
                     return false;
                 }
                 var order_id = $$('#id-order').val();
-                updateOrder(data, grand_total, customer_id, remarks, category_data, order_id);
+                updateOrder(data, grand_total, customer_id, remarks, category_data, order_id, deliveryFee, total);
             }
          });
+
+        $$('#delivery-fee').on('keyup', function(){
+            var grand_total = $$('#grand-total').val();
+            if(grand_total) {
+                console.log("grand total", grand_total);
+                var delivery_fee = $$(this).val();
+                console.log("delivery-fee", delivery_fee);
+                var total = +delivery_fee + +grand_total;
+                $$('#total').val(total);
+            }
+
+        });
     }
     if(page.name == 'order-list-page') {
+        console.log("order-list-page");
         setUpDate(page.name, '#created-calendar-from', '#created-calendar-to');
         var from_date = "";
         var to_date = "";
@@ -1459,6 +1764,17 @@ function calculateGrandTotal(service_ids)
         }
     }
     $$("#grand-total").val(sum);
+
+    var delivery_fee = $$('#delivery-fee').val();
+    if(delivery_fee) {
+        var grand_total = $$("#grand-total").val();
+        console.log("grand total", grand_total);
+        console.log("delivery-fee", delivery_fee);
+        var total = +delivery_fee + +grand_total;
+        $$('#total').val(total);
+    }
+
+
 }
 
 function removeDuplicateUsingSet(arr){
@@ -1515,7 +1831,9 @@ $$('#login').on('click', function(){
 
                 },
                 error: function (error) {
+                    console.log("THE ERROR LOGIN");
                     //console.log(error);
+                    myApp.hidePreloader();
                     var response_message = "";
                     var message = JSON.parse(error.responseText);
                     //console.log(message);
@@ -1587,7 +1905,7 @@ function refreshData(date, page, status)
                 // listHTML += '<div class="item-after">'+v.date+'</div>';
                 listHTML += '</div>';
                 listHTML += '<div class="item-subtitle">'+ v.branch_name +'</div>';
-                listHTML += '<div class="item-text">'+ v.service_type+'</div>';
+                //listHTML += '<div class="item-text">'+ v.service_type+'</div>';
                 //listHTML += '<div class = "card-footer"><a href="about.html?id='+ v.order_id +'" class="link">View Details</a></div>';
                 listHTML += '</div>';
                 listHTML += '</a>';
@@ -1640,7 +1958,7 @@ function refreshDataHistory(date, page, status)
                 // listHTML += '<div class="item-after">'+v.date+'</div>';
                 listHTML += '</div>';
                 listHTML += '<div class="item-subtitle">'+ v.branch_name +'</div>';
-                listHTML += '<div class="item-text">'+ v.service_type+'</div>';
+                //listHTML += '<div class="item-text">'+ v.service_type+'</div>';
                 //listHTML += '<div class = "card-footer"><a href="about.html?id='+ v.order_id +'" class="link">View Details</a></div>';
                 listHTML += '</div>';
                 listHTML += '</a>';
@@ -1713,8 +2031,10 @@ function myFunction() {
 
 function getOrderDate(page, date, status)
 {
-    console.log("date");
-    console.log(date);
+    console.log("THE PAGE");
+    console.log(page.name);
+    //console.log("date");
+    //console.log(date);
     var url = base_url+"/api/order-date/"+date+":"+status;
     //var url = "http://localhost/iwash/api/order-date/2018-07-01:2018-08-08";
     var token= $$('meta[name="token"]').attr("content");
@@ -1752,18 +2072,23 @@ function getOrderDate(page, date, status)
                 var listHTML = '<ul>';
                 $$.each(data.data, function(k, v) {
                     var javascript_date = new Date(v.date);
-                    console.log("THE DATE");
-                    console.log(javascript_date.getShortMonthName());
+                    //console.log("THE DATE");
+                    //console.log(javascript_date.getShortMonthName());
                     var month = javascript_date.getShortMonthName();
-                    var day = javascript_date.getDay();
-                    console.log("GET DAY");
-                    console.log(javascript_date.getDay());
+                    var day = javascript_date.getDate();
+                    //console.log("GET DAY");
+                    //console.log(javascript_date.getDate());
                     listHTML += '<li>';
                     if(status == 5) {
                          listHTML += '<a href="about-history.html?id='+ v.order_id +'" class="item-link item-content">';
                     }
                     else {
-                        listHTML += '<a href="about.html?id=' + v.order_id + '" class="item-link item-content">';
+                        if(page.name === "home") {
+                            listHTML += '<a href="home-about.html?id=' + v.order_id + '" class="item-link item-content">';
+                        }
+                        else {
+                            listHTML += '<a href="about.html?id=' + v.order_id + '" class="item-link item-content">';
+                        }
                     }
                     listHTML += '<div class="item-media"><span class="moname">'+month+'<span class="moday">'+day+'</span></span></div>';
                     listHTML += '<div class = "item-inner">';
@@ -1847,7 +2172,6 @@ function resetData(page, token)
                     listHTML += '<div class="item-after">'+v.date+'</div>';
                     listHTML += '</div>';
                     listHTML += '<div class="item-subtitle">'+ v.branch_name +'</div>';
-                    listHTML += '<div class="item-text"> Service Type : '+ v.service_type+'</div>';
                     listHTML += '</div>';
                     listHTML += '</a>';
                     listHTML += '</li>';
@@ -1910,7 +2234,6 @@ function getDefaultHistoryList(page, token, url)
                     // listHTML += '<div class="item-after">'+v.date+'</div>';
                     listHTML += '</div>';
                     listHTML += '<div class="item-subtitle">'+ v.branch_name +'</div>';
-                    listHTML += '<div class="item-text">'+ v.service_type+'</div>';
                     listHTML += '</div>';
                     listHTML += '</a>';
                     listHTML += '</li>';
@@ -2455,7 +2778,7 @@ String.prototype.capitalize = function() {
     return this.charAt(0).toUpperCase() + this.slice(1);
 }
 
-function createOrder(data, grand_total, customer_id, remarks, category_data)
+function createOrder(data, grand_total, customer_id, remarks, category_data, delivery_fee, total)
 {
     var token= $$('meta[name="token"]').attr("content");
 
@@ -2470,7 +2793,7 @@ function createOrder(data, grand_total, customer_id, remarks, category_data)
             headers: {
                 'Authorization': token,
             },
-            data: { data: data, customer_id: customer_id, grand_total: grand_total, remarks: remarks, category_data: category_data},
+            data: { data: data, customer_id: customer_id, grand_total: grand_total, remarks: remarks, category_data: category_data, delivery_fee: delivery_fee, total: total},
             success: function (data) {
                 myApp.hidePreloader();
 
@@ -2565,6 +2888,8 @@ function getOrderForEdit(order_id, page) {
                     //calculate grand total
                     calculateGrandTotal(service_ids);
                     $$('#remarks').val(v.remarks);
+                    $$('#delivery-fee').val(v.deliveryFee);
+                    $$('#total').val(v.total);
                     $$('#id-order').val(order_id);
 
                     $$('#id-my-preloader').hide();
@@ -2882,7 +3207,7 @@ function setUpDate(page, from_id, to_id)
     $$(to_id).val(today);
 }
 
-function updateOrder(data, grand_total, customer_id, remarks, category_data, order_id)
+function updateOrder(data, grand_total, customer_id, remarks, category_data, order_id, deliveryFee, total)
 {
     var token= $$('meta[name="token"]').attr("content");
 
@@ -2897,7 +3222,7 @@ function updateOrder(data, grand_total, customer_id, remarks, category_data, ord
             headers: {
                 'Authorization': token,
             },
-            data: { data: data, customer_id: customer_id, grand_total: grand_total, remarks: remarks, category_data: category_data, order_id: order_id},
+            data: { data: data, customer_id: customer_id, grand_total: grand_total, remarks: remarks, category_data: category_data, order_id: order_id, delivery_fee: deliveryFee, total: total},
             success: function (data) {
                 myApp.hidePreloader();
 

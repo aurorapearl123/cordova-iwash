@@ -11,25 +11,45 @@
       <change beforePath="$PROJECT_DIR$/platforms/android/.gradle/4.1/taskHistory/taskHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/android/.gradle/4.1/taskHistory/taskHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/platforms/android/app/build/intermediates/assets/debug/www/about-history.html" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/android/app/build/intermediates/assets/debug/www/about-history.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/platforms/android/app/build/intermediates/assets/debug/www/about.html" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/android/app/build/intermediates/assets/debug/www/about.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/platforms/android/app/build/intermediates/assets/debug/www/assets/css/framework7.ios.colors.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/platforms/android/app/build/intermediates/assets/debug/www/assets/css/framework7.ios.colors.min.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/platforms/android/app/build/intermediates/assets/debug/www/assets/css/framework7.ios.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/platforms/android/app/build/intermediates/assets/debug/www/assets/css/framework7.ios.min.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/platforms/android/app/build/intermediates/assets/debug/www/assets/css/framework7.ios.rtl.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/platforms/android/app/build/intermediates/assets/debug/www/assets/css/framework7.ios.rtl.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/platforms/android/app/build/intermediates/assets/debug/www/assets/css/framework7-icons.css" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/android/app/build/intermediates/assets/debug/www/assets/css/framework7-icons.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/platforms/android/app/build/intermediates/assets/debug/www/assets/css/framework7.material.colors.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/android/app/build/intermediates/assets/debug/www/assets/css/framework7.material.colors.min.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/platforms/android/app/build/intermediates/assets/debug/www/assets/css/framework7.material.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/android/app/build/intermediates/assets/debug/www/assets/css/framework7.material.min.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/platforms/android/app/build/intermediates/assets/debug/www/assets/css/framework7.material.rtl.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/platforms/android/app/build/intermediates/assets/debug/www/assets/css/framework7.material.rtl.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/platforms/android/app/build/intermediates/assets/debug/www/assets/css/ie9.css" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/android/app/build/intermediates/assets/debug/www/assets/css/ie9.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/platforms/android/app/build/intermediates/assets/debug/www/assets/css/jquery.signaturepad.css" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/android/app/build/intermediates/assets/debug/www/assets/css/jquery.signaturepad.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/platforms/android/app/build/intermediates/assets/debug/www/assets/css/my-app.css" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/android/app/build/intermediates/assets/debug/www/assets/css/my-app.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/platforms/android/app/build/intermediates/assets/debug/www/assets/css/signature-pad.css" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/android/app/build/intermediates/assets/debug/www/assets/css/signature-pad.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/platforms/android/app/build/intermediates/assets/debug/www/assets/js/bezier.js" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/android/app/build/intermediates/assets/debug/www/assets/js/bezier.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/platforms/android/app/build/intermediates/assets/debug/www/assets/js/framework7.js" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/android/app/build/intermediates/assets/debug/www/assets/js/framework7.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/platforms/android/app/build/intermediates/assets/debug/www/assets/js/jquery.signaturepad.js" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/android/app/build/intermediates/assets/debug/www/assets/js/jquery.signaturepad.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/platforms/android/app/build/intermediates/assets/debug/www/assets/js/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/android/app/build/intermediates/assets/debug/www/assets/js/main.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/platforms/android/app/build/intermediates/assets/debug/www/customer-detail.html" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/android/app/build/intermediates/assets/debug/www/customer-detail.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/platforms/android/app/build/intermediates/assets/debug/www/customer-edit.html" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/android/app/build/intermediates/assets/debug/www/customer-edit.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/platforms/android/app/build/intermediates/assets/debug/www/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/android/app/build/intermediates/assets/debug/www/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/platforms/android/app/build/intermediates/assets/debug/www/order-edit.html" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/android/app/build/intermediates/assets/debug/www/order-edit.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/platforms/android/app/build/intermediates/incremental/mergeDebugAssets/merger.xml" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/android/app/build/intermediates/incremental/mergeDebugAssets/merger.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/platforms/android/app/build/intermediates/incremental/packageDebug/debug/dex-renamer-state.txt" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/android/app/build/intermediates/incremental/packageDebug/debug/dex-renamer-state.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/platforms/android/app/build/intermediates/incremental/packageDebug/debug/file-input-save-data.txt" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/android/app/build/intermediates/incremental/packageDebug/debug/file-input-save-data.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/platforms/android/app/build/outputs/apk/debug/app-debug.apk" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/android/app/build/outputs/apk/debug/app-debug.apk" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/platforms/android/app/src/main/assets/www/about-history.html" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/android/app/src/main/assets/www/about-history.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/platforms/android/app/src/main/assets/www/about.html" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/android/app/src/main/assets/www/about.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/platforms/android/app/src/main/assets/www/assets/css/framework7.material.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/android/app/src/main/assets/www/assets/css/framework7.material.min.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/platforms/android/app/src/main/assets/www/assets/js/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/android/app/src/main/assets/www/assets/js/main.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/platforms/android/app/src/main/assets/www/customer-detail.html" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/android/app/src/main/assets/www/customer-detail.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/platforms/android/app/src/main/assets/www/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/android/app/src/main/assets/www/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/platforms/android/app/src/main/assets/www/order-edit.html" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/android/app/src/main/assets/www/order-edit.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/platforms/browser/www/about-history.html" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/browser/www/about-history.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/platforms/browser/www/about.html" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/browser/www/about.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/platforms/browser/www/assets/css/framework7.material.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/browser/www/assets/css/framework7.material.min.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/platforms/browser/www/assets/js/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/browser/www/assets/js/main.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/platforms/browser/www/customer-detail.html" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/browser/www/customer-detail.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/platforms/browser/www/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/browser/www/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/platforms/browser/www/order-edit.html" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/browser/www/order-edit.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/www/about-history.html" beforeDir="false" afterPath="$PROJECT_DIR$/www/about-history.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/www/about.html" beforeDir="false" afterPath="$PROJECT_DIR$/www/about.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/www/assets/css/framework7.material.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/www/assets/css/framework7.material.min.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/www/assets/js/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/www/assets/js/main.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/www/customer-detail.html" beforeDir="false" afterPath="$PROJECT_DIR$/www/customer-detail.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/www/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/www/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/www/order-edit.html" beforeDir="false" afterPath="$PROJECT_DIR$/www/order-edit.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -43,17 +63,105 @@
       <file leaf-file-name="main.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/www/assets/js/main.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="49096">
-              <caret line="2888" column="62" selection-start-line="2888" selection-start-column="57" selection-end-line="2888" selection-end-column="62" />
+            <state relative-caret-position="322">
+              <caret line="1835" column="42" selection-start-line="1835" selection-start-column="42" selection-end-line="1835" selection-end-column="42" />
+              <folding>
+                <element signature="e#1300#7203#0" />
+                <element signature="e#7242#8074#0" />
+                <element signature="e#8116#12512#0" />
+                <element signature="e#12553#13112#0" />
+                <element signature="e#13155#18545#0" />
+                <element signature="e#18575#30344#0" />
+                <element signature="e#31403#31419#0" />
+                <element signature="e#34660#34939#0" />
+                <element signature="e#34987#35111#0" />
+                <element signature="e#35150#44322#0" />
+                <element signature="e#44361#57777#0" />
+                <element signature="e#57817#61147#0" />
+                <element signature="e#61187#65056#0" />
+                <element signature="n#style#0;n#svg#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#path#0;n#g#0;n#svg#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#path#0;n#g#0;n#g#0;n#svg#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#path#1;n#g#0;n#g#0;n#svg#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#path#2;n#g#0;n#g#0;n#svg#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#path#1;n#g#0;n#svg#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#path#0;n#g#1;n#g#0;n#svg#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#path#1;n#g#1;n#g#0;n#svg#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#path#2;n#g#1;n#g#0;n#svg#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#path#3;n#g#1;n#g#0;n#svg#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#path#4;n#g#1;n#g#0;n#svg#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#path#5;n#g#1;n#g#0;n#svg#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#path#6;n#g#1;n#g#0;n#svg#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#path#7;n#g#1;n#g#0;n#svg#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#path#0;n#g#0;n#g#1;n#g#0;n#svg#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#path#8;n#g#1;n#g#0;n#svg#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#path#9;n#g#1;n#g#0;n#svg#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#path#10;n#g#1;n#g#0;n#svg#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#path#11;n#g#1;n#g#0;n#svg#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#path#12;n#g#1;n#g#0;n#svg#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#path#13;n#g#1;n#g#0;n#svg#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#path#14;n#g#1;n#g#0;n#svg#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#path#15;n#g#1;n#g#0;n#svg#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#path#16;n#g#1;n#g#0;n#svg#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#p#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="about-history.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/www/about-history.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="119">
+              <caret line="7" column="42" selection-start-line="7" selection-start-column="42" selection-end-line="7" selection-end-column="63" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="customer-edit.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/www/customer-edit.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="272">
+              <caret line="16" column="59" selection-start-line="16" selection-start-column="59" selection-end-line="16" selection-end-column="59" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="order-edit.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/www/order-edit.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="578">
+              <caret line="99" column="19" selection-start-line="99" selection-start-column="19" selection-end-line="99" selection-end-column="19" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="customer-detail.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/www/customer-detail.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="119">
+              <caret line="7" column="45" selection-start-line="7" selection-start-column="45" selection-end-line="7" selection-end-column="65" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/www/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="17">
-              <caret line="66" column="45" selection-start-line="66" selection-start-column="45" selection-end-line="66" selection-end-column="45" />
+            <state relative-caret-position="118">
+              <caret line="66" column="91" selection-start-line="66" selection-start-column="91" selection-end-line="66" selection-end-column="91" />
+              <folding>
+                <element signature="n#style#0;n#img#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="config.xml" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/config.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="381">
+              <caret line="29" column="58" selection-start-line="29" selection-start-column="19" selection-end-line="29" selection-end-column="58" />
             </state>
           </provider>
         </entry>
@@ -61,8 +169,17 @@
       <file leaf-file-name="about.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/www/about.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="119">
-              <caret line="7" column="28" selection-start-line="7" selection-start-column="28" selection-end-line="7" selection-end-column="28" />
+            <state relative-caret-position="374">
+              <caret line="22" column="45" selection-end-line="38" selection-end-column="6" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="home-about.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/www/home-about.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="136">
+              <caret line="8" column="53" selection-start-line="8" selection-start-column="53" selection-end-line="8" selection-end-column="71" />
             </state>
           </provider>
         </entry>
@@ -78,36 +195,36 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>forEAch</find>
-      <find>the data</find>
-      <find>error get</find>
-      <find>calculateGrandTotal</find>
-      <find>service_ids</find>
-      <find>getCategories</find>
-      <find>id-display-category</find>
-      <find>id-remove</find>
-      <find>getServices</find>
-      <find>id-add-order</find>
-      <find>calculate me</find>
-      <find>customer_details</find>
-      <find>login</find>
-      <find>id-add</find>
-      <find>log</find>
-      <find>id-home</find>
-      <find>getOrderDAte</find>
-      <find>reset</find>
-      <find>setUpDate</find>
-      <find>getDefault</find>
-      <find>getDefaultHistoryList</find>
-      <find>history-list</find>
-      <find>refreshDataHistory</find>
-      <find>about-history</find>
-      <find>span-persons</find>
-      <find>updateCustomer</find>
-      <find>signature-pad</find>
-      <find>createOrder</find>
       <find>resetData</find>
+      <find>THE DATE</find>
+      <find>order-list</find>
+      <find>hello ba</find>
+      <find>data-</find>
+      <find>hello</find>
+      <find>data-page</find>
+      <find>customer-detail</find>
+      <find>id-add-customer</find>
+      <find>customer-page</find>
+      <find>login-screen</find>
+      <find>customer-detail-back</find>
+      <find>order-add</find>
+      <find>order-add-page</find>
+      <find>createOrder</find>
       <find>getOrderDate</find>
+      <find>this is aboutn</find>
+      <find>getOrderForEdit</find>
+      <find>calculateGrandTotal</find>
+      <find>updateOrder</find>
+      <find>about</find>
+      <find>hello back</find>
+      <find>modal</find>
+      <find>customer-edit-page</find>
+      <find>THE PAGE</find>
+      <find>about-history</find>
+      <find>calendar-from</find>
+      <find>history-list</find>
+      <find>item-text</find>
+      <find>login</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -124,15 +241,17 @@
         <option value="$PROJECT_DIR$/www/assets/css/toast.css" />
         <option value="$PROJECT_DIR$/www/assets/js/toast.js" />
         <option value="$PROJECT_DIR$/www/pages/customer-detail.html" />
-        <option value="$PROJECT_DIR$/www/customer-detail.html" />
         <option value="$PROJECT_DIR$/www/customer-edit.html" />
         <option value="$PROJECT_DIR$/www/add-order.html" />
-        <option value="$PROJECT_DIR$/www/about.html" />
-        <option value="$PROJECT_DIR$/www/order-edit.html" />
-        <option value="$PROJECT_DIR$/www/about-history.html" />
         <option value="$PROJECT_DIR$/config.xml" />
-        <option value="$PROJECT_DIR$/www/assets/js/main.js" />
+        <option value="$PROJECT_DIR$/www/about.html" />
+        <option value="$PROJECT_DIR$/www/customer-detail.html" />
+        <option value="$PROJECT_DIR$/www/assets/css/framework7.material.min.css" />
+        <option value="$PROJECT_DIR$/www/order-edit.html" />
+        <option value="$PROJECT_DIR$/www/home-about.html" />
+        <option value="$PROJECT_DIR$/www/about-history.html" />
         <option value="$PROJECT_DIR$/www/index.html" />
+        <option value="$PROJECT_DIR$/www/assets/js/main.js" />
       </list>
     </option>
   </component>
@@ -316,27 +435,25 @@
             <path>
               <item name="iwash" type="b2602c69:ProjectViewProjectNode" />
               <item name="iwash" type="462c0819:PsiDirectoryNode" />
-              <item name="www" type="462c0819:PsiDirectoryNode" />
+              <item name="res" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="iwash" type="b2602c69:ProjectViewProjectNode" />
+              <item name="iwash" type="462c0819:PsiDirectoryNode" />
+              <item name="res" type="462c0819:PsiDirectoryNode" />
+              <item name="screen" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="iwash" type="b2602c69:ProjectViewProjectNode" />
+              <item name="iwash" type="462c0819:PsiDirectoryNode" />
+              <item name="res" type="462c0819:PsiDirectoryNode" />
+              <item name="screen" type="462c0819:PsiDirectoryNode" />
+              <item name="android" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="iwash" type="b2602c69:ProjectViewProjectNode" />
               <item name="iwash" type="462c0819:PsiDirectoryNode" />
               <item name="www" type="462c0819:PsiDirectoryNode" />
-              <item name="assets" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="iwash" type="b2602c69:ProjectViewProjectNode" />
-              <item name="iwash" type="462c0819:PsiDirectoryNode" />
-              <item name="www" type="462c0819:PsiDirectoryNode" />
-              <item name="assets" type="462c0819:PsiDirectoryNode" />
-              <item name="css" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="iwash" type="b2602c69:ProjectViewProjectNode" />
-              <item name="iwash" type="462c0819:PsiDirectoryNode" />
-              <item name="www" type="462c0819:PsiDirectoryNode" />
-              <item name="assets" type="462c0819:PsiDirectoryNode" />
-              <item name="icon" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -352,11 +469,11 @@
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\IAN\cordova\iwash\res\screen\android" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\IAN\cordova\iwash\www" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\IAN\cordova\iwash\res\screen\android" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -437,14 +554,16 @@
       <workItem from="1539677709123" duration="640000" />
       <workItem from="1539683882283" duration="627000" />
       <workItem from="1539740620293" duration="485000" />
+      <workItem from="1540342945635" duration="9392000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="532030000" />
+    <option name="totallyTimeSpent" value="548578000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="848" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" weight="0.3292517" />
@@ -472,22 +591,23 @@
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info id="npm" order="2" side_tool="true" />
-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.15755208" />
+      <window_info anchor="bottom" id="Run" order="2" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.19140625" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
-      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Version Control" order="11" />
-      <window_info anchor="bottom" id="Run" order="2" />
-      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Database Changes" order="8" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Find" order="1" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Command Line Tools Console" order="12" weight="0.3292517" />
       <window_info anchor="right" id="Database" order="3" />
       <window_info anchor="bottom" id="Terminal" order="9" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" weight="0.3292517" />
-      <window_info anchor="bottom" id="Database Changes" order="8" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="Version Control" order="11" />
+      <window_info anchor="bottom" id="Message" order="0" />
       <window_info id="Favorites" order="3" side_tool="true" />
     </layout-to-restore>
   </component>
@@ -499,38 +619,10 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="14" />
+      <option name="time" value="15" />
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/www/likes.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="21" column="35" selection-start-line="21" selection-start-column="35" selection-end-line="21" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/www/about.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1394">
-          <caret line="82" selection-start-line="82" selection-end-line="82" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/www/assets/css/signature-pad.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1751">
-          <caret line="103" column="28" selection-end-line="119" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/www/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1275">
-          <caret line="75" selection-start-line="75" selection-end-line="75" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/www/assets/js/main.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2652">
@@ -728,48 +820,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/www/assets/css/my-app.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4964">
-          <caret line="292" column="1" selection-start-line="292" selection-start-column="1" selection-end-line="292" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/www/about.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="7" column="28" selection-start-line="7" selection-start-column="28" selection-end-line="7" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/www/customer-edit.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="799">
-          <caret line="47" column="52" selection-start-line="4" selection-start-column="12" selection-end-line="47" selection-end-column="52" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/www/customer-detail.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="16" selection-start-line="16" selection-end-line="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/www/order-edit.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1343">
-          <caret line="79" column="80" selection-start-line="79" selection-start-column="80" selection-end-line="79" selection-end-column="95" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/www/about-history.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret line="79" selection-start-line="79" selection-end-line="79" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/www/assets/icon/icons.css">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-2346" />
@@ -790,27 +840,132 @@
     <entry file="file://$PROJECT_DIR$/res/icon/android/icon-36-ldpi.png">
       <provider selected="true" editor-type-id="images" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/res/screen/android/logo_shadow_hdpi.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/config.xml">
+    <entry file="file://$PROJECT_DIR$/www/assets/css/my-app.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="442">
-          <caret line="29" column="58" selection-start-line="29" selection-start-column="58" selection-end-line="29" selection-end-column="58" />
+        <state relative-caret-position="-360">
+          <caret column="1" selection-start-column="1" selection-end-column="1" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/www/assets/js/main.js">
+    <entry file="file://$PROJECT_DIR$/www/assets/css/framework7.material.min.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="49096">
-          <caret line="2888" column="62" selection-start-line="2888" selection-start-column="57" selection-end-line="2888" selection-end-column="62" />
+        <state relative-caret-position="419">
+          <caret column="177861" selection-start-column="177861" selection-end-column="177861" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/assets/img/login-bg.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/order-edit.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="578">
+          <caret line="99" column="19" selection-start-line="99" selection-start-column="19" selection-end-line="99" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/customer-edit.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="16" column="59" selection-start-line="16" selection-start-column="59" selection-end-line="16" selection-end-column="59" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/customer-detail.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="7" column="45" selection-start-line="7" selection-start-column="45" selection-end-line="7" selection-end-column="65" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/about.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="374">
+          <caret line="22" column="45" selection-end-line="38" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/home-about.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="8" column="53" selection-start-line="8" selection-start-column="53" selection-end-line="8" selection-end-column="71" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/about-history.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="7" column="42" selection-start-line="7" selection-start-column="42" selection-end-line="7" selection-end-column="63" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/www/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="66" column="45" selection-start-line="66" selection-start-column="45" selection-end-line="66" selection-end-column="45" />
+        <state relative-caret-position="118">
+          <caret line="66" column="91" selection-start-line="66" selection-start-column="91" selection-end-line="66" selection-end-column="91" />
+          <folding>
+            <element signature="n#style#0;n#img#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/assets/js/main.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="322">
+          <caret line="1835" column="42" selection-start-line="1835" selection-start-column="42" selection-end-line="1835" selection-end-column="42" />
+          <folding>
+            <element signature="e#1300#7203#0" />
+            <element signature="e#7242#8074#0" />
+            <element signature="e#8116#12512#0" />
+            <element signature="e#12553#13112#0" />
+            <element signature="e#13155#18545#0" />
+            <element signature="e#18575#30344#0" />
+            <element signature="e#31403#31419#0" />
+            <element signature="e#34660#34939#0" />
+            <element signature="e#34987#35111#0" />
+            <element signature="e#35150#44322#0" />
+            <element signature="e#44361#57777#0" />
+            <element signature="e#57817#61147#0" />
+            <element signature="e#61187#65056#0" />
+            <element signature="n#style#0;n#svg#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#path#0;n#g#0;n#svg#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#path#0;n#g#0;n#g#0;n#svg#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#path#1;n#g#0;n#g#0;n#svg#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#path#2;n#g#0;n#g#0;n#svg#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#path#1;n#g#0;n#svg#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#path#0;n#g#1;n#g#0;n#svg#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#path#1;n#g#1;n#g#0;n#svg#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#path#2;n#g#1;n#g#0;n#svg#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#path#3;n#g#1;n#g#0;n#svg#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#path#4;n#g#1;n#g#0;n#svg#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#path#5;n#g#1;n#g#0;n#svg#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#path#6;n#g#1;n#g#0;n#svg#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#path#7;n#g#1;n#g#0;n#svg#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#path#0;n#g#0;n#g#1;n#g#0;n#svg#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#path#8;n#g#1;n#g#0;n#svg#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#path#9;n#g#1;n#g#0;n#svg#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#path#10;n#g#1;n#g#0;n#svg#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#path#11;n#g#1;n#g#0;n#svg#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#path#12;n#g#1;n#g#0;n#svg#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#path#13;n#g#1;n#g#0;n#svg#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#path#14;n#g#1;n#g#0;n#svg#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#path#15;n#g#1;n#g#0;n#svg#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#path#16;n#g#1;n#g#0;n#svg#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#p#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/screen/android/logo_shadow_hdpi.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/screen/android/logo_shadow_mdpi.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="381">
+          <caret line="29" column="58" selection-start-line="29" selection-start-column="19" selection-end-line="29" selection-end-column="58" />
         </state>
       </provider>
     </entry>
